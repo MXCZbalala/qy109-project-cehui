@@ -99,7 +99,7 @@ public class BaseController {
      * @param []
      * @date 2020/7/8
      * @return com.aaa.lee.base.ResultData
-     * @throws
+     * @throws 123
     **/
     protected ResultData loginFailed() {
         ResultData resultData = new ResultData();
