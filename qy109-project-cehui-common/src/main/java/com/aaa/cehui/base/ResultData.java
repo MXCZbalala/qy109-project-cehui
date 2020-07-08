@@ -10,9 +10,8 @@ import java.io.Serializable;
  * @Author Seven Lee
  * @Date Create in 2020/7/8 11:06
  * @Description
- *      通过接口返回值
+ *      通过接口返回值123
  *      也就是说把后端的controller的返回值统一了
- *
  *      T:
  *          所谓的泛型说白了就相当于一个占位符
  **/
