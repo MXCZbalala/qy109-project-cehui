@@ -11,9 +11,6 @@
 
     <artifactId>qy109-project-cehui-eureka-6081</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>qy109-project-cehui-eureka-6082</module>
-    </modules>
 
 
 </project>
