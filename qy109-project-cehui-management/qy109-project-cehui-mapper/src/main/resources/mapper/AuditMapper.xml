@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.cehui.mapper.AuditMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.cehui.model.Audit" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="submit_time" property="submitTime" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="ref_id" property="refId" jdbcType="BIGINT" />
+    <association property="mappingProject" javaType="com.aaa.cehui.model.MappingProject">
+      <id property="id" column="id"/>
+      <result property="projectType" column="project_type"/>
+      <result property="projectName" column="project_name"/>
+      <result property="projectAmount" column="project_amount"/>
+      <result property="projectLeader" column="project_leader"/>
+      <result property="startDate" column="start_date"/>
+      <result property="endDate" column="end_date"/>
+      <result property="acceptanceDepartment" column="acceptance_department"/>
+      <result property="acceptanceReport" column="acceptance_report"/>
+      <result property="taskSource" column="task_source"/>
+      <result property="projectArea" column="project_area"/>
+      <result property="scale" column="scale"/>
+      <result property="sheetNumber" column="sheet_number"/>
+      <result property="awardsDepartment" column="awards_department"/>
+      <result property="prizeLevel" column="prize_level"/>
+      <result property="projectQualityApproval" column="project_quality_approval"/>
+      <result property="winningTime" column="winning_time"/>
+      <result property="acceptanceTime" column="acceptance_time"/>
+      <result property="basicContent" column="basic_content"/>
+      <result property="address" column="address"/>
+      <result property="creditStatus" column="credit_status"/>
+      <result property="submitStatus" column="submit_status"/>
+      <result property="userId" column="user_id"/>
+      <result property="memo" column="memo"/>
+    </association>
+  </resultMap>
+  <select id="selectAuditInfo" resultMap="BaseResultMap"  >
+    select a.id, a.submit_time, a.audit_time,a.memo,b.project_type, b.project_name, b.project_leader, b.start_date, b.end_date, b.complete_time,
+b.acceptance_department,b.project_amount, b.schedule from t_audit a join t_mapping_project b on a.ref_id = b.id where a.type = 2 and a.status = 1
+  </select>
+
+  <select id="fuzzyQueryAduit" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select a.id, a.submit_time, a.audit_time,a.memo,b.project_type, b.project_name, b.project_leader, b.start_date, b.end_date, b.complete_time,
+    b.acceptance_department,b.project_amount, b.schedule from t_audit a join t_mapping_project b on a.ref_id = b.id
+    <where>
+      a.type = 2 and a.status = 1
+      <if test="projectName != null and projectName != '' ">
+        AND project_name like CONCAT('%', CONCAT(#{projectName, jdbcType=VARCHAR},'%'))
+      </if>
+    </where>
+    ORDER BY a.id ASC
+  </select>
+</mapper>

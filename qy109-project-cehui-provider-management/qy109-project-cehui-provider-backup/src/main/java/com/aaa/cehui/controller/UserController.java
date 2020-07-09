@@ -29,14 +29,6 @@ public class UserController extends CommonController<User> {
         return userService;
     }
 
-    @PostMapping("/add")
-    public ResultData add(User user) {
-        return userService.insertDta(user);
-    }
 
-    @PostMapping("/add")
-    public ResultData selectAllRoles() {
-        return userService.selectAllRoles();
-    }
 
 }
