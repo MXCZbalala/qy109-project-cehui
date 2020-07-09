@@ -1,6 +1,7 @@
 package com.aaa.cehui.base;
 
 import static com.aaa.cehui.status.LoginStatus.*;
+import static com.aaa.cehui.status.OperationStatus.*;
 
 /**
  * @Company AAA软件教育
@@ -31,7 +32,7 @@ public class BaseController {
      * @date 2020/7/8
      * @return com.aaa.lee.base.ResultData
      * @throws
-    **/
+     **/
     protected ResultData loginSuccess() {
         ResultData resultData = new ResultData();
         resultData.setCode(LOGIN_SUCCESS.getCode());
@@ -99,8 +100,8 @@ public class BaseController {
      * @param []
      * @date 2020/7/8
      * @return com.aaa.lee.base.ResultData
-     * @throws 123
-    **/
+     * @throws
+     **/
     protected ResultData loginFailed() {
         ResultData resultData = new ResultData();
         resultData.setCode(LOGIN_FAILED.getCode());
@@ -125,7 +126,41 @@ public class BaseController {
         return resultData;
     }
 
+    /**
+     * @author Seven Lee
+     * @description
+     *      操作成功，返回系统消息
+     * @param []
+     * @date 2020/7/9
+     * @return com.aaa.lee.base.ResultData
+     * @throws
+     **/
+    protected ResultData operationSuccess() {
+        ResultData resultData = new ResultData();
+        resultData.setCode(SUCCESS.getCode());
+        resultData.setMsg(SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      操作失败，返回系统消息
+     * @param []
+     * @date 2020/7/9
+     * @return com.aaa.lee.base.ResultData
+     * @throws
+     **/
+    protected ResultData operationFailed() {
+        ResultData resultData = new ResultData();
+        resultData.setCode(FAILED.getCode());
+        resultData.setMsg(FAILED.getMsg());
+        return resultData;
+    }
+
     // TODO 代码未完善，记得补充
+
+
 
 
 
