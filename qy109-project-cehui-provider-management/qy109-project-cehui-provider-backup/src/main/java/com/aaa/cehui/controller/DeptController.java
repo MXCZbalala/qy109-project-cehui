@@ -84,15 +84,15 @@ public class DeptController extends CommonController<Dept> {
 
     /**
     * @Author LTL
-    * @Description 查询所有部门信息
+    * @Description 分页查询所有部门信息
     * @Param []
     * @Return com.aaa.cehui.base.ResultData
     * @DateTime 2020/7/16  15:55
     * @Throws
     */
     @GetMapping("/selectAllDept")
-    public ResultData selectAllDept(){
-        if (deptService.selectAll().size()>0){
+    public ResultData selectAllDept(Integer pageNo,Integer pageSize){
+        if (deptService.selectAll(pageNo,pageSize).size()>0){
             return getSuccess(deptService.selectAll());
         }else {
             return getFiled();

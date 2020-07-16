@@ -141,6 +141,17 @@ public abstract class BaseService<T> {
         return mapper.selectAll();
     }
     /**
+    * @Author LTL
+    * @Description 实现查询全部的分页，不需要其他功能
+    * @Param [pageNo, pageSize]
+    * @Return java.util.List<T>
+    * @DateTime 2020/7/16  19:22
+    * @Throws
+    */
+    public List<T> selectAll(Integer pageNo,Integer pageSize){
+        return selectByFileds(pageNo,pageSize,null,null,null);
+    }
+    /**
      * @author Seven Lee
      * @description
      *      查询一条数据

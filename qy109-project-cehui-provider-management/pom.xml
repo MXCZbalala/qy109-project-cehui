@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>qy109-project-cehui-provider-backup</module>
+        <module>qy109-project-cehui-provider-cehuiManagement</module>
     </modules>
 
     <dependencies>
