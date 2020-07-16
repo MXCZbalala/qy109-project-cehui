@@ -9,22 +9,24 @@ import java.util.List;
 public interface ResultCommitMapper extends Mapper<ResultCommit> {
 
     /**
-       * @Author 吴超
-       * @Description 测绘成果的模糊成勋
-       * @Date 17:46 2020/6/1
-       * @Param
-       * @return java.util.List<com.aaa.wc.model.ResultCommit>
-     */
+    * @Author LTL
+    * @Description 测绘成果的模糊成勋
+    * @Param [name, projectType, resultDate]
+    * @Return java.util.List<com.aaa.cehui.model.ResultCommit>
+    * @DateTime 2020/7/16  8:39
+    * @Throws
+    */
     List<ResultCommit> fuzzyResultName(@Param("name") String name,
                                        @Param("projectType") String projectType,
                                        @Param("resultDate") String resultDate);
 
     /**
-       * @Author 吴超
-       * @Description 测绘成果详情
-       * @Date 17:47 2020/6/1
-       * @Param
-       * @return com.aaa.wc.model.ResultCommit
-     */
+    * @Author LTL
+    * @Description 测绘成果详情
+    * @Param [id]
+    * @Return com.aaa.cehui.model.ResultCommit
+    * @DateTime 2020/7/16  8:40
+    * @Throws
+    */
     ResultCommit selectResultDetails(@Param("id") Long id);
 }

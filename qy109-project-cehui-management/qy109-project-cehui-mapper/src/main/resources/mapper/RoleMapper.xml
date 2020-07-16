@@ -24,7 +24,7 @@
       and CREATE_TIME >= #{beginDate} and #{endDate} >= CREATE_TIME
     </if>
   </select>
-  <insert id="insertRoleResultId"  useGeneratedKeys="true" keyProperty="roleId" parameterType="com.aaa.xj.model.Role" >
+  <insert id="insertRoleResultId"  useGeneratedKeys="true" keyProperty="roleId" parameterType="com.aaa.cehui.model.Role" >
     INSERT INTO t_role
     (ROLE_NAME,REMARK,CREATE_TIME) VALUES
     (#{roleName},#{remark},#{createTime})

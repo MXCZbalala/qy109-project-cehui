@@ -1,6 +1,6 @@
 package com.aaa.cehui.redis;
 
-import com.aaa.cehui.utils.JSONUtil;
+import com.aaa.cehui.utils.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisCluster;
@@ -54,15 +54,15 @@ public class RedisService<T> {
         if(null != seconds && 0 < seconds && (NX.equals(nxxx) || XX.equals(nxxx)) && (EX.equals(expx) || PX.equals(expx))) {
             // 说明需要设置失效时间
 
-           return jedisCluster.set(key, JSONUtil.toJsonString(value), nxxx, expx, seconds);
+           return jedisCluster.set(key, JSONUtils.toJsonString(value), nxxx, expx, seconds);
 
         } else {
             // 说明不需要设置失效时间
             // 就算不需要失效时间，但是我也得知道最终你所传递的是nx还是xx，所以需要再次判断
             if(NX.equals(nxxx)) {
-                return String.valueOf(jedisCluster.setnx(key, JSONUtil.toJsonString(value)));
+                return String.valueOf(jedisCluster.setnx(key, JSONUtils.toJsonString(value)));
             } else if(XX.equals(nxxx)) {
-                return jedisCluster.set(key, JSONUtil.toJsonString(value));
+                return jedisCluster.set(key, JSONUtils.toJsonString(value));
             }
         }
         return NO;

@@ -9,9 +9,12 @@ import com.aaa.cehui.model.User;
 import com.aaa.cehui.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.HandlerAdapter;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Handler;
 
 /**
  * @Company AAA软件教育
@@ -25,6 +28,7 @@ public class UserService extends BaseService<User> {
     UserMapper userMapper;
 
     public ResultData selectAllRoles() {
+
         return null;
     }
     /**

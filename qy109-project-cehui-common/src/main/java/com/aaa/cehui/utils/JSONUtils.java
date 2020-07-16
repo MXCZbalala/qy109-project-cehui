@@ -12,10 +12,10 @@ import java.util.List;
  * @Description
  *      json转换工具类
  **/
-public class JSONUtil {
+public class JSONUtils {
 
     // 1.定义私有静态常量ObjectMapper(命名规则：所有字母全部大写，单词与单词之间使用_连接)
-        // ObjectMapper:就是fastjson包中进行类型转换的工具类
+    // ObjectMapper:就是fastjson包中进行类型转换的工具类
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
@@ -71,7 +71,7 @@ public class JSONUtil {
      **/
     public static <T> List<T> toList(String jsonData, Class<T> beanType) {
         // 1.为List集合添加一个指定的泛型
-            // List  User.class ---> 通过constructParametricType方法把List和User合并，也就是说为List指定一个User对象的泛型(List<User>)
+        // List  User.class ---> 通过constructParametricType方法把List和User合并，也就是说为List指定一个User对象的泛型(List<User>)
         JavaType javaType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
         try {
             List<T> list = OBJECT_MAPPER.readValue(jsonData, javaType);

@@ -9,6 +9,7 @@ import com.aaa.cehui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
@@ -24,11 +25,8 @@ public class UserController extends CommonController<User> {
     @Autowired
     private UserService userService;
 
-    @Override
+
     public BaseService<User> getBaseService() {
         return userService;
     }
-
-
-
 }

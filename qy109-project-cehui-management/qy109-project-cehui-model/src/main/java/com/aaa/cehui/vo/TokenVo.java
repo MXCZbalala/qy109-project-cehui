@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @Company AAA软件教育
  * @Author Seven Lee
- * @Date Create in 2020/5/15 16:38
+ * @Date Create in 2020/7/15 9:47
  * @Description
  **/
 @Data
@@ -19,18 +19,14 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class TokenVo implements Serializable {
 
-    /**
-     * 就是简单的token值
-     */
     private String token;
-    /**
-     * 标识了方法是否执行成功
-     */
     private Boolean ifSuccess;
-
     /**
-     * 保存token的key值
+     * 1.账号不存在
+     * 2.密码错误
+     * 3.账号被锁定
+     * 4.系统异常
      */
-    private String redisKey;
+    private Integer type;
 
 }
