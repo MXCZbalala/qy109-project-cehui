@@ -2,6 +2,8 @@ package com.aaa.cehui.base;
 
 
 
+import java.sql.PreparedStatement;
+
 import static com.aaa.cehui.status.LoginStatus.*;
 import static com.aaa.cehui.status.OperationStatus.*;
 import static com.aaa.cehui.status.CRUDStatus.*;
@@ -163,25 +165,242 @@ public class BaseController {
 
     /**
     * @Author LTL
-    * @Description 查询成功
+    * @Description 查询成功 返回数据信息
     * @Param
     * @Return
     * @DateTime 2020/7/16  9:32
     * @Throws
     */
-    protected ResultData findSuccess(Object object){
+    protected ResultData getSuccess(Object object){
         ResultData resultData = new ResultData();
         resultData.setData(object);
-        resultData.setCode(FIND_SUCCESS.getCode());
-        resultData.setMsg(FIND_SUCCESS.getMsg());
+        resultData.setCode(GET_SUCCESS.getCode());
+        resultData.setMsg(GET_SUCCESS.getMsg());
         return resultData;
     }
 
-    protected ResultData findFiled(Object object){
+    /**
+    * @Author LTL
+    * @Description 查询失败
+    * @Param [object]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:38
+    * @Throws
+    */
+    protected ResultData getFiled(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(GET_FAILED.getCode());
+        resultData.setMsg(GET_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 查询失败  返回自定义消息
+    * @Param [msg]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:42
+    * @Throws
+    */
+    protected ResultData getFiled(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setMsg(msg);
+        resultData.setCode(GET_FAILED.getCode());
+        resultData.setMsg(GET_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 修改成功
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:53
+    * @Throws
+    */
+    protected ResultData updateSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(UPDATE_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 修改成功 返回数据
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:43
+    * @Throws
+    */
+    protected ResultData updateSuccess(Object object){
         ResultData resultData = new ResultData();
         resultData.setData(object);
-        resultData.setCode(FIND_FILED.getCode());
-        resultData.setMsg(FIND_FILED.getMsg());
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(UPDATE_SUCCESS.getMsg());
+        return resultData;
+    }
+    /**
+    * @Author LTL
+    * @Description 修改成功，返回自定义消息
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:45
+    * @Throws
+    */
+    protected ResultData updateSuccess(Object object,String msg){
+        ResultData resultData = new ResultData();
+        resultData.setData(object);
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+    /**
+    * @Author LTL
+    * @Description 修改失败
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:45
+    * @Throws
+    */
+    protected ResultData updateFiled(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_FAILED.getCode());
+        resultData.setMsg(UPDATE_FAILED.getMsg());
+        return resultData;
+    }
+    /**
+     * @Author LTL
+     * @Description 增加成功
+     * @Param [object]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  10:46
+     * @Throws
+     */
+    protected ResultData addSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(ADD_SUCCESS.getCode());
+        resultData.setMsg(ADD_SUCCESS.getMsg());
+        return resultData;
+    }
+    /**
+    * @Author LTL
+    * @Description 增加成功 ，返回数据
+    * @Param [object]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:46
+    * @Throws
+    */
+    protected ResultData addSuccess(Object object){
+        ResultData resultData = new ResultData();
+        resultData.setData(object);
+        resultData.setCode(ADD_SUCCESS.getCode());
+        resultData.setMsg(ADD_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @Author LTL
+     * @Description 增加成功 ，返回数据,返回自定义消息
+     * @Param [object]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  10:46
+     * @Throws
+     */
+    protected ResultData addSuccess(Object object,String msg){
+        ResultData resultData = new ResultData();
+        resultData.setData(object);
+        resultData.setCode(ADD_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 增加失败
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:47
+    * @Throws
+    */
+    protected ResultData addFiled(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(ADD_FAILED.getCode());
+        resultData.setMsg(ADD_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 增加失败，返回自定义消息
+    * @Param [msg]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:48
+    * @Throws
+    */
+    protected ResultData addFiled(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(ADD_FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 删除成功
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:48
+    * @Throws
+    */
+    protected ResultData deleteSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(DELETE_SUCCESS.getMsg());
+        return resultData;
+    }
+    /**
+     * @Author LTL
+     * @Description 删除成功 返回自定义消息
+     * @Param []
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  10:48
+     * @Throws
+     */
+    protected ResultData deleteSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 删除失败
+    * @Param []
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:49
+    * @Throws
+    */
+    protected ResultData deleteFiled(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DElETE_FAILED.getCode());
+        resultData.setMsg(DElETE_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @Author LTL
+     * @Description 删除失败 返回自定义消息
+     * @Param []
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  10:49
+     * @Throws
+     */
+    protected ResultData deleteFiled(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DElETE_FAILED.getCode());
+        resultData.setMsg(msg);
         return resultData;
     }
 

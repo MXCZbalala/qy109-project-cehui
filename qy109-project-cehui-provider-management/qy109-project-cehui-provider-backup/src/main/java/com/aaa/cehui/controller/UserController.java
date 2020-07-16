@@ -32,6 +32,13 @@ public class UserController extends CommonController<User> {
         return userService;
     }
 
+    @RequestMapping("/addUser")
+    public ResultData addUser(@RequestBody User user){
+        if (userService.addUser(user)){
+            return addSuccess();
+        }
+        return addFiled();
+    }
     /**
     * @Author LTL
     * @Description 分页查询所有用户信息
@@ -48,8 +55,8 @@ public class UserController extends CommonController<User> {
     }
 
     @PostMapping("/selectUserById")
-    public List<User> selectUserById(@RequestBody User user){
-        return userService.selectList(user);
+    public ResultData selectUserById(@RequestBody User user){
+        return getSuccess(userService.selectList(user));
     }
 
     @PostMapping("/deleteById")

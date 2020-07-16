@@ -122,5 +122,27 @@ public abstract class CommonController<T> extends BaseController {
         return super.operationFailed();
     }
 
+    /**
+    * @Author LTL
+    * @Description 修改操作
+    * @Param [map]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  10:54
+    * @Throws
+    */
+    public ResultData update(@RequestBody Map map){
+        T instance = getBaseService().newInstance(map);
+        try {
+            //调用baseService的update方法
+            Integer i = getBaseService().update(instance);
+            if (i > 0){
+                return updateSuccess();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return getFiled();
+    }
+
 
 }
