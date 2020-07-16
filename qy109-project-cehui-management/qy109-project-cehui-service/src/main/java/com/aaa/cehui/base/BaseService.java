@@ -130,6 +130,17 @@ public abstract class BaseService<T> {
     }
 
     /**
+    * @Author LTL
+    * @Description 查询全部
+    * @Param []
+    * @Return java.util.List<T>
+    * @DateTime 2020/7/16  15:47
+    * @Throws
+    */
+    public List<T> selectAll(){
+        return mapper.selectAll();
+    }
+    /**
      * @author Seven Lee
      * @description
      *      查询一条数据

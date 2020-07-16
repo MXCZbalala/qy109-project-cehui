@@ -78,5 +78,10 @@ public class User extends BaseModel {
      */
     private String token;
 
+    /**
+    * 部门外键
+    */
+    private Dept dept;
+
 
 }

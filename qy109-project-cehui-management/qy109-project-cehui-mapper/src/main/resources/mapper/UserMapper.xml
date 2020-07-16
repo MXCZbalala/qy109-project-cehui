@@ -20,9 +20,29 @@
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="CHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
+    <association property="dept" javaType="com.aaa.cehui.model.Dept" column="dept_id" autoMapping="true"/>
   </resultMap>
   <select id="selectId" resultType="HashMap">
     select * from t_user where username = #{username}
   </select>
 
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    SELECT t.*,d.DEPT_NAME FROM t_user t,t_dept d where t.dept_id = d.DEPT_ID
+  </select>
+
+  <select id="selectUserByDeptNo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT t.*,d.DEPT_NAME FROM t_user t,t_dept d
+     where
+    t.dept_id = d.DEPT_ID
+    and
+    t.dept_id = #{deptno}
+  </select>
+
+  <select id="selectUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT t.*,d.DEPT_NAME FROM t_user t,t_dept d
+     where
+    t.dept_id = d.DEPT_ID
+    and
+    t.id = #{id}
+  </select>
 </mapper>

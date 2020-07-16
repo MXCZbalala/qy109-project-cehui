@@ -7,6 +7,7 @@ import com.aaa.cehui.mapper.UserMapper;
 import com.aaa.cehui.model.User;
 
 import com.aaa.cehui.utils.IDUtils;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Handler;
@@ -183,7 +185,7 @@ public class UserService extends BaseService<User> {
      */
     public PageInfo selectAllUser(Integer pageNo,Integer pageSize){
         PageHelper.startPage(pageNo,pageSize);
-        List<User> users = userMapper.selectAll();
+        List<User> users = userMapper.selectAllUser();
         if (users.size()>0){
             PageInfo<User> pageInfo = new PageInfo<>(users);
             return pageInfo;
@@ -192,10 +194,24 @@ public class UserService extends BaseService<User> {
         }
     }
 
-    public List<User> selectUserById(User user){
+    public User selectUserById(Integer id){
+        User user1 = userMapper.selectUserById(id);
+        if(null != user1){
+            return user1;
+        }else {
+            return null;
+        }
 
-      return userMapper.select(user);
+    }
 
+    public PageInfo selectUserByDeptNo(Integer deptno ,Integer pageNo,Integer pageSize){
+        PageHelper.startPage(pageNo,pageSize);
+        List<User> users = userMapper.selectUserByDeptNo(deptno);
+        if (users.size()>0){
+            PageInfo<User> pageInfo = new PageInfo<User>(users);
+            return pageInfo;
+        }
+        return null;
     }
 
 }

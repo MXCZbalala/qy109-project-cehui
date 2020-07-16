@@ -34,6 +34,7 @@ public class UserController extends CommonController<User> {
 
     @RequestMapping("/addUser")
     public ResultData addUser(@RequestBody User user){
+
         if (userService.addUser(user)){
             return addSuccess();
         }
@@ -51,22 +52,60 @@ public class UserController extends CommonController<User> {
     public PageInfo selectAllUser(@RequestParam("pageNo") Integer pageNo,
                                   @RequestParam("pageSize") Integer pageSize
     ){
-        return userService.selectListByPage(null, pageNo, pageSize);
+        return userService.selectAllUser(pageNo, pageSize);
     }
 
+    /**
+    * @Author LTL
+    * @Description 通过用户ID查询用户信息
+    * @Param [user]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  15:01
+    * @Throws
+    */
     @PostMapping("/selectUserById")
-    public ResultData selectUserById(@RequestBody User user){
-        return getSuccess(userService.selectList(user));
+    public ResultData selectUserById(@RequestParam("id") Integer id
+
+    ){
+        return getSuccess(userService.selectUserById(id));
+    }
+
+    /**
+    * @Author LTL
+    * @Description 通过部门编号分页查询用户
+    * @Param [deptno]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/16  14:59
+    * @Throws
+    */
+    @PostMapping("/selectUserByDept")
+    public ResultData selectUserByDept(@RequestParam("deptno") Integer deptno,
+                                       @RequestParam("pageNo") Integer pageNo,
+                                       @RequestParam("pageSize") Integer pageSize
+    ){
+        if (null != getSuccess(userService.selectUserByDeptNo(deptno,pageNo,pageSize))){
+            return getSuccess(userService.selectUserByDeptNo(deptno,pageNo,pageSize));
+        }
+        return getFiled("未查询到数据");
     }
 
     @PostMapping("/deleteById")
-    public Integer deleteById(@RequestBody User user){
-        return userService.delete(user);
+    public ResultData deleteById(User user){
+         if (userService.delete(user)>0){
+             return deleteSuccess();
+         }else {
+             return deleteFiled();
+         }
     }
 
     @PostMapping("/updateById")
-    public Integer updateById(@RequestBody User user){
-        return userService.updateUser(user);
+    public ResultData updateById(User user){
+         if(userService.updateUser(user)>0){
+             return updateSuccess();
+         }
+         else {
+             return updateFiled();
+         }
     }
     /**
     * @Author LTL
@@ -81,5 +120,6 @@ public class UserController extends CommonController<User> {
     public ResultData batchDelete(@RequestParam("ids[]") Integer[] ids){
         return super.batchDelete(ids);
     }
+
 
 }
