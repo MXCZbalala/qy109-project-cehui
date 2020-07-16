@@ -14,7 +14,7 @@ public interface DeptMapper extends Mapper<Dept> {
     * @Description 查询部门信息，根据主键id查询部门的信息
     * @Param [deptId]
     * @Return com.aaa.cehui.model.Dept
-    * @DateTime 2020/7/16  8:38
+    * @DateTime 2020/7/15  8:38
     * @Throws
     */
     Dept selectDeptByDeptId(Integer deptId);
@@ -25,7 +25,7 @@ public interface DeptMapper extends Mapper<Dept> {
     * @Description 查询所有的部门
     * @Param [parentId]
     * @Return java.util.List<com.aaa.cehui.model.Dept>
-    * @DateTime 2020/7/16  8:38
+    * @DateTime 2020/7/14  10:31
     * @Throws
     */
     List<Dept> selectDeptByParentId(Integer parentId);

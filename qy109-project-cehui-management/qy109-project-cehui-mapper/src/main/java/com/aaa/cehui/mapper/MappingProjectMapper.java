@@ -19,7 +19,7 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
     * @Description 查询所有已提交的项目信息
     * @Param []
     * @Return java.util.List<com.aaa.cehui.model.MappingProject>
-    * @DateTime 2020/7/16  8:39
+    * @DateTime 2020/7/16  9:39
     * @Throws
     */
     List<MappingProject> selectAllMappingProject();
@@ -29,7 +29,7 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
     * @Description 条件查询 根据项目类型projectType 查询所有已提交项
     * @Param [projectType]
     * @Return java.util.List<com.aaa.cehui.model.MappingProject>
-    * @DateTime 2020/7/16  8:39
+    * @DateTime 2020/7/15  9:20
     * @Throws
     */
     List<MappingProject> selectAllByProjectType(String projectType);
@@ -38,7 +38,7 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
     * @Description 模糊查询(动态sql 查询测绘项目名称)
     * @Param [projectName, projectType, startDate]
     * @Return java.util.List<com.aaa.cehui.model.MappingProject>
-    * @DateTime 2020/7/16  8:39
+    * @DateTime 2020/7/15  8:39
     * @Throws
     */
     List<MappingProject> fuzzyProjectName(@Param("projectName") String projectName,

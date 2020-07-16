@@ -87,6 +87,7 @@ public abstract class BaseService<T> {
         return mapper.deleteByExample(example);
     }
 
+
     /**
      * @author Seven Lee
      * @description

@@ -7,14 +7,20 @@ import com.aaa.cehui.mapper.UserMapper;
 import com.aaa.cehui.model.User;
 
 import com.aaa.cehui.utils.IDUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Handler;
+
+import static com.aaa.cehui.utils.DateUtils.DATE_TYPE;
 
 /**
  * @Company AAA软件教育
@@ -31,6 +37,8 @@ public class UserService extends BaseService<User> {
 
         return null;
     }
+
+
     /**
      * @author Seven Lee
      * @description
@@ -42,7 +50,6 @@ public class UserService extends BaseService<User> {
      * @throws
      **/
     public Boolean addUser(User user){
-
         try {
 
             //获取当前时间
@@ -84,6 +91,111 @@ public class UserService extends BaseService<User> {
             e.printStackTrace();
         }
         return false;
+    }
+    /**
+    * @Author LTL
+    * @Description 通过主键删除用户
+    * @Param [user]
+    * @Return java.lang.Integer
+    * @DateTime 2020/7/16  9:08
+    * @Throws
+    */
+    public Integer deleteUser(User user){
+        //判断前段是否传值成功
+        if (!"".equals(user) && null !=user){
+            try {
+                //执行删除操作
+                Integer delete = delete(user);
+                if (delete>0){
+                    return delete;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 根据id批量删除用户
+    * @Param [ids]
+    * @Return java.lang.Integer
+    * @DateTime 2020/7/16  9:08
+    * @Throws
+    */
+    public Integer deleteMoreUser(List<Integer> ids){
+        //判断前段是否传值成功
+        if (!"".equals(ids) && null !=ids){
+            try {
+                //调用父类的批量删除方法
+                Integer integer = super.deleteByIds(ids);
+                //判断是否查询出结果
+                if (integer>0){
+                    return integer;
+                }
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+    * @Author LTL
+    * @Description 根据id修改用户信息
+    * @Param [user]
+    * @Return java.lang.Integer
+    * @DateTime 2020/7/16  9:17
+    * @Throws
+    */
+    public Integer updateUser(User user){
+        if (!"".equals(user) && null !=user){
+            //获取当前时间作为修改时间
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TYPE);
+            String format = simpleDateFormat.format(new Date());
+            //把时间存到实体中
+            user.setModifyTime(format);
+            try {
+                //通过父类方法修改用户信息
+                Integer update = super.update(user);
+                //判断受影响的行数
+                if (update>0){
+                    return update;
+                }
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * @Author LTL
+     * @Description 分页查询所有用户信息
+     * @Param [pageNo, pageSize]
+     * @Return com.github.pagehelper.PageInfo
+     * @DateTime 2020/7/16  9:07
+     * @Throws
+     */
+    public PageInfo selectAllUser(Integer pageNo,Integer pageSize){
+        PageHelper.startPage(pageNo,pageSize);
+        List<User> users = userMapper.selectAll();
+        if (users.size()>0){
+            PageInfo<User> pageInfo = new PageInfo<>(users);
+            return pageInfo;
+        }else{
+            return null;
+        }
+    }
+
+    public List<User> selectUserById(User user){
+
+      return userMapper.select(user);
+
     }
 
 }

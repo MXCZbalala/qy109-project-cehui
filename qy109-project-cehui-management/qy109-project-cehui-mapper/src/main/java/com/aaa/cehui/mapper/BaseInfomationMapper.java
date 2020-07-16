@@ -15,7 +15,7 @@ public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
     * @Description 模糊查询 查询测绘单位名称
     * @Param [unitName, ownedDistrict, qualificationLevel]
     * @Return java.util.List<com.aaa.cehui.model.Mapping_unit>
-    * @DateTime 2020/7/16  8:38
+    * @DateTime 2020/7/14  11:23
     * @Throws
     */
     List<Mapping_unit> fuzzyUnitName(@Param("unitName") String unitName,

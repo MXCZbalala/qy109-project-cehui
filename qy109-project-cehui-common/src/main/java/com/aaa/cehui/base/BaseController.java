@@ -1,8 +1,10 @@
 package com.aaa.cehui.base;
 
 
+
 import static com.aaa.cehui.status.LoginStatus.*;
 import static com.aaa.cehui.status.OperationStatus.*;
+import static com.aaa.cehui.status.CRUDStatus.*;
 
 /**
  * @Company AAA软件教育
@@ -159,7 +161,29 @@ public class BaseController {
         return resultData;
     }
 
-    // TODO 代码未完善，记得补充
+    /**
+    * @Author LTL
+    * @Description 查询成功
+    * @Param
+    * @Return
+    * @DateTime 2020/7/16  9:32
+    * @Throws
+    */
+    protected ResultData findSuccess(Object object){
+        ResultData resultData = new ResultData();
+        resultData.setData(object);
+        resultData.setCode(FIND_SUCCESS.getCode());
+        resultData.setMsg(FIND_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    protected ResultData findFiled(Object object){
+        ResultData resultData = new ResultData();
+        resultData.setData(object);
+        resultData.setCode(FIND_FILED.getCode());
+        resultData.setMsg(FIND_FILED.getMsg());
+        return resultData;
+    }
 
 
 
