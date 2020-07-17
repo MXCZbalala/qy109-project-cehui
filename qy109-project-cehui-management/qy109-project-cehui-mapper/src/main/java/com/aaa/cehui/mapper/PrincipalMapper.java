@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface PrincipalMapper extends Mapper<Principal> {
 
-    Principal selectOne(Long id);
 
     int updateList(Principal principal);
 
