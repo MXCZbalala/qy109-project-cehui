@@ -24,5 +24,22 @@
       TABLE_NAME = #{tableName}
       where DICT_ID = #{id}
  </update>
+<!--    <update id="updateDict" parameterType="com.aaa.cehui.model.Dict">-->
+<!--      update t_dict-->
+<!--      set-->
+<!--      <if test=" keyy!=null and keyy !=' '">-->
+<!--               AND KEYY = #{keyy,jdbcType=INTEGER}-->
+<!--      </if>-->
+<!--     <if test=" valuee!=null and valuee !=' '">-->
+<!--         AND VALUEE = #{valuee,jdbcType=VARCHAR}-->
+<!--     </if>-->
+<!--     <if test=" fieldName!=null and fieldName !=' '">-->
+<!--         AND FIELD_NAME = #{fieldName,jdbcType=VARCHAR}-->
+<!--    </if>-->
+<!--    <if test=" tableName!=null and tableName !=' '">-->
+<!--        AND TABLE_NAME = #{tableName,jdbcType=VARCHAR}-->
+<!--    </if>-->
+<!--          where DICT_ID = #{id}-->
+<!--     </update>-->
 
 </mapper>

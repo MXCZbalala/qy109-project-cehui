@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @program: qy109-project-cehui
  * @description:
- *      字典
+ *      系统管理--字典管理
  * @author: Mr.Wang
  * @create: 2020-07-16 10:32
  **/
@@ -104,7 +104,7 @@ public class DictService extends BaseService<Dict> {
     public Integer updateDict(Dict dict){
         //判断修改的信息是否为空
         if (null!=dict){
-            Integer integer = dictMapper.updateDict(dict);
+            Integer integer = super.update(dict);
             //判断是否修改成功
             if (integer>0){
                 return integer;

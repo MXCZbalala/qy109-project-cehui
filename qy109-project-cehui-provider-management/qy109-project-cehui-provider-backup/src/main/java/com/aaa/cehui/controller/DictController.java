@@ -47,7 +47,7 @@ public class DictController extends CommonController {
     * @Date: 2020/7/16
     */
     @PostMapping("/addDict")
-    public ResultData addDict(@RequestBody Dict dict){
+    public ResultData addDict(Dict dict){
         if (dictService.addDict(dict)>0){
             return addSuccess(dictService.addDict(dict));
         }
@@ -89,8 +89,8 @@ public class DictController extends CommonController {
     * @Date: 2020/7/16
     */
     @RequestMapping("/updateDict")
-    public ResultData updateDict(@RequestBody Dict dict){
-        if (dictService.updateDict(dict)>0){
+    public ResultData updateDict(Dict dict){
+        if (dictService.updateDict(dict)!=null){
             return updateSuccess(dictService.updateDict(dict));
         }
         return updateFiled();
@@ -103,7 +103,7 @@ public class DictController extends CommonController {
     * @Date: 2020/7/16
     */
     @PostMapping("/selectDictByPage")
-    public ResultData selectDictByPage(@RequestBody Dict dict,@RequestParam("pageNo") Integer pageNo,
+    public ResultData selectDictByPage(Dict dict,@RequestParam("pageNo") Integer pageNo,
                                        @RequestParam("pageSize") Integer pageSize){
         if (!"".equals(dictService.selectDictByPage(dict,pageNo,pageSize))){
             return getSuccess(dictService.selectDictByPage(dict,pageNo,pageSize));
