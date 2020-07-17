@@ -15,7 +15,7 @@ import java.util.Random;
  * @create: 2020-07-16 15:42
  **/
 @Service
-public class ProjectManagementService  extends BaseService {
+public class ProjectManagementService  extends BaseService<ProjectInfo> {
     @Autowired
     private ProjectInfoMapper projectInfoMapper;
     

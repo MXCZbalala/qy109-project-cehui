@@ -21,7 +21,7 @@ import static com.aaa.cehui.status.CRUDStatus.*;
  * @create: 2020-07-16 11:28
  **/
 @RestController
-public class DictController extends CommonController {
+public class DictController extends CommonController<Dict> {
     @Autowired
     private DictService dictService;
     /**

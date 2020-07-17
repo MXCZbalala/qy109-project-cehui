@@ -18,7 +18,7 @@ import java.util.Map;
 public class DeptService extends BaseService<Dept> {
 
     @Autowired
-    private DeptMapper deptMapper;
+    DeptMapper deptMapper;
 
     /**
     * @Author LTL
