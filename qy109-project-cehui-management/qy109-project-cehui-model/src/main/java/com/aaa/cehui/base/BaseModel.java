@@ -15,11 +15,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class BaseModel implements Serializable {
+public class BaseModel implements Serializable{
 
     @Id
     @NotNull
-    private Long id;
+    private Integer id;
 
     @Column(name = "create_time")
     @Max(value = 100, message = "时间长度最长不能超过100")

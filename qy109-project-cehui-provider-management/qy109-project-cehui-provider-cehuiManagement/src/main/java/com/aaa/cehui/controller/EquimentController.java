@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @Date 2020/7/17  9:35
  * @Description
  **/
+@RestController
 public class EquimentController extends CommonController<Equipment> {
 
     @Autowired

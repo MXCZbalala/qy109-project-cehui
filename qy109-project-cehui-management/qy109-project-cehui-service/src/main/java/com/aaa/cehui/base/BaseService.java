@@ -39,7 +39,7 @@ public abstract class BaseService<T> {
     @Autowired
     private Mapper<T> mapper;
 
-    protected Mapper getMapper() {
+    protected Mapper<T> getMapper() {
         return mapper;
     }
 
