@@ -19,13 +19,14 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="VARCHAR" />
     <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+    <association property="user" javaType="com.aaa.cehui.model.User" column="user_id" autoMapping="true">
+
+    </association>
   </resultMap>
 
-  <select id="selectEquipment" parameterType="com.aaa.cehui.model.Equipment" resultType="com.aaa.cehui.model.Equipment">
-    select id, name, brand, production_id, number, check_date, effective_date, invoice_code,
-    check_department, check_certificate_id, identified
-    from t_equipment
-    where user_id = #{userId,jdbcType=BIGINT}
+  <select id="selectAllEquiment" resultMap="BaseResultMap">
+    select e.*,u.username from t_equipment e , t_user u where e.user_id = u.id;
   </select>
+
 
 </mapper>

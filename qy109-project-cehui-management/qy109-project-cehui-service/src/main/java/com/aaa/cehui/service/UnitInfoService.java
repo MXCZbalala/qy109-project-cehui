@@ -5,6 +5,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.mapper.BaseInfomationMapper;
 import com.aaa.cehui.model.Mapping_unit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author ltl
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description
  *      测绘管理--单位基本信息
  **/
+@Service
 public class UnitInfoService extends BaseService<Mapping_unit> {
     @Autowired
     BaseInfomationMapper baseInfomationMapper;

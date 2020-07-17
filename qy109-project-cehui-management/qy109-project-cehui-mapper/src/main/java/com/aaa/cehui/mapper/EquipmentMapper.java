@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EquipmentMapper extends Mapper<Equipment> {
 
-    List<Equipment> selectEquipment(Long userId);
+    List<Equipment> selectAllEquiment();
 
 }

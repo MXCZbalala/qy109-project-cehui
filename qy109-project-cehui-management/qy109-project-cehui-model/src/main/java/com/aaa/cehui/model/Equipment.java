@@ -80,5 +80,10 @@ public class Equipment extends BaseModel {
     @Column(name = "user_id")
     private Long userId;
 
+    /**
+    *  设备用户持有人信息
+    */
+    private User user;
+
 
 }
