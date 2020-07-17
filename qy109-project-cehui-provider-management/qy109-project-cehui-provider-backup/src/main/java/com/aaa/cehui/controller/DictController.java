@@ -16,6 +16,7 @@ import static com.aaa.cehui.status.CRUDStatus.*;
 /**
  * @program: qy109-project-cehui
  * @description: 字典控制层
+ *          系统管理--字典管理
  * @author: Mr.Wang
  * @create: 2020-07-16 11:28
  **/

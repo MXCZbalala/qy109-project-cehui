@@ -16,6 +16,7 @@ import java.util.Map;
  * @Author ltl
  * @Date 2020/7/16  15:39
  * @Description
+ *      系统管理--部门管理
  **/
 @RestController
 public class DeptController extends CommonController<Dept> {

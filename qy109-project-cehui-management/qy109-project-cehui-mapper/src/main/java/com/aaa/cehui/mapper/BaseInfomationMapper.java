@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
 
-    List<Mapping_unit> qureyMapping_unit(Long userId);
+    Mapping_unit qureyMapping_unit(Long userId);
 
     /**
     * @Author LTL
