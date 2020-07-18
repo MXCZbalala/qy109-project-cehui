@@ -8,6 +8,7 @@ import com.aaa.cehui.model.RoleMenu;
 import com.aaa.cehui.model.User;
 import com.aaa.cehui.model.UserRole;
 import com.aaa.cehui.service.*;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-public class MenuManagement   {
+public class MenuManagement extends CommonController<Menu> {
 
     @Autowired
     private UserRoleService user_roleService;
@@ -37,45 +38,96 @@ public class MenuManagement   {
     @Autowired
     private MenuService menuService;
 
+    public BaseService<Menu> getBaseService() {
+        return menuService;
+    }
+
+
+    @PostMapping("/getMenuByUserId")
+    public List<Menu> getMenuByUserId(@RequestBody User user){
+        return menuService.selectMenuByUserId(user,user_roleService,role_menuService);
+    }
 
 
     /**
      * @Author LTL
-     * @Description 通过登录的ID 查询所拥有的菜单列表
-     * @Param
-     * @Return
-     * @DateTime 2020/7/17  18:16
+     * @Description 通过角色ID查询角色菜单信息
+     * @Param [roleId]
+     * @Return java.lang.Object
+     * @DateTime 2020/7/18  8:41
      * @Throws
      */
-    @PostMapping("/getMenu")
-    public Map<Integer, String> getMenu(@RequestBody User user) {
-        System.out.println("UserId" + user.getId());
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        List<Integer> menuId = new ArrayList<Integer>();
-        //拿到了单个的角色信息
-        UserRole roleId = user_roleService.selectOne(new UserRole().setRoleId(user.getId()));
-        System.out.println("单个的UserId" + roleId);
-        //通过角色ID 拿到菜单数组,
-        List<RoleMenu> role_menus = role_menuService.selectList(new RoleMenu().setRoleId(roleId.getRoleId()));
-        System.out.println("通过角色ID 拿到的菜单数组" + role_menus);
-        for (int i = 0; i < role_menus.size(); i++) {
-            menuId.add(role_menus.get(i).getMenuId());
-        }
-        System.out.println("转化过的menuId" + menuId.toString());
+    @PostMapping("/getMenuByRoleId")
+    public List<Menu> getMenuByRoleId(@RequestParam Long roleId,RoleMenuService roleMenuService) {
 
-        if (menuId.size() > 0) {
-            //拿到所有的MenuId 开始查询所有的MenuName
-            System.out.println(menuId.get(21));
-            ;
-            for (int m = 0; m < menuId.size(); m++) {
-                map.put(menuId.get(m), menuService.selectMenuNameById(menuId.get(m)));
-            }
-            return map;
-        }
-        return null;
+
+
+        return  null;
     }
 
 
+    @PostMapping("/updateMenuByRoleId")
+    public Integer updateMenuByRoleId(@RequestParam("ids[]") List<Integer> ids,
+                                      @RequestParam("roleId") Integer roleId) {
+        Integer integer = role_menuService.deleteMenuByRoleId(roleId);
+        if (integer > 0) {
+            return role_menuService.add(roleId, ids);
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * @Author LTL
+     * @Description 查询所有的菜单信息
+     * @Param [pageNo, pageSize]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/18  9:56
+     * @Throws
+     */
+    @PostMapping("/selectAllMenu")
+    public ResultData selectAllMenu(@RequestParam("pageNo") Integer pageNo,
+                                    @RequestParam("pageSize") Integer pageSize
+    ) {
+        return getSuccess(getBaseService().selectAll(pageNo, pageSize));
+    }
+
+    @PostMapping("/updateMenuByMenuId")
+    public ResultData updateMenuByMenuId(@RequestBody Menu menu) {
+      return   updateSuccess(getBaseService().update(menu));
+    }
+
+
+    /**
+    * @Author LTL
+    * @Description 分页查询所有一级菜单
+    * @Param [pageNo, pageSize]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/18  15:36
+    * @Throws
+    */
+    @PostMapping("/selectAllParentMenu")
+    public PageInfo<Menu> selectAllParentMenu(@RequestParam("pageNo") Integer pageNo,
+                                          @RequestParam("pageSize") Integer pageSize,
+                                          Sqls where
+    ){
+        return getBaseService().selectListByPageAndFiled(pageNo,pageSize,where.andEqualTo("parentId",1),null);
+    }
+
+
+    /**
+    * @Author LTL
+    * @Description 通过父级菜单查询子菜单
+    * @Param [parentId, where]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/18  15:54
+    * @Throws
+    */
+    @PostMapping("/selectChildMenuByParentId")
+    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId,
+                                          Sqls where){
+        return getSuccess(getBaseService().selectListByFiled(where.andEqualTo("parentId",parentId),null));
+    }
 
 
 }

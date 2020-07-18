@@ -88,7 +88,7 @@ public class RoleSerivce extends BaseService<Role> {
     * @DateTime 2020/7/17  16:57
     * @Throws
     */
-    public Long insertRole(Role role){
+    public Integer insertRole(Role role){
         //判断前段是否传值成功
         if (!"".equals(role) && null !=role){
             //将角色名称传入
@@ -100,7 +100,7 @@ public class RoleSerivce extends BaseService<Role> {
             //执行新增
             Integer integer = roleMapper.insertRoleResultId(role);
             //获取返回的生成的id
-            @NotNull Long roleId = role.getRoleId();
+            @NotNull Integer roleId = role.getRoleId();
             if (null !=integer){
                 return roleId;
             }

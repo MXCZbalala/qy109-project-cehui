@@ -4,6 +4,8 @@ import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Role;
+import com.aaa.cehui.model.RoleMenu;
+import com.aaa.cehui.service.RoleMenuService;
 import com.aaa.cehui.service.RoleSerivce;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class RoleController  extends CommonController<Role> {
 
     @Autowired
     private RoleSerivce roleSerivce;
+    @Autowired
+    RoleMenuService roleMenuService;
     public BaseService<Role> getBaseService() {
         return roleSerivce;
     }
@@ -78,9 +82,12 @@ public class RoleController  extends CommonController<Role> {
     * @Throws
     */
     @PostMapping("/updateRoleById")
-    public ResultData updateRoleById(@RequestBody Role role){
+    public ResultData updateRoleById(@RequestBody Role role,
+                                     @RequestParam("ids[]")List<Integer> ids){
         Integer integer = roleSerivce.updateRoleByPrimaryKey(role);
-        if (integer > 0){
+        roleMenuService.deleteMenuByRoleId(role.getRoleId());
+        Integer add = roleMenuService.add(role.getRoleId(), ids);
+        if (add > 0){
             return updateSuccess();
         }else {
             return updateFiled();
@@ -96,8 +103,11 @@ public class RoleController  extends CommonController<Role> {
     * @Throws
     */
     @PostMapping("/addRole")
-    public ResultData addRole(@RequestBody Role role){
+    public ResultData addRole(@RequestBody Role role,
+                              @RequestParam("ids[]")List<Integer> ids
+    ){
         Integer add = roleSerivce.add(role);
+        roleMenuService.add(role.getRoleId(),ids);
         if (add > 0 ){
             return addSuccess();
         }else {

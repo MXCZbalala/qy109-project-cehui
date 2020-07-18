@@ -10,4 +10,8 @@ import tk.mybatis.mapper.common.Mapper;
  * @Description
  **/
 public interface RoleMenuMapper extends Mapper<RoleMenu> {
+
+    Integer deleteMenuByRoleId(Integer roleId);
+
+    Integer insertMenuByRoleId(Integer roleId,Integer menuId);
 }

@@ -21,7 +21,7 @@ public class Role implements Serializable {
     @Id
     @Column(name = "ROLE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Integer roleId;
 
     /**
      * 角色名称
