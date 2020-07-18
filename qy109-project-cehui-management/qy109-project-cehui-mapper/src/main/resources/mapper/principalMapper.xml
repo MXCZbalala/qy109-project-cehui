@@ -22,7 +22,9 @@
     <result column="modify_time" property="modifyTime" jdbcType="DATE" />
   </resultMap>
 
-
+  <select id="qureyOne" parameterType="com.aaa.cehui.model.Principal" resultType="com.aaa.cehui.model.Principal">
+    select id,type,name,id_number,sex,age,major,title from t_principal where user_id =#{userId}
+  </select>
 
   <update id="updateList" parameterType="com.aaa.cehui.model.Principal">
     update t_principal

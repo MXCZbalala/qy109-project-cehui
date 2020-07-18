@@ -24,6 +24,7 @@ public class DeptController extends CommonController<Dept> {
     @Autowired
     DeptService deptService;
 
+    @Override
     public BaseService getBaseService() {
         return deptService;
     }

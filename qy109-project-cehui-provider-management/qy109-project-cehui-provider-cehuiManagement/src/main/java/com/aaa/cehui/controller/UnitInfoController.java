@@ -22,6 +22,7 @@ public class UnitInfoController extends CommonController<Mapping_unit> {
     @Autowired
     private UnitInfoService unitInfoService;
 
+    @Override
     public BaseService<Mapping_unit> getBaseService() {
         return unitInfoService;
     }

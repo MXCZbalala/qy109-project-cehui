@@ -6,6 +6,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Principal;
 import com.aaa.cehui.service.PrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class PrincipalController extends CommonController<Principal> {
     @Autowired
     PrincipalService principalService;
 
+    @Override
     public BaseService<Principal> getBaseService() {
         return principalService;
     }
@@ -112,5 +114,15 @@ public class PrincipalController extends CommonController<Principal> {
         }else {
             return deleteFiled();
         }
+    }
+    /**
+     * 根据userId查询负责人信息
+     * @param
+     * @return
+     */
+    @PostMapping("/queryPrincipalByUserId")
+    public List<Principal> selectByUserId(@RequestParam("userId")Integer userId){
+        Long userId1=new Long(userId);
+        return  principalService.selectByUserId(userId1);
     }
 }
