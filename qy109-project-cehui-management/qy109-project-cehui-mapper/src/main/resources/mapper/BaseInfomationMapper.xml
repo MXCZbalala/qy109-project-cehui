@@ -80,5 +80,10 @@
     </where>
     ORDER BY id ASC
   </select>
-
+  <select id="queryBaiMingDanByScore" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where score >100
+</select>
+  <select id="queryHeiMingDanByScore" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  <![CDATA[select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where score <100]]>
+</select>
 </mapper>
