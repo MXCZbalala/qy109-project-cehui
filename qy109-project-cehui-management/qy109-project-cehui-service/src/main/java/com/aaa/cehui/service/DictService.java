@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,11 +124,24 @@ public class DictService extends BaseService<Dict> {
         //调用父类的方法进行查询
         PageInfo<Dict> pageInfo = selectListByPage(dict, pageNo, pageSize);
         //判断查询的结果是否为空
-        if (null!=pageInfo&& "".equals(pageInfo)){
+        if (null!=pageInfo&& !"".equals(pageInfo)){
             //不为空返回结果
             return pageInfo;
         }
         return null;
     }
-
+    /**
+    * @Description: 通过键或值或表名或字段查询字典信息
+    * @Param: [keyy, valuee]
+    * @return: java.util.List<com.aaa.cehui.model.Dict>
+    * @Author: Mr.Wang
+    * @Date: 2020/7/17
+    */
+    public List<Dict> selectLikeDict(Integer keyy,String valuee,String fieldName,String tableName){
+        List<Dict> dicts = dictMapper.selectLikeDict(keyy, valuee,fieldName,tableName);
+        if (dicts.size()>0 && null!=dicts){
+            return dicts;
+        }
+        return null;
+    }
 }

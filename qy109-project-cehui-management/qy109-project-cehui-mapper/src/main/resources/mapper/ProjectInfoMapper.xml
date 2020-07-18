@@ -50,6 +50,9 @@
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
   <select id="getInfoByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select * from t_mapping_project where results_status=0 and project_type=#{projectType, jdbcType=VARCHAR}
+    select * from t_mapping_project where project_type=#{projectType, jdbcType=VARCHAR}
+  </select>
+  <select id="getLikeProjectIno" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from t_mapping_project where project_name like concat('%',#{projectName},'%')
   </select>
 </mapper>

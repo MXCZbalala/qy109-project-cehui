@@ -3,8 +3,11 @@ package com.aaa.cehui.service;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.mapper.ProjectInfoMapper;
 import com.aaa.cehui.model.ProjectInfo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -78,7 +81,7 @@ public class ProjectManagementService  extends BaseService<ProjectInfo> {
     * @Author: Mr.Wang
     * @Date: 2020/7/16
     */
-    public Integer updateProjectInfo(ProjectInfo projectInfo){
+    public Integer updateProjectInfoById(ProjectInfo projectInfo){
         if (null!=projectInfo){
             Integer i =super.update(projectInfo);
             if (i>0){
@@ -95,11 +98,25 @@ public class ProjectManagementService  extends BaseService<ProjectInfo> {
     * @Date: 2020/7/17
     */
     public List<ProjectInfo> getInfoType(String projectType){
-        if (!"".equals(projectType)){
+        if (null!=projectType){
             List<ProjectInfo> infoByType = projectInfoMapper.getInfoByType(projectType);
-            if (infoByType.size()>0 && infoByType!=null){
+            if (infoByType.size()>0){
                 return infoByType;
             }
+        }
+        return null;
+    }
+    /**
+    * @Description: 项目管理的分页查询
+    * @Param: [projectInfo, pageNo, pageSize]
+    * @return: com.github.pagehelper.PageInfo<com.aaa.cehui.model.ProjectInfo>
+    * @Author: Mr.Wang
+    * @Date: 2020/7/17
+    */
+    public PageInfo<ProjectInfo> selectProjectByPage(ProjectInfo projectInfo,Integer pageNo,Integer pageSize){
+        PageInfo<ProjectInfo> pageInfo = selectListByPage(projectInfo,pageNo,pageSize);
+        if (null!=pageInfo && !"".equals(pageInfo)){
+            return pageInfo;
         }
         return null;
     }

@@ -15,4 +15,6 @@ public interface ProjectInfoMapper extends Mapper<ProjectInfo> {
     * @Throws
     */
     List<ProjectInfo> getInfoByType(String projectType);
+
+    List<ProjectInfo> getLikeProjectIno(String projectName);
 }
