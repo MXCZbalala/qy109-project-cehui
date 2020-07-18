@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.cehui.mapper.NewsMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.cehui.model.News" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="digest" property="digest" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="body" property="body" jdbcType="LONGVARCHAR" />
+  </resultMap>
+<select id="queryByTitle"  parameterType="com.aaa.cehui.model.News" resultType="com.aaa.cehui.model.News">
+  select id,title,digest,body,gmt_create,gmt_modified from t_news where title like concat('%',#{title},'%')
+</select>
+  <insert id="insertNews" parameterType="com.aaa.cehui.model.News">
+    insert into t_news (id,title,digest,body,gmt_create,gmt_modified) values (#{id},#{title},#{digest},#{body},#{gmtCreate},#{gmtModified})
+  </insert>
+  <delete id="delNewsById" parameterType="com.aaa.cehui.model.News">
+          delete  from t_news where id=#{id}
+  </delete>
+</mapper>
