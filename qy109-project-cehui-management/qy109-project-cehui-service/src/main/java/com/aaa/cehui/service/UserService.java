@@ -4,6 +4,7 @@ package com.aaa.cehui.service;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.mapper.UserMapper;
+import com.aaa.cehui.model.Dept;
 import com.aaa.cehui.model.User;
 
 import com.aaa.cehui.utils.IDUtils;
@@ -15,11 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Handler;
 
 import static com.aaa.cehui.utils.DateUtils.DATE_TYPE;
@@ -35,23 +35,16 @@ public class UserService extends BaseService<User> {
     @Autowired
     UserMapper userMapper;
 
-    public ResultData selectAllRoles() {
-
-        return null;
-    }
-
 
     /**
-     * @author Seven Lee
-     * @description
-     * 这个方法用来添加用户的 参数user是前端传来的
-     *
      * @param
-     * @date 2020/5/22
      * @return java.lang.Boolean
      * @throws
+     * @author Seven Lee
+     * @description 这个方法用来添加用户的 参数user是前端传来的
+     * @date 2020/5/22
      **/
-    public Boolean addUser(User user){
+    public Boolean addUser(User user) {
         try {
 
             //获取当前时间
@@ -84,9 +77,9 @@ public class UserService extends BaseService<User> {
                     //传入id
                     .setId(user.getId());
             int insert = userMapper.insert(user);
-            if (insert>0){
+            if (insert > 0) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (Exception e) {
@@ -94,21 +87,22 @@ public class UserService extends BaseService<User> {
         }
         return false;
     }
+
     /**
-    * @Author LTL
-    * @Description 通过主键删除用户
-    * @Param [user]
-    * @Return java.lang.Integer
-    * @DateTime 2020/7/16  9:08
-    * @Throws
-    */
-    public Integer deleteUser(User user){
+     * @Author LTL
+     * @Description 通过主键删除用户
+     * @Param [user]
+     * @Return java.lang.Integer
+     * @DateTime 2020/7/16  9:08
+     * @Throws
+     */
+    public Integer deleteUser(User user) {
         //判断前段是否传值成功
-        if (!"".equals(user) && null !=user){
+        if (!"".equals(user) && null != user) {
             try {
                 //执行删除操作
                 Integer delete = delete(user);
-                if (delete>0){
+                if (delete > 0) {
                     return delete;
                 }
             } catch (Exception e) {
@@ -119,21 +113,21 @@ public class UserService extends BaseService<User> {
     }
 
     /**
-    * @Author LTL
-    * @Description 根据id批量删除用户
-    * @Param [ids]
-    * @Return java.lang.Integer
-    * @DateTime 2020/7/16  9:08
-    * @Throws
-    */
-    public Integer deleteMoreUser(List<Integer> ids){
+     * @Author LTL
+     * @Description 根据id批量删除用户
+     * @Param [ids]
+     * @Return java.lang.Integer
+     * @DateTime 2020/7/16  9:08
+     * @Throws
+     */
+    public Integer deleteMoreUser(List<Integer> ids) {
         //判断前段是否传值成功
-        if (!"".equals(ids) && null !=ids){
+        if (!"".equals(ids) && null != ids) {
             try {
                 //调用父类的批量删除方法
                 Integer integer = super.deleteByIds(ids);
                 //判断是否查询出结果
-                if (integer>0){
+                if (integer > 0) {
                     return integer;
                 }
                 return null;
@@ -145,15 +139,15 @@ public class UserService extends BaseService<User> {
     }
 
     /**
-    * @Author LTL
-    * @Description 根据id修改用户信息
-    * @Param [user]
-    * @Return java.lang.Integer
-    * @DateTime 2020/7/16  9:17
-    * @Throws
-    */
-    public Integer updateUser(User user){
-        if (!"".equals(user) && null !=user){
+     * @Author LTL
+     * @Description 根据id修改用户信息
+     * @Param [user]
+     * @Return java.lang.Integer
+     * @DateTime 2020/7/16  9:17
+     * @Throws
+     */
+    public Integer updateUser(User user) {
+        if (!"".equals(user) && null != user) {
             //获取当前时间作为修改时间
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TYPE);
             String format = simpleDateFormat.format(new Date());
@@ -163,7 +157,7 @@ public class UserService extends BaseService<User> {
                 //通过父类方法修改用户信息
                 Integer update = super.update(user);
                 //判断受影响的行数
-                if (update>0){
+                if (update > 0) {
                     return update;
                 }
                 return null;
@@ -183,37 +177,71 @@ public class UserService extends BaseService<User> {
      * @DateTime 2020/7/16  9:07
      * @Throws
      */
-    public PageInfo selectAllUser(Integer pageNo,Integer pageSize){
-        PageHelper.startPage(pageNo,pageSize);
+    public PageInfo selectAllUser(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
         List<User> users = userMapper.selectAllUser();
-        if (users.size()>0){
+        if (users.size() > 0) {
             PageInfo<User> pageInfo = new PageInfo<>(users);
             return pageInfo;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public User selectUserById(Integer id){
+    public User selectUserById(Integer id) {
         User user1 = userMapper.selectUserById(id);
-        if(null != user1){
+        if (null != user1) {
             return user1;
-        }else {
+        } else {
             return null;
         }
 
     }
 
-    public PageInfo selectUserByDeptNo(Integer deptno ,Integer pageNo,Integer pageSize){
-        PageHelper.startPage(pageNo,pageSize);
-        List<User> users = userMapper.selectUserByDeptNo(deptno);
-        if (users.size()>0){
-            PageInfo<User> pageInfo = new PageInfo<User>(users);
-            return pageInfo;
+
+    /**
+     * @Author LTL
+     * @Description 多条件查询用户信息
+     * @Param [map, pageNo, pageSize]
+     * @Return java.util.List<com.aaa.cehui.model.User>
+     * @DateTime 2020/7/20  19:44
+     * @Throws
+     */
+    public PageInfo selectUserByFiled(Map map, Integer pageNo, Integer pageSize, Sqls where) {
+        Object userName = map.get("userName");
+        Object deptId = map.get("deptId");
+        Object beginTime = map.get("beginTime");
+        Object endTime = map.get("endTime");
+        if (null != userName && !"".equals(userName)
+                && null != deptId && !"".equals(deptId)
+                && null != beginTime && !"".equals(beginTime)) {
+            //说明 全条件查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("userName", userName.toString()).andEqualTo("deptId", deptId).andBetween("createTime", beginTime, endTime), null);
+        } else if (null != deptId && !"".equals(deptId)
+                && null != beginTime && !"".equals(beginTime)
+        ) {
+            //说明是部门和时间查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("deptId", deptId).andBetween("createTime", beginTime, endTime), null);
+        } else if (null != userName && !"".equals(userName)
+                && null != deptId && !"".equals(deptId)
+        ) {
+            //说明是 名称和部门查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("userName", userName.toString()).andEqualTo("deptId", deptId), null);
+        } else if (null != userName && !"".equals(userName)
+                && null != beginTime && !"".equals(beginTime)
+        ) {
+            //说明是名称和时间查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("userName", userName.toString()).andBetween("createTime", beginTime, endTime), null);
+        } else if (null != userName && !"".equals(userName)) {
+            //说明是单条件 名字查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("userName", userName.toString()), null);
+        } else if (null != deptId && !"".equals(deptId)) {
+            //说明是单条件 部门查询
+            return selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("deptId", deptId.toString()), null);
+        } else if (null != beginTime && !"".equals(beginTime)) {
+            // 说明是单条件 创建时间查询
+            return selectListByPageAndFiled(pageNo,pageSize,where.andBetween("createTime",beginTime,endTime),null);
         }
         return null;
     }
-
-
-
 }

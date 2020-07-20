@@ -6,11 +6,21 @@ import com.aaa.cehui.model.Menu;
 import com.aaa.cehui.model.RoleMenu;
 import com.aaa.cehui.model.User;
 import com.aaa.cehui.model.UserRole;
+import com.aaa.cehui.utils.DateUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import static com.aaa.cehui.staticproperties.TimeForatProperties.TIME_FORMAT;
+import static com.aaa.cehui.utils.DateUtils.DATE_TYPE;
 
 
 /**
@@ -60,11 +70,11 @@ public class MenuService extends BaseService<Menu> {
         List<RoleMenu> roleMenus = roleMenuService.selectList(new RoleMenu().setRoleId(userRole.getRoleId()));
         for (int i = 0; i < roleMenus.size(); i++) {
             try {
-               menuList.add(
+                menuList.add(
                         menuMapper.selectMenuByMenuId(
                                 roleMenus.get(i).getMenuId()
                         ).setSubMenu(
-                                getSubMenu(roleMenus.get(i).getMenuId(),menuMapper.selectAll())
+                                getSubMenu(roleMenus.get(i).getMenuId(), menuMapper.selectAll())
                         )
                 );
             } catch (Exception e) {
@@ -109,6 +119,12 @@ public class MenuService extends BaseService<Menu> {
         return menusList;
     }
 
+    public PageInfo selectAllMenusByPage(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        PageInfo<Menu> pageInfo = new PageInfo<>(selectAllMenus());
+        return pageInfo;
+    }
+
     /**
      * @Author LTL
      * @Description 查询子菜单
@@ -137,30 +153,76 @@ public class MenuService extends BaseService<Menu> {
     }
 
     /**
-    * @Author LTL
-    * @Description 通过角色ID查询所有权限
-    * @Param [roleId, roleMenuService]
-    * @Return java.util.List<com.aaa.cehui.model.Menu>
-    * @DateTime 2020/7/18  19:11
-    * @Throws
-    */
-    public List<Menu> getMenuByRoleId(Long roleId,RoleMenuService roleMenuService){
+     * @Author LTL
+     * @Description 通过角色ID查询所有权限
+     * @Param [roleId, roleMenuService]
+     * @Return java.util.List<com.aaa.cehui.model.Menu>
+     * @DateTime 2020/7/18  19:11
+     * @Throws
+     */
+    public List<Menu> getMenuByRoleId(Long roleId, RoleMenuService roleMenuService) {
         List<RoleMenu> roleMenus = null;
         List<Menu> menuList = new ArrayList<>();
-        if (null != roleId){
+        if (null != roleId) {
             try {
                 roleMenus = roleMenuService.selectList(new RoleMenu().setRoleId(roleId));
                 for (int i = 0; i < roleMenus.size(); i++) {
-                    menuList.add(menuMapper.selectMenuByMenuId(roleMenus.get(i).getMenuId()).setSubMenu(getSubMenu(roleId,selectAllMenus())));
+                    menuList.add(menuMapper.selectMenuByMenuId(roleMenus.get(i).getMenuId()).setSubMenu(getSubMenu(roleId, selectAllMenus())));
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
             return menuList;
         }
-      return null;
+        return null;
 
     }
 
+
+    /**
+     * @Author LTL
+     * @Description 通过id修改菜单信息
+     * @Param [menu]
+     * @Return java.lang.Integer
+     * @DateTime 2020/7/20  21:41
+     * @Throws
+     */
+    public Integer updateMenuByMenuId(Menu menu) {
+        menu.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
+        Integer update = update(menu);
+        if (update > 0) {
+            return update;
+        } else {
+            return 0;
+        }
+
+    }
+
+
+    /**
+     * @Author LTL
+     * @Description 条件查询菜单信息
+     * @Param [map]
+     * @Return java.util.List<com.aaa.cehui.model.Menu>
+     * @DateTime 2020/7/20  22:03
+     * @Throws
+     */
+    public List<Menu> selectMenusByFiled(Map map, Sqls where) {
+        Object menuName = map.get("menuName");
+        Object beginTime = map.get("beginTime");
+        Object endTime = map.get("endTime");
+        if (null != menuName && !"".equals(menuName)
+                && null != beginTime && !"".equals(beginTime)) {
+            //说明是全条件查询
+            return selectListByFiled(where.andLike("menuName", menuName.toString()).andBetween("createTime", beginTime, endTime), null);
+        } else if (null != menuName && !"".equals(menuName)) {
+            //说明单条件，通过名称查询
+            return selectListByFiled(where.andLike("menuName", menuName.toString()), null);
+        } else if (null != beginTime && !"".equals(beginTime)) {
+            //说明是单条件查询
+            return selectListByFiled(where.andBetween("createTime", beginTime, endTime), null);
+        }
+        return null;
+    }
 
 }

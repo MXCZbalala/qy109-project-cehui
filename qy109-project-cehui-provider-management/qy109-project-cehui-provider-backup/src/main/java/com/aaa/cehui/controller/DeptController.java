@@ -7,6 +7,7 @@ import com.aaa.cehui.model.Dept;
 import com.aaa.cehui.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,13 @@ import java.util.Map;
 /**
  * @Author ltl
  * @Date 2020/7/16  15:39
- * @Description
- *      系统管理--部门管理
+ * @Description 系统管理--部门管理
  **/
 @RestController
 public class DeptController extends CommonController<Dept> {
 
     @Autowired
-    DeptService deptService;
+    private DeptService deptService;
 
     @Override
     public BaseService getBaseService() {
@@ -30,120 +30,86 @@ public class DeptController extends CommonController<Dept> {
     }
 
     /**
-    * @Author LTL
-    * @Description 新增部门
-    * @Param [dept]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  15:55
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 新增部门
+     * @Param [dept]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  15:55
+     * @Throws
+     */
     @PostMapping("/addDept")
-    public ResultData addDept(Dept dept){
-        System.out.println(dept.toString());
-        Integer add = deptService.add(dept);
-        if (add != 0){
-            return addSuccess();
-        }
-        else {
-            return addFiled();
-        }
+    public ResultData addDept(@RequestBody Dept dept) {
+        return deptService.add(dept) > 0 ? updateSuccess() : updateFiled();
     }
 
     /**
-    * @Author LTL
-    * @Description 通过ID删除部门信息
-    * @Param [dept]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  15:55
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过ID删除部门信息
+     * @Param [dept]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  15:55
+     * @Throws
+     */
     @PostMapping("/deleteDeptById")
-    public ResultData deleteDeptById(Dept dept){
-        Integer delete = deptService.delete(dept);
-        if (0 != delete){
-            return deleteSuccess();
-        }else {
-            return deleteFiled();
-        }
+    public ResultData deleteDeptById(@RequestParam Dept dept) {
+        return deptService.delete(dept) > 0 ? updateSuccess() : updateFiled();
     }
+
     /**
-    * @Author LTL
-    * @Description 修改部门信息
-    * @Param [dept]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  15:54
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 修改部门信息
+     * @Param [dept]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  15:54
+     * @Throws
+     */
     @PostMapping("/updateDept")
-    public ResultData updateDept(Dept dept){
-        Integer update = deptService.update(dept);
-        if ( 0 !=update){
-            return updateSuccess();
-        }else {
-            return updateFiled();
-        }
+    public ResultData updateDept(@RequestBody Dept dept) {
+        return deptService.update(dept) > 0 ? updateSuccess() : updateFiled();
     }
 
     /**
-    * @Author LTL
-    * @Description 分页查询所有部门信息
-    * @Param []
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  15:55
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 分页查询所有部门信息
+     * @Param []
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  15:55
+     * @Throws
+     */
     @GetMapping("/selectAllDept")
-    public ResultData selectAllDept(Integer pageNo,Integer pageSize){
-        if (deptService.selectAll(pageNo,pageSize).size()>0){
-            return getSuccess(deptService.selectAll());
-        }else {
-            return getFiled();
-        }
+    public ResultData selectAllDept(@RequestParam("pageNo") Integer pageNo,
+                                    @RequestParam("pageSize") Integer pageSize) {
+        return deptService.selectAll(pageNo, pageSize).size() > 0 ? getSuccess(deptService.selectAll(pageNo, pageSize)) : getFiled();
     }
 
     /**
-    * @Author LTL
-    * @Description 查询-动态sql查询条件：部门名称 创建时间区间
-    * @Param [map]
-    * @Return java.util.List<com.aaa.cehui.model.Dept>
-    * @DateTime 2020/7/16  17:32
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 查询-动态sql查询条件：部门名称 创建时间区间
+     * @Param [map]
+     * @Return java.util.List<com.aaa.cehui.model.Dept>
+     * @DateTime 2020/7/16  17:32
+     * @Throws
+     */
     @PostMapping("/selectDeptInfoByField")
-    public List<Dept> selectDeptInfoByField(Map map) {
-        // 调用 deptService 中的 selectDeptInfoByField 方法，得到查询结果
-        List<Dept> deptList = deptService.selectDeptInfoByField(map);
+    public ResultData selectDeptInfoByField(@RequestBody Map map,
+                                            @RequestParam("pageNo") Integer pageNo,
+                                            @RequestParam("pageSize") Integer pageSize,
+                                            Sqls where) {
+        return deptService.selectDeptInfoByField(map, pageNo, pageSize, where).getSize() > 0 ? getSuccess(deptService.selectDeptInfoByField(map, pageNo, pageSize, where)) : getFiled("未查询到数据");
 
-        // 判断 结果是否为空
-        if (deptList != null) {
-            // 说明结果不为空，查询成功，返回查询的结果
-            return deptList;
-        }else {
-            // 查询失败，返回null
-            return null;
-        }
     }
 
     /**
-    * @Author LTL
-    * @Description 批量删除
-    * @Param [ids]
-    * @Return java.lang.Boolean
-    * @DateTime 2020/7/16  17:36
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 批量删除
+     * @Param [ids]
+     * @Return java.lang.Boolean
+     * @DateTime 2020/7/16  17:36
+     * @Throws
+     */
     @PostMapping("/batchDeleteByPrimaryKey")
-    public Boolean batchDeleteByPrimaryKey(List<Integer> ids) {
-        // 调用 deptService 中的 batchDeleteByPrimaryKey 方法，得到结果
-        Boolean aBoolean = deptService.batchDeleteByPrimaryKey(ids);
-        // 判断 结果是否为true
-        if (aBoolean == true) {
-            // 说明结果为true，删除成功 返回true
-            return true;
-        }else {
-            // 删除失败，返回false
-            return false;
-        }
+    public ResultData batchDeleteByPrimaryKey(@RequestParam("ids[]") List<Integer> ids) {
+        return deptService.batchDeleteByPrimaryKey(ids) ? deleteSuccess() : deleteSuccess();
     }
 
 }

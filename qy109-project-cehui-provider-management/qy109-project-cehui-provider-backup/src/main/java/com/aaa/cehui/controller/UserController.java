@@ -11,6 +11,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 import java.util.Map;
@@ -33,93 +34,106 @@ public class UserController extends CommonController<User> {
         return userService;
     }
 
+    /**
+     * @Author LTL
+     * @Description 新增用户信息
+     * @Param [user]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  19:26
+     * @Throws
+     */
     @RequestMapping("/addUser")
-    public ResultData addUser(@RequestBody User user){
-
-        if (userService.addUser(user)){
-            return addSuccess();
-        }
-        return addFiled();
+    public ResultData addUser(@RequestBody User user) {
+        return userService.addUser(user) ? addSuccess() : addFiled();
     }
+
     /**
-    * @Author LTL
-    * @Description 分页查询所有用户信息
-    * @Param [pageNo, pageSize]
-    * @Return com.github.pagehelper.PageInfo
-    * @DateTime 2020/7/16  8:57
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过ID删除一条用户信息
+     * @Param [user]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  19:37
+     * @Throws
+     */
+    @PostMapping("/deleteById")
+    public ResultData deleteById(User user) {
+        return userService.delete(user) > 0 ? deleteSuccess() : deleteFiled();
+    }
+
+    /**
+     * @Author LTL
+     * @Description 通过主键批量删除用户信息
+     * @Param [ids]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  19:28
+     * @Throws
+     */
+    @PostMapping("/deleteUserByIds")
+    public ResultData deleteUserByIds(@RequestParam("ids[]") List<Integer> ids) {
+        return userService.deleteByIds(ids) > 0 ? deleteSuccess() : deleteFiled();
+    }
+
+    /**
+     * @Author LTL
+     * @Description 通过id修改用户信息
+     * @Param [user]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  19:31
+     * @Throws
+     */
+    @PostMapping("/updateUserById")
+    public ResultData updateUserById(@RequestBody User user) {
+        return userService.updateUser(user) > 0 ? updateSuccess() : updateFiled();
+    }
+
+
+    /**
+     * @Author LTL
+     * @Description 分页查询所有用户信息
+     * @Param [pageNo, pageSize]
+     * @Return com.github.pagehelper.PageInfo
+     * @DateTime 2020/7/16  8:57
+     * @Throws
+     */
     @PostMapping("/selectAllUser")
-    public PageInfo selectAllUser(@RequestParam("pageNo") Integer pageNo,
-                                  @RequestParam("pageSize") Integer pageSize
-    ){
-        return userService.selectAllUser(pageNo, pageSize);
+    public ResultData selectAllUser(@RequestParam("pageNo") Integer pageNo,
+                                    @RequestParam("pageSize") Integer pageSize
+    ) {
+        return userService.selectAllUser(pageNo, pageSize) != null ? getSuccess(userService.selectAllUser(pageNo, pageSize)) : getFiled();
     }
 
     /**
-    * @Author LTL
-    * @Description 通过用户ID查询用户信息
-    * @Param [user]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  15:01
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过用户ID查询用户信息
+     * @Param [user]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/16  15:01
+     * @Throws
+     */
     @PostMapping("/selectUserById")
     public ResultData selectUserById(@RequestParam("id") Integer id
 
-    ){
-        return getSuccess(userService.selectUserById(id));
+    ) {
+        return userService.selectUserById(id) != null ? getSuccess(userService.selectUserById(id)) : getFiled();
     }
+
+
 
     /**
     * @Author LTL
-    * @Description 通过部门编号分页查询用户
-    * @Param [deptno]
+    * @Description 多条件查询用户信息
+    * @Param [map, pageNo, pageSize]
     * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/16  14:59
+    * @DateTime 2020/7/20  19:43
     * @Throws
     */
-    @PostMapping("/selectUserByDept")
-    public ResultData selectUserByDept(@RequestParam("deptno") Integer deptno,
-                                       @RequestParam("pageNo") Integer pageNo,
-                                       @RequestParam("pageSize") Integer pageSize
-    ){
-        if (null != getSuccess(userService.selectUserByDeptNo(deptno,pageNo,pageSize))){
-            return getSuccess(userService.selectUserByDeptNo(deptno,pageNo,pageSize));
-        }
-        return getFiled("未查询到数据");
-    }
-
-    @PostMapping("/deleteById")
-    public ResultData deleteById(User user){
-         if (userService.delete(user)>0){
-             return deleteSuccess();
-         }else {
-             return deleteFiled();
-         }
-    }
-
-    @PostMapping("/updateById")
-    public ResultData updateById(User user){
-         if(userService.updateUser(user)>0){
-             return updateSuccess();
-         }
-         else {
-             return updateFiled();
-         }
-    }
-    /**
-    * @Author LTL
-    * @Description 通过ID 批量删除
-    * @Param
-    * @Return
-    * @DateTime 2020/7/16  9:55
-    * @Throws
-    */
-    @Override
-    @PostMapping("/updateByIds")
-    public ResultData batchDelete(@RequestParam("ids[]") Integer[] ids){
-        return super.batchDelete(ids);
+    @PostMapping("/selectUserByFiled")
+    public ResultData selectUserByFiled(@RequestParam Map map,
+                                        @RequestParam("pageNo") Integer pageNo,
+                                        @RequestParam("pageSize") Integer pageSize,
+                                        Sqls sqls
+    ) {
+       return userService.selectUserByFiled(map, pageNo, pageSize, sqls).getSize()>0 ? getSuccess(userService.selectUserByFiled(map, pageNo, pageSize, sqls)) : getFiled();
     }
 
 

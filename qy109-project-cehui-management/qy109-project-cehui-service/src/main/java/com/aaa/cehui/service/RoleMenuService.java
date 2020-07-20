@@ -28,7 +28,7 @@ public class RoleMenuService extends BaseService<RoleMenu> {
     * @DateTime 2020/7/18  9:39
     * @Throws
     */
-    public Integer deleteMenuByRoleId(Integer roleId){
+    public Integer deleteMenuByRoleId(Long roleId){
         return roleMenuMapper.deleteMenuByRoleId(roleId);
     }
 
@@ -41,7 +41,7 @@ public class RoleMenuService extends BaseService<RoleMenu> {
     * @DateTime 2020/7/18  9:41
     * @Throws
     */
-    public Integer add(Integer roleId, List<Integer> menuId){
+    public Integer add(Long roleId, List<Integer> menuId){
 
         Integer num = 0;
         for (int i = 0; i < menuId.size(); i++) {
