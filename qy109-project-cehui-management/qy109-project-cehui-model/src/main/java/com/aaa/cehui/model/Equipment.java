@@ -1,6 +1,5 @@
 package com.aaa.cehui.model;
 
-import com.aaa.cehui.base.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "t_equipment")
-public class Equipment extends BaseModel {
-
+public class Equipment implements Serializable  {
+    /**
+     * 编号
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     /**
      * 仪器设备名称
      */
@@ -85,5 +89,5 @@ public class Equipment extends BaseModel {
     */
     private User user;
 
-
+    private Equipment equipment;
 }

@@ -28,6 +28,7 @@ public class UserController extends CommonController<User> {
     private UserService userService;
 
 
+    @Override
     public BaseService<User> getBaseService() {
         return userService;
     }

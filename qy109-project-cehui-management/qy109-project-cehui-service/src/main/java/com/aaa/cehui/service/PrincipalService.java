@@ -7,6 +7,8 @@ import com.aaa.cehui.model.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author ltl
  * @Date 2020/7/16  20:25
@@ -19,6 +21,14 @@ public class PrincipalService extends BaseService<Principal> {
     @Autowired
     PrincipalMapper principalMapper;
 
+    /**
+     * 根据userId查询负责人信息
+     * @param
+     * @return
+     */
+    public List<Principal> selectByUserId(Long userId){
+        return principalMapper.qureyOne(userId);
+    }
 
 
 }

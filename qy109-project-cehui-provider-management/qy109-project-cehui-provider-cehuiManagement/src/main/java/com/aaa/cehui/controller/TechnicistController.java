@@ -5,10 +5,12 @@ import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Technicist;
 import com.aaa.cehui.service.TechnicistService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class TechnicistController extends CommonController<Technicist> {
 
     @Autowired
     TechnicistService technicistService;
+    @Override
     public BaseService<Technicist> getBaseService() {
         return technicistService;
     }
@@ -97,5 +100,25 @@ public class TechnicistController extends CommonController<Technicist> {
         }else {
             return updateFiled();
         }
+    }
+
+    /**
+     * 通过userID查询技术人员分页
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @param where
+     * @return
+     */
+    @PostMapping("/queryTechnicistByUserIdPage")
+    public ResultData queryByUserIdPage(@RequestParam("userId") Integer userId,
+                                        @RequestParam("pageNo") Integer pageNo,
+                                        @RequestParam("pageSize") Integer pageSize, Sqls where){
+        PageInfo<Technicist> userId1 = technicistService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("userId", userId), null, null);
+
+        if (userId1 != null) {
+            return getSuccess(userId1);
+        }
+        return getFiled();
     }
 }

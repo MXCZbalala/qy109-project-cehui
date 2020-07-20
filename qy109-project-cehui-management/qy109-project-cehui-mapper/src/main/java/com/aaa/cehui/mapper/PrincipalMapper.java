@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PrincipalMapper extends Mapper<Principal> {
 
+    List<Principal> qureyOne(Long id);
 
     int updateList(Principal principal);
 

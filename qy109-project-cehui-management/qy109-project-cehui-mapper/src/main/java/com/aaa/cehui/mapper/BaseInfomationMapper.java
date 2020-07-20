@@ -26,6 +26,17 @@ public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
 
 
 
+    /**
+     * 查询白名单
+     * @return
+     */
+    List<Mapping_unit> queryBaiMingDanByScore();
+
+    /**
+     * 查询黑名单
+     * @return
+     */
+    List<Mapping_unit> queryHeiMingDanByScore();
 
 
 

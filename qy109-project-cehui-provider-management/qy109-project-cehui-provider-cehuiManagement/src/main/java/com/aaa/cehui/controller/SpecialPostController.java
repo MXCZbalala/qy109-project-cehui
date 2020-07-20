@@ -8,6 +8,7 @@ import com.aaa.cehui.service.SpecialPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class SpecialPostController extends CommonController<SpecialPost> {
     SpecialPostService specialPostService;
 
 
+    @Override
     public BaseService<SpecialPost> getBaseService() {
         return specialPostService;
     }
@@ -100,6 +102,21 @@ public class SpecialPostController extends CommonController<SpecialPost> {
             return updateSuccess();
         }else {
             return updateFiled();
+        }
+    }
+    /**
+     * 通过userId查询特殊岗位人员
+     * @param userId
+     * @return
+     */
+    @PostMapping("/queryByUserId")
+    public ResultData queryByUserId(@RequestParam("userId") Integer userId){
+        Long userId1=new Long(userId);
+        List<SpecialPost> specialPosts = specialPostService.queryByUserId(userId1);
+        if (specialPosts.size()>0) {
+            return getSuccess(specialPosts);
+        }else {
+            return getFiled();
         }
     }
 }

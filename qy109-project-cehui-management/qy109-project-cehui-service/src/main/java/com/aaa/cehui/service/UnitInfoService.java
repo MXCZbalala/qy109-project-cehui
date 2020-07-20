@@ -7,6 +7,8 @@ import com.aaa.cehui.model.Mapping_unit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author ltl
  * @Date 2020/7/16  20:01
@@ -30,5 +32,22 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
          return baseInfomationMapper.qureyMapping_unit(id);
     }
 
+    /**
+     * 查询白名单
+     * @return
+     */
+    public List<Mapping_unit> queryBaiMingDanByScore(){
+
+        return baseInfomationMapper.queryBaiMingDanByScore();
+    };
+
+    /**
+     * 查询黑名单
+     * @return
+     */
+    public List<Mapping_unit> queryHeiMingDanByScore(){
+
+        return baseInfomationMapper.queryHeiMingDanByScore();
+    };
 
 }
