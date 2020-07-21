@@ -78,25 +78,5 @@ public class MappingProjectService extends BaseService<MappingProject> {
         }
         return null;
     }
-    /**
-    * @Description: 新增项目汇交
-    * @Param: [mappingProject]
-    * @return: java.lang.Integer
-    * @Author: Mr.Wang
-    * @Date: 2020/7/17
-    */
-    public Integer addMappingProject(MappingProject mappingProject){
-        Random random = new Random();
-        StringBuilder string = new StringBuilder();
-        for (int i = 0; i < 19; i++) {
-            string.append(random.nextInt(10));
-        }
-        Long id =Long.parseLong(String.valueOf(string));
-        mappingProject.setId(id);
-        int insert = mappingProjectMapper.insert(mappingProject);
-        if (insert>0){
-            return insert;
-        }
-        return null;
-    }
+
 }

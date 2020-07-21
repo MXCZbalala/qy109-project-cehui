@@ -50,18 +50,5 @@ public class AuditService extends BaseService<Audit> {
         }
         return null;
     }
-    /**
-    * @Description: 分页查询通过关联业务编号查询项目审核记录
-    * @Param: [refId, pageNo, pageSize, where]
-    * @return: com.github.pagehelper.PageInfo<com.aaa.cehui.model.Audit>
-    * @Author: Mr.Wang
-    * @Date: 2020/7/18
-    */
-//    public PageInfo<Audit> getAuditByRifId(Long refId, Integer pageNo, Integer pageSize, Sqls where){
-//        PageInfo<Audit> refId1 = selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("refId", refId), null, null);
-//        if (null!=refId1 && !"".equals(refId1)){
-//            return refId1;
-//        }
-//        return null;
-//   }
+
 }

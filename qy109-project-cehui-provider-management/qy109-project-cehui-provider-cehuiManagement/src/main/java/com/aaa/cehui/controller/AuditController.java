@@ -8,6 +8,7 @@ import com.aaa.cehui.service.AuditService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
@@ -43,7 +44,8 @@ public class AuditController extends CommonController<Audit> {
         return getFiled();
     }
     @PostMapping("/getProjectAuditAllByPage")
-    public ResultData getProjectAuditAllByPage(Audit audit,Integer pageNo,Integer pageSize){
+    public ResultData getProjectAuditAllByPage(Audit audit, @RequestParam("pageNo") Integer pageNo,
+                                               @RequestParam("pageSize") Integer pageSize){
         PageInfo<Audit> auditPageInfo = auditService.selectListByPage(audit, pageNo, pageSize);
         if (null!=auditPageInfo && !"".equals(auditPageInfo)){
             return getSuccess(auditPageInfo);
@@ -51,14 +53,15 @@ public class AuditController extends CommonController<Audit> {
         return getFiled();
     }
     /**
-    * @Description: 分页查询通过关联业务编号查询和type=2查询项目审核记录type=4查询项目汇交成功的结果
+    * @Description: 分页查询通过关联业务编号查询和type=2查询项目登记审核记录type=4查询项目成果汇交记录
     * @Param: [refId, pageNo, pageSize, where]
     * @return: com.aaa.cehui.base.ResultData
     * @Author: Mr.Wang
     * @Date: 2020/7/18
     */
     @PostMapping("/getAuditByRifId")
-    public ResultData getAuditByRifId(Long refId,Integer type, Integer pageNo, Integer pageSize, Sqls where){
+    public ResultData getAuditByRifId(@RequestParam("refId") Long refId,@RequestParam("type") Integer type,
+                                      @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize, Sqls where){
         PageInfo<Audit> refId1 = auditService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("refId",refId).andEqualTo("type",type),null);
         if (null!=refId1 && !"".equals(refId1)){
             return getSuccess(refId1);

@@ -225,6 +225,10 @@ public abstract class BaseService<T> {
         PageInfo<T> pageInfo = new PageInfo<T>(select);
         return pageInfo;
     }
+    public List<T> select(T t){
+        List<T> select = mapper.select(t);
+        return select;
+    }
 
     /**
      * @author Seven Lee

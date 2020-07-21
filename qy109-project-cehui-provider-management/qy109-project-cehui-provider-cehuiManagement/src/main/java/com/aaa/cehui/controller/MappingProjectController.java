@@ -89,19 +89,5 @@ public class MappingProjectController extends CommonController<MappingProject> {
         }
         return updateFiled();
     }
-    /**
-    * @Description: 新增项目汇交
-    * @Param: [mappingProject]
-    * @return: com.aaa.cehui.base.ResultData
-    * @Author: Mr.Wang
-    * @Date: 2020/7/17
-    */
-    @PostMapping("/addMappingProject")
-    public ResultData addMappingProject(MappingProject mappingProject){
-        Integer integer = mappingProjectService.addMappingProject(mappingProject);
-        if (null!=integer && integer>0){
-            return addSuccess(integer);
-        }
-        return addFiled();
-    }
+
 }
