@@ -3,7 +3,7 @@ package com.aaa.cehui.controller;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
-import com.aaa.cehui.model.Mapping_unit;
+import com.aaa.cehui.model.MappingUnit;
 import com.aaa.cehui.model.Score;
 import com.aaa.cehui.service.ScoreService;
 import com.aaa.cehui.service.UnitInfoService;
@@ -55,7 +55,7 @@ public class ScoreController extends CommonController<Score> {
     @PostMapping("/insertScore")
     public ResultData insertScore(Score score){
         Integer add = getBaseService().add(score);
-        Mapping_unit mapping_unit=new Mapping_unit();
+        MappingUnit mapping_unit=new MappingUnit();
         mapping_unit.setId(score.getUnitId());
         mapping_unit.setScore(score.getScore());
         int i=score.getScore();

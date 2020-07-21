@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.aaa.cehui.mapper.BaseInfomationMapper" >
-  <resultMap id="BaseResultMap" type="com.aaa.cehui.model.Mapping_unit" >
+  <resultMap id="BaseResultMap" type="com.aaa.cehui.model.MappingUnit" >
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-    <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
     <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
@@ -60,7 +58,7 @@
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
 
-  <select id="qureyMapping_unit" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  <select id="qureyMapping_unit" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit">
     select * from t_mapping_unit where user_id=#{userId}
   </select>
   <select id="fuzzyUnitName" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -80,21 +78,31 @@
     </where>
     ORDER BY id ASC
   </select>
-  <select id="queryBaiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  <select id="queryBaiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit">
   select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_status=1
 </select>
-  <select id="queryHeiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  <select id="queryHeiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit">
   <![CDATA[select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_status=2]]>
 </select>
 
-  <select id="selectAllMappingUtil" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit" >
+  <select id="selectAllMappingUtil" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit" >
     select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit
   </select>
 
-  <select id="queryAllMappingUtilByName" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit" >
+  <select id="queryAllMappingUtilByName" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit" >
     select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_name like concat('%',#{name},'%')
   </select>
-  <update id="updateScoreAndStatusById" parameterType="com.aaa.cehui.model.Mapping_unit">
+  <update id="updateScoreAndStatusById" parameterType="com.aaa.cehui.model.MappingUnit">
     update t_mapping_unit set score=#{score},unit_status=#{unitStatus} where id=#{id}
   </update>
+  <select id="selectPartUnitByPage" parameterType="com.aaa.cehui.model.MappingUnit" resultType="com.aaa.cehui.model.MappingUnit">
+  select id,unit_name,oa,qualification_level,certificate_code,belong_industry,linkman,phone,score
+  from t_mapping_unit
+  <where>
+    1=1
+    <if test="ownedDistrict != null and ownedDistrict != '' ">
+      AND owned_district=#{ownedDistrict, jdbcType=VARCHAR}
+    </if>
+  </where>
+  </select>
 </mapper>

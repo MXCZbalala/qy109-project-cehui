@@ -3,7 +3,7 @@ package com.aaa.cehui.service;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.mapper.BaseInfomationMapper;
-import com.aaa.cehui.model.Mapping_unit;
+import com.aaa.cehui.model.MappingUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  *      测绘管理--单位基本信息
  **/
 @Service
-public class UnitInfoService extends BaseService<Mapping_unit> {
+public class UnitInfoService extends BaseService<MappingUnit> {
     @Autowired
     BaseInfomationMapper baseInfomationMapper;
 
@@ -28,7 +28,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
     * @DateTime 2020/7/16  21:49
     * @Throws
     */
-    public Mapping_unit selectUnitInfoById(Long id){
+    public MappingUnit selectUnitInfoById(Long id){
          return baseInfomationMapper.qureyMapping_unit(id);
     }
 
@@ -36,7 +36,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * 查询白名单
      * @return
      */
-    public List<Mapping_unit> queryBaiMingDanByUnitStatus(){
+    public List<MappingUnit> queryBaiMingDanByUnitStatus(){
 
         return baseInfomationMapper.queryBaiMingDanByUnitStatus();
     };
@@ -45,7 +45,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * 查询黑名单
      * @return
      */
-    public List<Mapping_unit> queryHeiMingDanByUnitStatus(){
+    public List<MappingUnit> queryHeiMingDanByUnitStatus(){
 
         return baseInfomationMapper.queryHeiMingDanByUnitStatus();
     };
@@ -54,7 +54,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * 查询所有单位信息
      * @return
      */
-    public List<Mapping_unit> selectAllMappingUtil(){
+    public List<MappingUnit> selectAllMappingUtil(){
         return baseInfomationMapper.selectAllMappingUtil();
     }
 
@@ -63,7 +63,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * @param name
      * @return
      */
-    public List<Mapping_unit> queryAllMappingUtilByName(String name){
+    public List<MappingUnit> queryAllMappingUtilByName(String name){
         return baseInfomationMapper.queryAllMappingUtilByName(name);
     }
 
@@ -72,7 +72,7 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * @param mapping_unit
      * @return
      */
-    public int updateScoreAndStatusById(Mapping_unit mapping_unit){
+    public int updateScoreAndStatusById(MappingUnit mapping_unit){
         return baseInfomationMapper.updateScoreAndStatusById(mapping_unit);
     }
 }

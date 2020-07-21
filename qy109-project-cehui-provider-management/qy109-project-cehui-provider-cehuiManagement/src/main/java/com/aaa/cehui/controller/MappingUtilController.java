@@ -3,7 +3,7 @@ package com.aaa.cehui.controller;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
-import com.aaa.cehui.model.Mapping_unit;
+import com.aaa.cehui.model.MappingUnit;
 import com.aaa.cehui.service.UnitInfoService;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
@@ -18,11 +18,11 @@ import java.util.List;
  * @date 2020/7/18 16:12
  */
 @RestController
-public class MappingUtilController extends CommonController<Mapping_unit> {
+public class MappingUtilController extends CommonController<MappingUnit> {
     @Autowired
     private UnitInfoService unitInfoService;
     @Override
-    public BaseService<Mapping_unit> getBaseService() {
+    public BaseService<MappingUnit> getBaseService() {
         return unitInfoService;
     }
 
@@ -31,7 +31,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      * @return
      */
     @PostMapping("/queryBaiMingDan")
-    public List<Mapping_unit> selectBaiByScore(){
+    public List<MappingUnit> selectBaiByScore(){
         return unitInfoService.queryBaiMingDanByUnitStatus();
     }
 
@@ -46,7 +46,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
     @PostMapping("/queryBaiMingDanPage")
     public ResultData queryBaiMingDan(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize")Integer pageSize ,Sqls where){
         Integer unitStatus=1;
-        PageInfo<Mapping_unit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
+        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
         if (resultMapping != null) {
             return getSuccess(resultMapping);
         }else {
@@ -59,7 +59,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      * @return
      */
     @PostMapping("/queryHeiMingDan")
-    public List<Mapping_unit> selectHeiByScore(){
+    public List<MappingUnit> selectHeiByScore(){
         return unitInfoService.queryHeiMingDanByUnitStatus();
     }
 
@@ -74,7 +74,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
     @PostMapping("/queryHeiMingDanPage")
     public ResultData queryHeiMingDan(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize")Integer pageSize ,Sqls where){
         Integer unitStatus=2;
-        PageInfo<Mapping_unit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
+        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
         if (resultMapping != null) {
             return getSuccess(resultMapping);
         }else {
@@ -86,7 +86,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      * @return
      */
     @PostMapping("/selectAllMappingUtil")
-    public List<Mapping_unit> selectAllMappingUtil(){
+    public List<MappingUnit> selectAllMappingUtil(){
         return unitInfoService.selectAllMappingUtil();
     }
 
@@ -98,7 +98,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      */
     @PostMapping("/selectAllMappingUtilPage")
     public ResultData selectAllMappingUtilPage(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
-        List<Mapping_unit> mapping_units = getBaseService().selectAll(pageNo, pageSize);
+        List<MappingUnit> mapping_units = getBaseService().selectAll(pageNo, pageSize);
         if (mapping_units != null) {
             return getSuccess(mapping_units);
         }else{
@@ -113,7 +113,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      */
     @PostMapping("/queryAllMappingUtilByName")
     public ResultData queryAllMappingUtilByName(@RequestParam("name") String name){
-        List<Mapping_unit> mapping_units = unitInfoService.queryAllMappingUtilByName(name);
+        List<MappingUnit> mapping_units = unitInfoService.queryAllMappingUtilByName(name);
         if (mapping_units != null) {
             return getSuccess(mapping_units);
         }else{
@@ -131,7 +131,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      */
     @PostMapping("/queryMappingUtilByStatus")
     public  ResultData queryMappingUtilBySyzStatus(@RequestParam("synchronizationStatus")Integer synchronizationStatus, @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize")Integer pageSize, Sqls where){
-        PageInfo<Mapping_unit> resultMappingUtil = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("synchronizationStatus", synchronizationStatus), null, null);
+        PageInfo<MappingUnit> resultMappingUtil = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("synchronizationStatus", synchronizationStatus), null, null);
 
         if (resultMappingUtil !=null) {
             return getSuccess(resultMappingUtil);
@@ -146,7 +146,7 @@ public class MappingUtilController extends CommonController<Mapping_unit> {
      * @return
      */
     @PostMapping("/updateMappingUnit")
-    public ResultData updateMappingUnit(Mapping_unit mapping_unit){
+    public ResultData updateMappingUnit(MappingUnit mapping_unit){
         Integer resultMappingUnit = getBaseService().update(mapping_unit);
         if (resultMappingUnit != null) {
             return getSuccess(resultMappingUnit);

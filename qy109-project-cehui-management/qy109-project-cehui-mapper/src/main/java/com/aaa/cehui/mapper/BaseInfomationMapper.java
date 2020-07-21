@@ -1,14 +1,14 @@
 package com.aaa.cehui.mapper;
 
-import com.aaa.cehui.model.Mapping_unit;
+import com.aaa.cehui.model.MappingUnit;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
+public interface BaseInfomationMapper extends Mapper<MappingUnit> {
 
-    Mapping_unit qureyMapping_unit(Long userId);
+    MappingUnit qureyMapping_unit(Long userId);
 
     /**
     * @Author LTL
@@ -18,7 +18,7 @@ public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
     * @DateTime 2020/7/14  11:23
     * @Throws
     */
-    List<Mapping_unit> fuzzyUnitName(@Param("unitName") String unitName,
+    List<MappingUnit> fuzzyUnitName(@Param("unitName") String unitName,
                                      @Param("ownedDistrict") String ownedDistrict,
                                      @Param("qualificationLevel") String qualificationLevel);
 
@@ -30,21 +30,22 @@ public interface BaseInfomationMapper extends Mapper<Mapping_unit> {
      * 查询白名单
      * @return
      */
-    List<Mapping_unit> queryBaiMingDanByUnitStatus();
+    List<MappingUnit> queryBaiMingDanByUnitStatus();
 
     /**
      * 查询黑名单
      * @return
      */
-    List<Mapping_unit> queryHeiMingDanByUnitStatus();
+    List<MappingUnit> queryHeiMingDanByUnitStatus();
 
     /**
      * 查询所有单位信息
      * @return
      */
-    List<Mapping_unit> selectAllMappingUtil();
+    List<MappingUnit> selectAllMappingUtil();
 
-    List<Mapping_unit> queryAllMappingUtilByName(String name);
+    List<MappingUnit> queryAllMappingUtilByName(String name);
 
-    int updateScoreAndStatusById(Mapping_unit mapping_unit);
+    int updateScoreAndStatusById(MappingUnit mapping_unit);
+    List<MappingUnit> selectPartUnitByPage(String ownedDistrict);
 }
