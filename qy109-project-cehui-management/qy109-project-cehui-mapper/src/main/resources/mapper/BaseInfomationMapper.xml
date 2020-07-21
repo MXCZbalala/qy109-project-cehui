@@ -80,10 +80,21 @@
     </where>
     ORDER BY id ASC
   </select>
-  <select id="queryBaiMingDanByScore" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
-  select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where score >100
+  <select id="queryBaiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_status=1
 </select>
-  <select id="queryHeiMingDanByScore" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
-  <![CDATA[select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where score <100]]>
+  <select id="queryHeiMingDanByUnitStatus" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit">
+  <![CDATA[select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_status=2]]>
 </select>
+
+  <select id="selectAllMappingUtil" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit" >
+    select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit
+  </select>
+
+  <select id="queryAllMappingUtilByName" parameterType="com.aaa.cehui.model.Mapping_unit" resultType="com.aaa.cehui.model.Mapping_unit" >
+    select id,unit_name,register_address,qualification_level,certificate_code,belong_industry,linkman,phone,score from t_mapping_unit where unit_name like concat('%',#{name},'%')
+  </select>
+  <update id="updateScoreAndStatusById" parameterType="com.aaa.cehui.model.Mapping_unit">
+    update t_mapping_unit set score=#{score},unit_status=#{unitStatus} where id=#{id}
+  </update>
 </mapper>

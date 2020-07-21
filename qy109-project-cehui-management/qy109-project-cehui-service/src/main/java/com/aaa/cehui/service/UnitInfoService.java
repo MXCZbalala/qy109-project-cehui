@@ -36,18 +36,43 @@ public class UnitInfoService extends BaseService<Mapping_unit> {
      * 查询白名单
      * @return
      */
-    public List<Mapping_unit> queryBaiMingDanByScore(){
+    public List<Mapping_unit> queryBaiMingDanByUnitStatus(){
 
-        return baseInfomationMapper.queryBaiMingDanByScore();
+        return baseInfomationMapper.queryBaiMingDanByUnitStatus();
     };
 
     /**
      * 查询黑名单
      * @return
      */
-    public List<Mapping_unit> queryHeiMingDanByScore(){
+    public List<Mapping_unit> queryHeiMingDanByUnitStatus(){
 
-        return baseInfomationMapper.queryHeiMingDanByScore();
+        return baseInfomationMapper.queryHeiMingDanByUnitStatus();
     };
 
+    /**
+     * 查询所有单位信息
+     * @return
+     */
+    public List<Mapping_unit> selectAllMappingUtil(){
+        return baseInfomationMapper.selectAllMappingUtil();
+    }
+
+    /**
+     * 根据单位名称模糊查询单位信息
+     * @param name
+     * @return
+     */
+    public List<Mapping_unit> queryAllMappingUtilByName(String name){
+        return baseInfomationMapper.queryAllMappingUtilByName(name);
+    }
+
+    /**
+     * 根据Id修改分数和黑白状态
+     * @param mapping_unit
+     * @return
+     */
+    public int updateScoreAndStatusById(Mapping_unit mapping_unit){
+        return baseInfomationMapper.updateScoreAndStatusById(mapping_unit);
+    }
 }

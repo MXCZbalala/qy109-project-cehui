@@ -18,4 +18,7 @@
   <delete id="delNewsById" parameterType="com.aaa.cehui.model.News">
           delete  from t_news where id=#{id}
   </delete>
+  <update id="updateNews" parameterType="com.aaa.cehui.model.News">
+    update  t_news set title=#{title},digest=#{digest},body=#{body},gmt_create=#{gmtCreate},gmt_modified=#{gmtModified}  where id=#{id}
+  </update>
 </mapper>

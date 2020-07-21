@@ -6,6 +6,8 @@ import com.aaa.cehui.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +34,23 @@ public class NewsService extends BaseService<News> {
      * @return
      */
     public int insertNews(News news){
+
+        SimpleDateFormat dat=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+         String date= dat.format(new Date());
+        news.setGmtModified(date);
         return newsMapper.insertNews(news);
+    }
+
+    /**
+     * 修改新闻
+     * @param news
+     * @return
+     */
+    public int updateNews(News news){
+        SimpleDateFormat dat=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        String date= dat.format(new Date());
+        news.setGmtCreate(date);
+        return newsMapper.updateNews(news);
     }
 
     /**
@@ -43,4 +61,5 @@ public class NewsService extends BaseService<News> {
     public int delNewsById(Long id){
         return newsMapper.delNewsById(id);
     }
+
 }

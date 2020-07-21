@@ -69,5 +69,22 @@ public class AuditController extends CommonController<Audit> {
             return null;
     }
 
+    /**
+     * 根据UserId分页查询审核记录
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @param where
+     * @return
+     */
+    @PostMapping("/queryAuditByUserIdPage")
+    public ResultData queryAuditByUserIdPage(@RequestParam("userId") Integer userId,@RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize,Sqls where){
+        PageInfo<Audit> userId1 = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("userId", userId), null, null);
+        if (userId1 != null) {
+            return getSuccess(userId1);
+        }else {
+            return getFiled();
+        }
+    }
 
 }

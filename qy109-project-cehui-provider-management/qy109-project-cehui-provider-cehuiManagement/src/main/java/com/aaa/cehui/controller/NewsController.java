@@ -72,6 +72,20 @@ public class NewsController extends CommonController<News> {
     }
 
     /**
+     * 修改新闻
+     * @param news
+     * @return
+     */
+    @PostMapping("/updateNews")
+    public ResultData updateNews(News news){
+        ResultData resultData=new ResultData();
+        int resultNews = newsService.updateNews(news);
+        if (resultNews>0) {
+            return resultData.setMsg(SUCCESS.getMsg());
+        }
+        return resultData.setMsg(FAILED.getMsg());
+    }
+    /**
      * 根据Id删除新闻
      * @param
      * @return
@@ -85,6 +99,21 @@ public class NewsController extends CommonController<News> {
             return resultData.setMsg(SUCCESS.getMsg());
         }else {
         return resultData.setMsg(FAILED.getMsg());
+        }
+    }
+
+    /**
+     * 根据id批量删除
+     * @param ids
+     * @return
+     */
+    @PostMapping("/deleteByIds")
+    public ResultData deleteNewsByIds(List<Integer> ids){
+        Integer resultNews = getBaseService().deleteByIds(ids);
+        if (resultNews != null) {
+            return getSuccess(resultNews);
+        }else {
+            return getFiled();
         }
     }
 }
