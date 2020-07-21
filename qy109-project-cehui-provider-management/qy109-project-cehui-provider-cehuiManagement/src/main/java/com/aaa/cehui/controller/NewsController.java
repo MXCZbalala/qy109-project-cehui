@@ -19,6 +19,7 @@ import static com.aaa.cehui.status.OperationStatus.SUCCESS;
 /**
  * @author sbs
  * @date 2020/7/18 8:53
+ *      测绘管理--公告栏
  */
 @RestController
 @RequestMapping("/News")
@@ -52,8 +53,8 @@ public class NewsController extends CommonController<News> {
      * @return
      */
     @PostMapping("/queryByTitle")
-    public List<News> queryByTitle(@RequestParam(value = "title",required = false) String title){
-        return newsService.queryByTitle(title);
+    public ResultData queryByTitle(@RequestParam(value = "title",required = false) String title){
+        return getSuccess(newsService.queryByTitle(title));
     }
 
     /**

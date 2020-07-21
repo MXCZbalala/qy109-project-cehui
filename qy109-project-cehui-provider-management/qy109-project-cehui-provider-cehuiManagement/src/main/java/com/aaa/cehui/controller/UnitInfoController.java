@@ -38,11 +38,13 @@ public class UnitInfoController extends CommonController<MappingUnit> {
     @PostMapping("/selectUnitInfoById")
     public ResultData selectUnitInfoById(@RequestParam("id") Long id){
         if (null != unitInfoService.selectUnitInfoById(id)){
-            return super.getSuccess(unitInfoService.selectUnitInfoById(id));
+            return getSuccess(unitInfoService.selectUnitInfoById(id));
         }else {
            return getFiled();
         }
     }
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.aaa.cehui.service;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.mapper.MappingProjectMapper;
 import com.aaa.cehui.model.MappingProject;
+import com.aaa.cehui.model.Resource;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,6 @@ public class MappingProjectService extends BaseService<MappingProject> {
         }
         return null;
     }
+
 
 }
