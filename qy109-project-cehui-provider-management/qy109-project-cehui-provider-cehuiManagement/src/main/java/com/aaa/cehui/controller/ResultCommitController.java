@@ -44,7 +44,7 @@ public class ResultCommitController extends CommonController<ResultCommit> {
         return getFiled();
     }
     /**
-     * @Description: 分页查询所有项目成果汇交审核
+     * @Description: 分页通过查询所有项目成果汇交审核
      * @Param: []
      * @return: java.util.List<com.aaa.cehui.model.ResultCommit>
      * @Author: Mr.Wang
@@ -60,7 +60,7 @@ public class ResultCommitController extends CommonController<ResultCommit> {
         return getFiled();
     }
     /**
-    * @Description: 通过条件分页查询所有项目成果汇交审核
+    * @Description: 通过姓名分页查询所有项目成果汇交审核
     * @Param: [name, PageNo, PageSize, where]
     * @return: com.aaa.cehui.base.ResultData
     * @Author: Mr.Wang
@@ -69,10 +69,12 @@ public class ResultCommitController extends CommonController<ResultCommit> {
     @PostMapping("/selectNameResultCommitByPage")
     public ResultData selectNameResultCommitByPage(@RequestParam("name") String name, @RequestParam("pageNo") Integer pageNo,
                                                    @RequestParam("pageSize") Integer pageSize, Sqls where){
-        PageInfo<ResultCommit> pageInfo = commitService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("name", name), null);
+        name = "%" + name + "%";
+        PageInfo<ResultCommit> pageInfo = commitService.selectListByPageAndFiled(pageNo, pageSize, where.andLike("name", name), null);
         if (null!=pageInfo && !"".equals(pageInfo)){
             return getSuccess(pageInfo);
         }
         return getFiled();
     }
+
 }

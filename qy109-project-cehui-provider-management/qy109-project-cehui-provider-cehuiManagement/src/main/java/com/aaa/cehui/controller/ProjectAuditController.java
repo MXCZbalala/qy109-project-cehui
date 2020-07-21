@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 
 /**
  * @program: qy109-project-cehui
- * @description:       测绘管理-->项目审核
+ * @description:       测绘管理-->项目审核 -->项目信息
  * @author: Mr.Wang
  * @create: 2020-07-18 09:52
  **/
@@ -72,5 +73,22 @@ public class ProjectAuditController extends CommonController<ProjectInfo> {
             return getSuccess(likeProjectIno);
         }
         return null;
+    }
+    /**
+    * @Description: 分页项目信息通过项目名称模糊查询
+    * @Param: [projectName, pageNo, pageSize, where]
+    * @return: com.aaa.cehui.base.ResultData
+    * @Author: Mr.Wang
+    * @Date: 2020/7/21
+    */
+    @PostMapping("/getLikeProjectInoByPage")
+    public ResultData getLikeProjectInoByPage(@RequestParam("projectName") String projectName,@RequestParam("pageNo") Integer pageNo,
+                                        @RequestParam("pageSize") Integer pageSize, Sqls where){
+        projectName = "%"+ projectName + "%";
+        PageInfo<ProjectInfo> pageInfo = projectAuditService.selectListByPageAndFiled(pageNo, pageSize, where.andLike("projectName", projectName), null);
+        if (null!=pageInfo && !"".equals(pageInfo)){
+            return getSuccess(pageInfo);
+        }
+        return getFiled();
     }
 }

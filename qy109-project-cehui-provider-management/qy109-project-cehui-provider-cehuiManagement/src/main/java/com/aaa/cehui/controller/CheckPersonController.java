@@ -72,6 +72,28 @@ public class CheckPersonController extends CommonController<CheckPerson> {
         }
         return getFiled();
     }
+    /**
+    * @Description: 分页查询所有审核人员信息
+    * @Param: [checkPerson, pageNo, pageSize]
+    * @return: com.aaa.cehui.base.ResultData
+    * @Author: Mr.Wang
+    * @Date: 2020/7/21
+    */
+    @PostMapping("/selectCheckPersonByPage")
+    public ResultData selectCheckPersonByPage(CheckPerson checkPerson,Integer pageNo,Integer pageSize){
+        PageInfo<CheckPerson> checkPersonPageInfo = checkPersonService.selectListByPage(checkPerson, pageNo, pageSize);
+        if (null!=checkPersonPageInfo && !"".equals(checkPersonPageInfo)){
+            return getSuccess(checkPersonPageInfo);
+        }
+        return getFiled();
+    }
+    /**
+    * @Description: 分页随机抽查审核人员信息
+    * @Param: [put, checkPerson, pageNo, pageSize]
+    * @return: com.aaa.cehui.base.ResultData
+    * @Author: Mr.Wang
+    * @Date: 2020/7/21
+    */
     @PostMapping("/selectPartCheckPersonByPage")
     public ResultData selectPartCheckPersonByPage(Double put, CheckPerson checkPerson,Integer pageNo, Integer pageSize) {
         PageInfo<CheckPerson> personPageInfo = checkPersonService.selectPartCheckPersonByPage(put, checkPerson, pageNo, pageSize);

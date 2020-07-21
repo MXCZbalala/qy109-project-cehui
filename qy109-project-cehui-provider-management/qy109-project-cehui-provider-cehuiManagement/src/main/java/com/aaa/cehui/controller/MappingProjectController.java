@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheAnnotationParser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 
@@ -58,6 +59,22 @@ public class MappingProjectController extends CommonController<MappingProject> {
         }
         return getFiled();
     }
+    /**
+    * @Description: 分页通过项目类型查询项目
+    * @Param: [projectType, pageNo, pageSize, where]
+    * @return: com.aaa.cehui.base.ResultData
+    * @Author: Mr.Wang
+    * @Date: 2020/7/21
+    */
+    @PostMapping("/selectMappingProjectByTypeByPage")
+    public ResultData selectMappingProjectByTypeByPage(String projectType, Integer pageNo, Integer pageSize, Sqls where){
+        PageInfo<MappingProject> projectType1 = mappingProjectService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("projectType", projectType), null);
+        if (null!=projectType && !"".equals(projectType1)){
+            return getSuccess(projectType1);
+        }
+        return getFiled();
+    }
+
     /**
     * @Description: 分页查询，根据所提交的项目进行分页
     * @Param: [mappingProject, pageNo, pageSize]

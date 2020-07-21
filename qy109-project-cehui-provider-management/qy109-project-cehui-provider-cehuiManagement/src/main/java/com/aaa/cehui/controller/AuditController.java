@@ -43,6 +43,13 @@ public class AuditController extends CommonController<Audit> {
         }
         return getFiled();
     }
+    /**
+    * @Description: 分页查询项目中审核记录
+    * @Param: [audit, pageNo, pageSize]
+    * @return: com.aaa.cehui.base.ResultData
+    * @Author: Mr.Wang
+    * @Date: 2020/7/21
+    */
     @PostMapping("/getProjectAuditAllByPage")
     public ResultData getProjectAuditAllByPage(Audit audit, @RequestParam("pageNo") Integer pageNo,
                                                @RequestParam("pageSize") Integer pageSize){

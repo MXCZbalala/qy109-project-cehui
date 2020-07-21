@@ -3,7 +3,7 @@ package com.aaa.cehui.controller;
 import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
-import com.aaa.cehui.model.Mapping_unit;
+import com.aaa.cehui.model.MappingUnit;
 import com.aaa.cehui.service.UnitInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
  *              测绘管理--单位基本信息
  **/
 @RestController
-public class UnitInfoController extends CommonController<Mapping_unit> {
+public class UnitInfoController extends CommonController<MappingUnit> {
 
     @Autowired
     private UnitInfoService unitInfoService;
 
     @Override
-    public BaseService<Mapping_unit> getBaseService() {
+    public BaseService<MappingUnit> getBaseService() {
         return unitInfoService;
     }
 

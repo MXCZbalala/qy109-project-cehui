@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "t_mapping_unit")
-public class Mapping_unit implements Serializable {
+public class MappingUnit implements Serializable {
     /**
      * 编号
      */

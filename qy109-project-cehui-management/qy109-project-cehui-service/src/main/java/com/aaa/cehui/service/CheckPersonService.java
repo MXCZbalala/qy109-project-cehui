@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -44,7 +46,7 @@ public class CheckPersonService extends BaseService<CheckPerson> {
         return null;
     }
     /**
-    * @Description:
+    * @Description: 分页通过抽查比例查询审核人员信息
     * @Param: [put, checkPerson, pageNo, pageSize]
     * @return: com.github.pagehelper.PageInfo<com.aaa.cehui.model.CheckPerson>
     * @Author: Mr.Wang
@@ -52,18 +54,20 @@ public class CheckPersonService extends BaseService<CheckPerson> {
     */
     public PageInfo<CheckPerson> selectPartCheckPersonByPage(Double put, CheckPerson checkPerson,Integer pageNo, Integer pageSize){
         PageHelper.startPage(pageNo, pageSize);
-//        List<CheckPerson> checkPeople = selectAll();
         List<CheckPerson> select = select(checkPerson);
         int size = select.size();
         double a = (double)(size);
         int v = (int)(a * (put/100));
         List<CheckPerson> lists = new ArrayList<CheckPerson>();
-        Random random = new Random();
-        int i1 = random.nextInt();
+        Collections.shuffle(select);
         for (int i = 0; i < v; i++) {
             lists.add(select.get(i));
         }
         PageInfo<CheckPerson> pageInfo = new PageInfo<CheckPerson>(lists);
-        return pageInfo;
+        if (lists.size()>0 && lists != null){
+            return pageInfo;
+        }
+        return null;
     }
+
 }
