@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Accessors(chain = true)
 public class User extends BaseModel {
 
+
     /**
      * 用户名
      */

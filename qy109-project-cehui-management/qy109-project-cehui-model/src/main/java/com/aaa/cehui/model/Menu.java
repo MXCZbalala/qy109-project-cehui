@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author ltl
@@ -27,7 +28,7 @@ public class Menu implements Serializable {
      * 菜单ID
      */
     @Column(name = "MENU_ID")
-    private Integer menuId;
+    private Long menuId;
 
 
 
@@ -35,7 +36,7 @@ public class Menu implements Serializable {
      * 上级菜单ID
      */
     @Column(name = "PARENT_ID")
-    private Integer parentId;
+    private Long parentId;
 
 
 
@@ -90,6 +91,8 @@ public class Menu implements Serializable {
     @Column(name = "modify_time")
     @Max(value = 100, message = "时间长度最长不能超过100")
     private String modifyTime;
+
+    private List<Menu> subMenu;
 
 
 

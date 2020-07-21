@@ -8,6 +8,7 @@ import com.aaa.cehui.model.RoleMenu;
 import com.aaa.cehui.model.User;
 import com.aaa.cehui.model.UserRole;
 import com.aaa.cehui.service.*;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 
 /**
  * @Author ltl
@@ -26,7 +25,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-public class MenuManagement   {
+public class MenuManagement extends CommonController<Menu> {
 
     @Autowired
     private UserRoleService user_roleService;
@@ -37,45 +36,123 @@ public class MenuManagement   {
     @Autowired
     private MenuService menuService;
 
+    public BaseService<Menu> getBaseService() {
+        return menuService;
+    }
 
 
     /**
      * @Author LTL
-     * @Description 通过登录的ID 查询所拥有的菜单列表
-     * @Param
-     * @Return
-     * @DateTime 2020/7/17  18:16
+     * @Description 通过用户ID查询用户拥有的权限
+     * @Param [user]
+     * @Return java.util.List<com.aaa.cehui.model.Menu>
+     * @DateTime 2020/7/20  8:34
      * @Throws
      */
-    @PostMapping("/getMenu")
-    public Map<Integer, String> getMenu(@RequestBody User user) {
-        System.out.println("UserId" + user.getId());
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        List<Integer> menuId = new ArrayList<Integer>();
-        //拿到了单个的角色信息
-        UserRole roleId = user_roleService.selectOne(new UserRole().setRoleId(user.getId()));
-        System.out.println("单个的UserId" + roleId);
-        //通过角色ID 拿到菜单数组,
-        List<RoleMenu> role_menus = role_menuService.selectList(new RoleMenu().setRoleId(roleId.getRoleId()));
-        System.out.println("通过角色ID 拿到的菜单数组" + role_menus);
-        for (int i = 0; i < role_menus.size(); i++) {
-            menuId.add(role_menus.get(i).getMenuId());
-        }
-        System.out.println("转化过的menuId" + menuId.toString());
-
-        if (menuId.size() > 0) {
-            //拿到所有的MenuId 开始查询所有的MenuName
-            System.out.println(menuId.get(21));
-            ;
-            for (int m = 0; m < menuId.size(); m++) {
-                map.put(menuId.get(m), menuService.selectMenuNameById(menuId.get(m)));
-            }
-            return map;
-        }
-        return null;
+    @PostMapping("/getMenuByUserId")
+    public ResultData getMenuByUserId(@RequestBody User user) {
+        return menuService.selectMenuByUserId(user, user_roleService, role_menuService).size() > 0 ? getSuccess(menuService.selectMenuByUserId(user, user_roleService, role_menuService)) : getFiled();
     }
 
 
+    /**
+     * @Author LTL
+     * @Description 通过角色ID查询角色菜单信息
+     * @Param [roleId]
+     * @Return java.lang.Object
+     * @DateTime 2020/7/18  8:41
+     * @Throws
+     */
+    @PostMapping("/getMenuByRoleId")
+    public ResultData getMenuByRoleId(@RequestParam Long roleId, RoleMenuService roleMenuService) {
+        return menuService.getMenuByRoleId(roleId, roleMenuService).size() > 0 ? getSuccess(menuService.getMenuByRoleId(roleId, roleMenuService)) : getFiled("为查询到数据");
+    }
 
+
+    /**
+    * @Author LTL
+    * @Description 通过角色ID 修改菜单信息
+    * @Param [roleId]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/20  22:13
+    * @Throws
+    */
+    @PostMapping("/updateMenuByRoleId")
+    public ResultData updateMenuByRoleId(@RequestParam("roleId") Long roleId) {
+        return role_menuService.deleteMenuByRoleId(roleId) > 0 ? updateSuccess(role_menuService.deleteMenuByRoleId(roleId)) : getFiled();
+    }
+
+    /**
+     * @Author LTL
+     * @Description 查询所有的菜单信息
+     * @Param [pageNo, pageSize]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/18  9:56
+     * @Throws
+     */
+    @PostMapping("/selectAllMenu")
+    public ResultData selectAllMenu() {
+        return menuService.selectAllMenus().size() > 0 ? getSuccess(menuService.selectAllMenus()) : getFiled("网络异常，查询失败");
+    }
+
+    /**
+    * @Author LTL
+    * @Description 通过菜单ID 修改菜单信息
+    * @Param [menu]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/20  22:01
+    * @Throws
+    */
+    @PostMapping("/updateMenuByMenuId")
+    public ResultData updateMenuByMenuId(@RequestBody Menu menu) {
+        return menuService.updateMenuByMenuId(menu) > 0 ? updateSuccess(menuService.updateMenuByMenuId(menu)) : updateFiled();
+    }
+
+
+    /**
+     * @Author LTL
+     * @Description 分页查询所有一级菜单
+     * @Param [pageNo, pageSize]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/18  15:36
+     * @Throws
+     */
+    @PostMapping("/selectAllParentMenu")
+    public PageInfo<Menu> selectAllParentMenu(@RequestParam("pageNo") Integer pageNo,
+                                              @RequestParam("pageSize") Integer pageSize,
+                                              Sqls where
+    ) {
+        return getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("parentId", 1), null);
+    }
+
+
+    /**
+     * @Author LTL
+     * @Description 通过父级菜单查询子菜单
+     * @Param [parentId, where]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/18  15:54
+     * @Throws
+     */
+    @PostMapping("/selectChildMenuByParentId")
+    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId,
+                                      Sqls where) {
+        return getSuccess(getBaseService().selectListByFiled(where.andEqualTo("parentId", parentId), null));
+    }
+
+
+    /**
+    * @Author LTL
+    * @Description 通过条件查询所有菜单信息
+    * @Param [map, where]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/20  22:11
+    * @Throws
+    */
+    @PostMapping("/selectMenuByFiled")
+    public ResultData selectMenuByFiled(@RequestBody Map map,
+                                        Sqls where){
+        return menuService.selectMenusByFiled(map,where).size() > 0 ? getSuccess(menuService.selectMenusByFiled(map,where)) : getFiled("未查到");
+    }
 
 }

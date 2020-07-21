@@ -25,12 +25,12 @@ public class UserRole implements Serializable {
      * 用户ID
      */
     @Column(name = "USER_ID")
-    private Integer userId;
+    private Long userId;
 
 
     /**
      * 角色ID
      */
     @Column(name = "ROLE_ID")
-    private Integer roleId;
+    private Long roleId;
 }

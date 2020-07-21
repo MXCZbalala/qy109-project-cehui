@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.aaa.cehui.mapper.RoleMenuMapper" >
 
+    <delete id="deleteMenuByRoleId" parameterType="java.lang.Integer">
+        delete * from t_role_menu where ROLE_ID = #{roleId}
+    </delete>
+
+    <insert id="insertMenuByRoleId" parameterType="java.lang.Integer">
+        insert into t_role_menu values (#{roleId},#{menuId})
+    </insert>
 </mapper>

@@ -4,6 +4,8 @@ import com.aaa.cehui.base.BaseService;
 import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Role;
+import com.aaa.cehui.model.RoleMenu;
+import com.aaa.cehui.service.RoleMenuService;
 import com.aaa.cehui.service.RoleSerivce;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 import java.util.Map;
@@ -22,10 +25,12 @@ import java.util.Map;
  *      系统管理--角色管理
  **/
 @RestController
-public class RoleController  extends CommonController<Role> {
+public class RoleController extends CommonController<Role> {
 
     @Autowired
     private RoleSerivce roleSerivce;
+    @Autowired
+    RoleMenuService roleMenuService;
     public BaseService<Role> getBaseService() {
         return roleSerivce;
     }
@@ -42,12 +47,9 @@ public class RoleController  extends CommonController<Role> {
     public ResultData selectAllRole(@RequestParam("pageNo")Integer pageNo,
                                     @RequestParam("pageSize")Integer pageSize
     ){
-        List<Role> roles = getBaseService().selectAll(pageNo, pageSize);
-        if (null != roles){
-            return getSuccess(roles);
-        }else {
-           return getFiled();
-        }
+
+        return getBaseService().selectAll(pageNo, pageSize) !=  null ? getSuccess(getBaseService().selectAll(pageNo, pageSize)) : getFiled();
+
     }
 
     /**
@@ -61,11 +63,16 @@ public class RoleController  extends CommonController<Role> {
     * @Throws
     */
     @PostMapping("/selectRoleByFiled")
-    public PageInfo selectRoleByFiled(@RequestBody Map map,
+    public ResultData selectRoleByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo")Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize
+                                        @RequestParam("pageSize") Integer pageSize,
+                                      Sqls where
     ){
-        return roleSerivce.selectRoleByFiled(map,pageNo,pageSize);
+        return roleSerivce.selectRoleByFiled(map,pageNo,pageSize,where).getSize() > 0
+                ?
+                getSuccess(roleSerivce.selectRoleByFiled(map,pageNo,pageSize,where))
+                :
+                getFiled("未查询到数据")  ;
     }
 
 
@@ -78,13 +85,11 @@ public class RoleController  extends CommonController<Role> {
     * @Throws
     */
     @PostMapping("/updateRoleById")
-    public ResultData updateRoleById(@RequestBody Role role){
-        Integer integer = roleSerivce.updateRoleByPrimaryKey(role);
-        if (integer > 0){
-            return updateSuccess();
-        }else {
-            return updateFiled();
-        }
+    public ResultData updateRoleById(@RequestBody Role role,
+                                     @RequestParam("ids[]")List<Integer> ids,
+                                     RoleMenuService roleMenuService){
+      return  roleSerivce.updateRoleByPrimaryKey(role,ids,roleMenuService) > 0 ? updateSuccess() : updateFiled();
+
     }
 
     /**
@@ -96,14 +101,24 @@ public class RoleController  extends CommonController<Role> {
     * @Throws
     */
     @PostMapping("/addRole")
-    public ResultData addRole(@RequestBody Role role){
-        Integer add = roleSerivce.add(role);
-        if (add > 0 ){
-            return addSuccess();
-        }else {
-            return addFiled();
-        }
+    public ResultData addRole(@RequestBody Role role,
+                              @RequestParam("ids[]")List<Integer> ids,
+                              RoleMenuService roleMenuService
+    ){
+        return roleMenuService.add(role.getRoleId(),ids) > 0 ? addSuccess() : addFiled();
     }
 
+    /**
+    * @Author LTL
+    * @Description 批量删除角色信息
+    * @Param [ids]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/20  19:23
+    * @Throws
+    */
+    @PostMapping("/deleteRoleByIds")
+    public ResultData deleteRoleByIds(@RequestParam("ids[]") List<Integer> ids){
+        return roleSerivce.deleteRoleByRoleId(ids) ? deleteSuccess() : deleteFiled();
+    }
 
 }
