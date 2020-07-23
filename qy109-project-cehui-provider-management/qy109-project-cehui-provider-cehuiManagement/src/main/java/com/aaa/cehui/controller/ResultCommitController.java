@@ -51,7 +51,8 @@ public class ResultCommitController extends CommonController<ResultCommit> {
      * @Date: 2020/7/20
      */
     @PostMapping("/selectAllResultCommitByPage")
-    public ResultData selectAllResultCommitByPage(ResultCommit resultCommit, @RequestParam("pageNo") Integer pageNo,
+    public ResultData selectAllResultCommitByPage(ResultCommit resultCommit,
+                                                  @RequestParam("pageNo") Integer pageNo,
                                                   @RequestParam("pageSize") Integer pageSize){
         PageInfo<ResultCommit> commitPageInfo = commitService.selectListByPage(resultCommit, pageNo, pageSize);
         if (null!=commitPageInfo && !"".equals(commitPageInfo)){
@@ -67,10 +68,12 @@ public class ResultCommitController extends CommonController<ResultCommit> {
     * @Date: 2020/7/20
     */
     @PostMapping("/selectNameResultCommitByPage")
-    public ResultData selectNameResultCommitByPage(@RequestParam("name") String name, @RequestParam("pageNo") Integer pageNo,
-                                                   @RequestParam("pageSize") Integer pageSize, Sqls where){
+    public ResultData selectNameResultCommitByPage(@RequestParam("name") String name,
+                                                   @RequestParam("pageNo") Integer pageNo,
+                                                   @RequestParam("pageSize") Integer pageSize
+        ){
         name = "%" + name + "%";
-        PageInfo<ResultCommit> pageInfo = commitService.selectListByPageAndFiled(pageNo, pageSize, where.andLike("name", name), null);
+        PageInfo<ResultCommit> pageInfo = commitService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andLike("name", name), null);
         if (null!=pageInfo && !"".equals(pageInfo)){
             return getSuccess(pageInfo);
         }

@@ -56,7 +56,7 @@ public class UserController extends CommonController<User> {
      * @Throws
      */
     @PostMapping("/deleteById")
-    public ResultData deleteById(User user) {
+    public ResultData deleteById(@RequestBody User user) {
         return userService.delete(user) > 0 ? deleteSuccess() : deleteFiled();
     }
 
@@ -118,22 +118,23 @@ public class UserController extends CommonController<User> {
     }
 
 
-
     /**
-    * @Author LTL
-    * @Description 多条件查询用户信息
-    * @Param [map, pageNo, pageSize]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/20  19:43
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 多条件查询用户信息
+     * @Param [map, pageNo, pageSize]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  19:43
+     * @Throws
+     */
     @PostMapping("/selectUserByFiled")
-    public ResultData selectUserByFiled(@RequestParam Map map,
+    public ResultData selectUserByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo") Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize,
-                                        Sqls sqls
+                                        @RequestParam("pageSize") Integer pageSize
     ) {
-       return userService.selectUserByFiled(map, pageNo, pageSize, sqls).getSize()>0 ? getSuccess(userService.selectUserByFiled(map, pageNo, pageSize, sqls)) : getFiled();
+        System.out.println(map.toString());
+        System.out.println(pageNo);
+        System.out.println(pageSize);
+        return userService.selectUserByFiled(map, pageNo, pageSize).getSize() > 0 ? getSuccess(userService.selectUserByFiled(map, pageNo, pageSize)) : getFiled();
     }
 
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.entity.SqlsCriteria;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
@@ -113,8 +114,8 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/queryTechnicistByUserIdPage")
     public ResultData queryByUserIdPage(@RequestParam("userId") Integer userId,
                                         @RequestParam("pageNo") Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize, Sqls where){
-        PageInfo<Technicist> userId1 = technicistService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("userId", userId), null, null);
+                                        @RequestParam("pageSize") Integer pageSize){
+        PageInfo<Technicist> userId1 = technicistService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("userId", userId), null, null);
 
         if (userId1 != null) {
             return getSuccess(userId1);

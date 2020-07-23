@@ -38,7 +38,8 @@ public class RoleSerivce extends BaseService<Role> {
      * @DateTime 2020/7/17  16:46
      * @Throws
      */
-    public PageInfo selectRoleByFiled(Map map, Integer pageNo, Integer pageSize, Sqls where) {
+    public PageInfo selectRoleByFiled(Map map, Integer pageNo, Integer pageSize) {
+        Sqls where = Sqls.custom();
         Object roleName = map.get("roleName");
         Object beginTime = map.get("beginTime");
         Object endTime = map.get("endTime");

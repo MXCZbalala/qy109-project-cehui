@@ -25,7 +25,7 @@ public class DeptService extends BaseService<Dept> {
     @Autowired
     private DeptMapper deptMapper;
 
-    public List<Dept> selectAllDept(Integer pageNo,Integer pageSize) {
+    public List<Dept> selectAllDept(Integer pageNo, Integer pageSize) {
         List<Dept> deptList = new ArrayList<>();
         List<Dept> allDeptList = deptMapper.selectAll();
         if (null != allDeptList && allDeptList.size() > 0) {
@@ -65,7 +65,6 @@ public class DeptService extends BaseService<Dept> {
     }
 
 
-
     /**
      * @Author LTL
      * @Description 查询-动态sql查询条件：部门名称 创建时间区间
@@ -74,7 +73,8 @@ public class DeptService extends BaseService<Dept> {
      * @DateTime 2020/7/16  17:31
      * @Throws
      */
-    public PageInfo selectDeptInfoByField(Map map, Integer pageNo, Integer pageSize, Sqls where) {
+    public PageInfo selectDeptInfoByField(Map map, Integer pageNo, Integer pageSize) {
+        Sqls where = Sqls.custom();
         Object deptName = map.get("deptName");
         Object beginTime = map.get("beginTime");
         Object endTime = map.get("endTime");

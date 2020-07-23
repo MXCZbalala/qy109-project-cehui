@@ -207,7 +207,8 @@ public class MenuService extends BaseService<Menu> {
      * @DateTime 2020/7/20  22:03
      * @Throws
      */
-    public List<Menu> selectMenusByFiled(Map map, Sqls where) {
+    public List<Menu> selectMenusByFiled(Map map) {
+        Sqls where = Sqls.custom();
         Object menuName = map.get("menuName");
         Object beginTime = map.get("beginTime");
         Object endTime = map.get("endTime");

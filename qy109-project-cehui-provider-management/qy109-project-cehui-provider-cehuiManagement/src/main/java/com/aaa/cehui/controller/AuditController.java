@@ -68,8 +68,8 @@ public class AuditController extends CommonController<Audit> {
     */
     @PostMapping("/getAuditByRifId")
     public ResultData getAuditByRifId(@RequestParam("refId") Long refId,@RequestParam("type") Integer type,
-                                      @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize, Sqls where){
-        PageInfo<Audit> refId1 = auditService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("refId",refId).andEqualTo("type",type),null);
+                                      @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize){
+        PageInfo<Audit> refId1 = auditService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("refId",refId).andEqualTo("type",type),null);
         if (null!=refId1 && !"".equals(refId1)){
             return getSuccess(refId1);
         }
@@ -85,8 +85,8 @@ public class AuditController extends CommonController<Audit> {
      * @return
      */
     @PostMapping("/queryAuditByUserIdPage")
-    public ResultData queryAuditByUserIdPage(@RequestParam("userId") Integer userId,@RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize,Sqls where){
-        PageInfo<Audit> userId1 = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("userId", userId), null, null);
+    public ResultData queryAuditByUserIdPage(@RequestParam("userId") Integer userId,@RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize")Integer pageSize){
+        PageInfo<Audit> userId1 = getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("userId", userId), null, null);
         if (userId1 != null) {
             return getSuccess(userId1);
         }else {

@@ -65,12 +65,11 @@ public class RoleController extends CommonController<Role> {
     @PostMapping("/selectRoleByFiled")
     public ResultData selectRoleByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo")Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize,
-                                      Sqls where
+                                        @RequestParam("pageSize") Integer pageSize
     ){
-        return roleSerivce.selectRoleByFiled(map,pageNo,pageSize,where).getSize() > 0
+        return roleSerivce.selectRoleByFiled(map,pageNo,pageSize).getSize() > 0 && roleSerivce.selectRoleByFiled(map,pageNo,pageSize) == null
                 ?
-                getSuccess(roleSerivce.selectRoleByFiled(map,pageNo,pageSize,where))
+                getSuccess(roleSerivce.selectRoleByFiled(map,pageNo,pageSize))
                 :
                 getFiled("未查询到数据")  ;
     }

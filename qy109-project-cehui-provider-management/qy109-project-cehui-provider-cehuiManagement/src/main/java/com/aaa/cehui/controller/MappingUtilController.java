@@ -40,13 +40,14 @@ public class MappingUtilController extends CommonController<MappingUnit> {
      * @param
      * @param pageNo
      * @param pageSize
-     * @param where
+     * @param
      * @return
      */
     @PostMapping("/queryBaiMingDanPage")
-    public ResultData queryBaiMingDan(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize")Integer pageSize ,Sqls where){
+    public ResultData queryBaiMingDan(@RequestParam("pageNo") Integer pageNo,
+                                      @RequestParam("pageSize")Integer pageSize){
         Integer unitStatus=1;
-        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
+        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("unitStatus", unitStatus), null, null);
         if (resultMapping != null) {
             return getSuccess(resultMapping);
         }else {
@@ -68,13 +69,14 @@ public class MappingUtilController extends CommonController<MappingUnit> {
      * @param
      * @param pageNo
      * @param pageSize
-     * @param where
+     * @param
      * @return
      */
     @PostMapping("/queryHeiMingDanPage")
-    public ResultData queryHeiMingDan(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize")Integer pageSize ,Sqls where){
+    public ResultData queryHeiMingDan(@RequestParam("pageNo") Integer pageNo,
+                                      @RequestParam("pageSize")Integer pageSize){
         Integer unitStatus=2;
-        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("unitStatus", unitStatus), null, null);
+        PageInfo<MappingUnit> resultMapping = getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("unitStatus", unitStatus), null, null);
         if (resultMapping != null) {
             return getSuccess(resultMapping);
         }else {
@@ -97,7 +99,8 @@ public class MappingUtilController extends CommonController<MappingUnit> {
      * @return
      */
     @PostMapping("/selectAllMappingUtilPage")
-    public ResultData selectAllMappingUtilPage(@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
+    public ResultData selectAllMappingUtilPage(@RequestParam("pageNo") Integer pageNo,
+                                               @RequestParam("pageSize") Integer pageSize){
         List<MappingUnit> mapping_units = getBaseService().selectAll(pageNo, pageSize);
         if (mapping_units != null) {
             return getSuccess(mapping_units);
@@ -130,8 +133,10 @@ public class MappingUtilController extends CommonController<MappingUnit> {
      * @return
      */
     @PostMapping("/queryMappingUtilByStatus")
-    public  ResultData queryMappingUtilBySyzStatus(@RequestParam("synchronizationStatus")Integer synchronizationStatus, @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize")Integer pageSize, Sqls where){
-        PageInfo<MappingUnit> resultMappingUtil = getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("synchronizationStatus", synchronizationStatus), null, null);
+    public  ResultData queryMappingUtilBySyzStatus(@RequestParam("synchronizationStatus")Integer synchronizationStatus,
+                                                   @RequestParam("pageNo") Integer pageNo,
+                                                   @RequestParam("pageSize")Integer pageSize){
+        PageInfo<MappingUnit> resultMappingUtil = getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("synchronizationStatus", synchronizationStatus), null, null);
 
         if (resultMappingUtil !=null) {
             return getSuccess(resultMappingUtil);

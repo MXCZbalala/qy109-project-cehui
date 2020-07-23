@@ -93,9 +93,8 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/selectDeptInfoByField")
     public ResultData selectDeptInfoByField(@RequestBody Map map,
                                             @RequestParam("pageNo") Integer pageNo,
-                                            @RequestParam("pageSize") Integer pageSize,
-                                            Sqls where) {
-        return deptService.selectDeptInfoByField(map, pageNo, pageSize, where).getSize() > 0 ? getSuccess(deptService.selectDeptInfoByField(map, pageNo, pageSize, where)) : getFiled("未查询到数据");
+                                            @RequestParam("pageSize") Integer pageSize) {
+        return deptService.selectDeptInfoByField(map, pageNo, pageSize).getSize() > 0 ? getSuccess(deptService.selectDeptInfoByField(map, pageNo, pageSize)) : getFiled("未查询到数据");
 
     }
 

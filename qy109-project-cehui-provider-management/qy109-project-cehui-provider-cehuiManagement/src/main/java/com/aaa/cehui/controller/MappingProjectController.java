@@ -67,8 +67,8 @@ public class MappingProjectController extends CommonController<MappingProject> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectMappingProjectByTypeByPage")
-    public ResultData selectMappingProjectByTypeByPage(String projectType, Integer pageNo, Integer pageSize, Sqls where){
-        PageInfo<MappingProject> projectType1 = mappingProjectService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("projectType", projectType), null);
+    public ResultData selectMappingProjectByTypeByPage(String projectType, Integer pageNo, Integer pageSize){
+        PageInfo<MappingProject> projectType1 = mappingProjectService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("projectType", projectType), null);
         if (null!=projectType && !"".equals(projectType1)){
             return getSuccess(projectType1);
         }

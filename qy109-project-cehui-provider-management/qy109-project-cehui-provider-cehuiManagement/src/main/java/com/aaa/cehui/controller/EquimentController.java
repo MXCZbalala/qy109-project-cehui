@@ -59,8 +59,8 @@ public class EquimentController extends CommonController<Equipment> {
     @PostMapping("/queryEquimentByUserIdPage")
     public ResultData queryByUserIdPage(@RequestParam("userId") Integer userId,
                                         @RequestParam("pageNo") Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize, Sqls where){
-        PageInfo<Equipment> userId1 = equimentService.selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("userId", userId), null, null);
+                                        @RequestParam("pageSize") Integer pageSize){
+        PageInfo<Equipment> userId1 = equimentService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("userId", userId), null, null);
         if (userId1 != null) {
             return getSuccess(userId1);
         }

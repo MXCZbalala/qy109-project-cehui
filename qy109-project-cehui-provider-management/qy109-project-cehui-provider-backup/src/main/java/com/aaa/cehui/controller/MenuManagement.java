@@ -70,13 +70,13 @@ public class MenuManagement extends CommonController<Menu> {
 
 
     /**
-    * @Author LTL
-    * @Description 通过角色ID 修改菜单信息
-    * @Param [roleId]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/20  22:13
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过角色ID 修改菜单信息
+     * @Param [roleId]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  22:13
+     * @Throws
+     */
     @PostMapping("/updateMenuByRoleId")
     public ResultData updateMenuByRoleId(@RequestParam("roleId") Long roleId) {
         return role_menuService.deleteMenuByRoleId(roleId) > 0 ? updateSuccess(role_menuService.deleteMenuByRoleId(roleId)) : getFiled();
@@ -96,13 +96,13 @@ public class MenuManagement extends CommonController<Menu> {
     }
 
     /**
-    * @Author LTL
-    * @Description 通过菜单ID 修改菜单信息
-    * @Param [menu]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/20  22:01
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过菜单ID 修改菜单信息
+     * @Param [menu]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  22:01
+     * @Throws
+     */
     @PostMapping("/updateMenuByMenuId")
     public ResultData updateMenuByMenuId(@RequestBody Menu menu) {
         return menuService.updateMenuByMenuId(menu) > 0 ? updateSuccess(menuService.updateMenuByMenuId(menu)) : updateFiled();
@@ -119,10 +119,9 @@ public class MenuManagement extends CommonController<Menu> {
      */
     @PostMapping("/selectAllParentMenu")
     public PageInfo<Menu> selectAllParentMenu(@RequestParam("pageNo") Integer pageNo,
-                                              @RequestParam("pageSize") Integer pageSize,
-                                              Sqls where
+                                              @RequestParam("pageSize") Integer pageSize
     ) {
-        return getBaseService().selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("parentId", 1), null);
+        return getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("parentId", 1), null);
     }
 
 
@@ -135,24 +134,22 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/selectChildMenuByParentId")
-    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId,
-                                      Sqls where) {
-        return getSuccess(getBaseService().selectListByFiled(where.andEqualTo("parentId", parentId), null));
+    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId) {
+        return getSuccess(getBaseService().selectListByFiled(Sqls.custom().andEqualTo("parentId", parentId), null));
     }
 
 
     /**
-    * @Author LTL
-    * @Description 通过条件查询所有菜单信息
-    * @Param [map, where]
-    * @Return com.aaa.cehui.base.ResultData
-    * @DateTime 2020/7/20  22:11
-    * @Throws
-    */
+     * @Author LTL
+     * @Description 通过条件查询所有菜单信息
+     * @Param [map, where]
+     * @Return com.aaa.cehui.base.ResultData
+     * @DateTime 2020/7/20  22:11
+     * @Throws
+     */
     @PostMapping("/selectMenuByFiled")
-    public ResultData selectMenuByFiled(@RequestBody Map map,
-                                        Sqls where){
-        return menuService.selectMenusByFiled(map,where).size() > 0 ? getSuccess(menuService.selectMenusByFiled(map,where)) : getFiled("未查到");
+    public ResultData selectMenuByFiled(@RequestBody Map map) {
+        return menuService.selectMenusByFiled(map).size() > 0 ? getSuccess(menuService.selectMenusByFiled(map)) : getFiled("未查到");
     }
 
 }

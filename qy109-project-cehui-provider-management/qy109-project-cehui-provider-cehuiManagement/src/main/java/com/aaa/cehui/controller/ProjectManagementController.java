@@ -107,7 +107,8 @@ public class ProjectManagementController extends CommonController<ProjectInfo> {
     * @Date: 2020/7/17
     */
     @PostMapping("/selectProjectByPage")
-    public ResultData selectProjectByPage(ProjectInfo projectInfo, @RequestParam("pageNo") Integer pageNo,
+    public ResultData selectProjectByPage(ProjectInfo projectInfo,
+                                          @RequestParam("pageNo") Integer pageNo,
                                           @RequestParam("pageSize") Integer pageSize){
         PageInfo<ProjectInfo> pageInfo = projectService.selectListByPage(projectInfo, pageNo, pageSize);
         if (null!=pageInfo && !"".equals(pageInfo)){

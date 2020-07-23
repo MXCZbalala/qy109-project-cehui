@@ -34,7 +34,9 @@ public class UnitAuditController extends CommonController<MappingUnit> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectUnitByPage")
-    public ResultData selectUnitByPage(MappingUnit mappingUnit,Integer pageNo,Integer pageSize){
+    public ResultData selectUnitByPage(MappingUnit mappingUnit,
+                                       Integer pageNo,
+                                       Integer pageSize){
         PageInfo<MappingUnit> mappingUnitPageInfo = unitAuditService.selectListByPage(mappingUnit, pageNo, pageSize);
         if (null!=mappingUnitPageInfo && !"".equals(mappingUnitPageInfo)){
             return getSuccess(mappingUnitPageInfo);
@@ -49,7 +51,11 @@ public class UnitAuditController extends CommonController<MappingUnit> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectPartUnitByPage")
-    public ResultData selectPartUnitByPage(@RequestParam(value = "ownedDistrict",required = false) String ownedDistrict, Double put, MappingUnit mappingUnit, Integer pageNo, Integer pageSize){
+    public ResultData selectPartUnitByPage(@RequestParam(value = "ownedDistrict",required = false) String ownedDistrict,
+                                           Double put,
+                                           MappingUnit mappingUnit,
+                                           Integer pageNo,
+                                           Integer pageSize){
         PageInfo<MappingUnit> mappingUnitPageInfo = unitAuditService.selectPartUnitByPage(ownedDistrict, put, mappingUnit, pageNo, pageSize);
         if (null!=mappingUnitPageInfo && !"".equals(mappingUnitPageInfo)){
             return getSuccess(mappingUnitPageInfo);

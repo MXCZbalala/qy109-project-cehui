@@ -37,7 +37,8 @@ public class ScoreController extends CommonController<Score> {
      * @return
      */
     @PostMapping("/selectAllScorePage")
-    public ResultData selectAllScorePage(@RequestParam("pageNo")Integer pageNo,@RequestParam("pageSize") Integer pageSize){
+    public ResultData selectAllScorePage(@RequestParam("pageNo")Integer pageNo,
+                                         @RequestParam("pageSize") Integer pageSize){
         List<Score> scores = getBaseService().selectAll(pageNo, pageSize);
         if (scores != null) {
             return getSuccess(scores);

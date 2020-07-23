@@ -51,7 +51,8 @@ public class ProjectAuditController extends CommonController<ProjectInfo> {
     * @Date: 2020/7/18
     */
     @PostMapping("/selectAllProjectByPage")
-    public ResultData selectAllProjectByPage(ProjectInfo projectInfo, @RequestParam("pageNo") Integer pageNo,
+    public ResultData selectAllProjectByPage(ProjectInfo projectInfo,
+                                             @RequestParam("pageNo") Integer pageNo,
                                              @RequestParam("pageSize") Integer pageSize){
         PageInfo<ProjectInfo> pageInfo = projectAuditService.selectAllProjectByPage(projectInfo, pageNo, pageSize);
         if (null!=pageInfo&&!"".equals(pageInfo)){
@@ -82,10 +83,12 @@ public class ProjectAuditController extends CommonController<ProjectInfo> {
     * @Date: 2020/7/21
     */
     @PostMapping("/getLikeProjectInoByPage")
-    public ResultData getLikeProjectInoByPage(@RequestParam("projectName") String projectName,@RequestParam("pageNo") Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize, Sqls where){
+    public ResultData getLikeProjectInoByPage(@RequestParam("projectName") String projectName,
+                                              @RequestParam("pageNo") Integer pageNo,
+                                              @RequestParam("pageSize") Integer pageSize
+    ){
         projectName = "%"+ projectName + "%";
-        PageInfo<ProjectInfo> pageInfo = projectAuditService.selectListByPageAndFiled(pageNo, pageSize, where.andLike("projectName", projectName), null);
+        PageInfo<ProjectInfo> pageInfo = projectAuditService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andLike("projectName", projectName), null);
         if (null!=pageInfo && !"".equals(pageInfo)){
             return getSuccess(pageInfo);
         }
