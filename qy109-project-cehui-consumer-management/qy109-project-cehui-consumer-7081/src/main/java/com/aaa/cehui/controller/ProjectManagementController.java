@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.ProjectInfo;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectAllInfo")
+    @ApiOperation(value = "查询所有项目的信息",
+            notes = "查询所有项目信息")
     public ResultData selectAllInfo(){
         return mappingApiService.selectAllInfo();
     }
@@ -41,6 +44,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectProjectInfoById")
+    @ApiOperation(value = "通过主键ID查询项目",
+            notes = "通过发送主键id来查询项目信息")
     public ResultData selectProjectInfoById(Long id){
         return mappingApiService.selectProjectInfoById(id);
     }
@@ -53,6 +58,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/addProjectInfo")
+    @ApiOperation(value = "新增项目信息",
+            notes = "通过发送实体类参数来新增项目信息")
     public ResultData addProjectInfo(ProjectInfo projectInfo){
         return mappingApiService.addProjectInfo(projectInfo);
     }
@@ -65,6 +72,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/updateProjectInfoById")
+    @ApiOperation(value = "通过ID修改项目",
+            notes = "通过发送id参数来修改项目信息")
     public ResultData updateProjectInfoById(ProjectInfo projectInfo){
         return mappingApiService.updateProjectInfoById(projectInfo);
     }
@@ -77,6 +86,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/getInfoType")
+    @ApiOperation(value = "通过项目类型查询项目",
+            notes = "通过发送项目类型参数来查询项目信息")
     public ResultData getInfoType(String projectType){
         return mappingApiService.getInfoType(projectType);
     }
@@ -89,6 +100,8 @@ public class ProjectManagementController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectProjectByPage")
+    @ApiOperation(value = "项目管理的分页查询",
+            notes = "通过发送pageNo，pageSize参数来分页查询所有项目信息")
     public ResultData selectProjectByPage(ProjectInfo projectInfo,
                                           @RequestParam("pageNo") Integer pageNo,
                                           @RequestParam("pageSize") Integer pageSize){

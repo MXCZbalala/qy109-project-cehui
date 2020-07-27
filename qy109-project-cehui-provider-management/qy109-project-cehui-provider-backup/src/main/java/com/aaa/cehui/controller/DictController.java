@@ -65,7 +65,7 @@ public class DictController extends CommonController<Dict> {
     * @Author: Mr.Wang
     * @Date: 2020/7/16
     */
-    @RequestMapping("/deleteDict")
+    @PostMapping("/deleteDict")
     public ResultData deleteDict(@RequestParam("dictIds") List<Integer> dictIds){
         if (dictService.deleteByIds(dictIds)>0){
             return deleteSuccess(dictService.deleteByIds(dictIds).toString());
@@ -93,7 +93,7 @@ public class DictController extends CommonController<Dict> {
     * @Author: Mr.Wang
     * @Date: 2020/7/16
     */
-    @RequestMapping("/updateDict")
+    @PostMapping("/updateDict")
     public ResultData updateDict(Dict dict){
         if (dictService.updateDict(dict)!=null){
             return updateSuccess(dictService.updateDict(dict));

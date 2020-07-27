@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.MappingProject;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,8 @@ public class MappingProjectController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectAllMappingProject")
+    @ApiOperation(value = "查询项目信息",
+            notes = "查询所有的项目信息")
     public ResultData selectAllMappingProject(){
         return mappingApiService.selectAllMappingProject();
     }
@@ -41,6 +44,8 @@ public class MappingProjectController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectMappingProjectByType")
+    @ApiOperation(value = "通过项目类型查询项目信息",
+            notes = "通过发送项目类型来查询项目信息")
     public ResultData selectMappingProjectByType(@RequestParam("projectType") String projectType){
         return mappingApiService.selectMappingProjectByType(projectType);
     }
@@ -53,6 +58,8 @@ public class MappingProjectController {
      * @Date: 2020/7/21
      */
     @PostMapping("/selectMappingProjectByTypeByPage")
+    @ApiOperation(value = "分页通过项目类型查询项目信息",
+            notes = "通过发送项目类型，pageNo，pageSize来分页查询项目信息")
     public ResultData selectMappingProjectByTypeByPage(@RequestParam("projectType") String projectType,
                                                        @RequestParam("pageNo") Integer pageNo,
                                                        @RequestParam("pageSize") Integer pageSize
@@ -68,6 +75,8 @@ public class MappingProjectController {
      * @Date: 2020/7/17
      */
     @PostMapping("/selectMappingProjectByPage")
+    @ApiOperation(value = "分页通查询项目信息",
+            notes = "通过发送pageNo，pageSize来分页查询所有项目信息")
     public ResultData selectMappingProjectByPage(@RequestBody MappingProject mappingProject,
                                                  @RequestParam("pageNo") Integer pageNo,
                                                  @RequestParam("pageSize") Integer pageSize)
@@ -83,6 +92,8 @@ public class MappingProjectController {
      * @Date: 2020/7/17
      */
     @PostMapping("/updateMappingProject")
+    @ApiOperation(value = "修改汇交项目",
+            notes = "通过发送实体类参数来修改汇交项目信息")
     public ResultData updateMappingProject(@RequestBody MappingProject mappingProject){
         return mappingApiService.updateMappingProject(mappingProject);
     }

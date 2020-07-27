@@ -144,7 +144,7 @@ public interface SystemApiService {
      * @DateTime 2020/7/27  8:49
      * @Throws
      */
-    @RequestMapping("/deleteDict")
+    @PostMapping("/deleteDict")
     ResultData deleteDict(@RequestParam("dictIds") List<Integer> dictIds);
 
 
@@ -168,7 +168,7 @@ public interface SystemApiService {
      * @DateTime 2020/7/27  8:50
      * @Throws
      */
-    @RequestMapping("/updateDict")
+    @PostMapping("/updateDict")
     ResultData updateDict(Dict dict);
 
     /**
