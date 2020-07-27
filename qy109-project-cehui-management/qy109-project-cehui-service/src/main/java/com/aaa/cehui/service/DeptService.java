@@ -81,12 +81,15 @@ public class DeptService extends BaseService<Dept> {
         if (null != deptName && !"".equals(deptName)
                 && null != beginTime && !"".equals(beginTime)) {
             //说明全条件查询
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("deptName", deptName.toString()).andBetween("createTime", beginTime, endTime), null);
+            System.out.println("全条件查询");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("deptName", "%"+deptName.toString()+"%").andBetween("createTime", beginTime, endTime), null);
         } else if (null != deptName && !"".equals(deptName)) {
             //说明单条件查询  通过deptname
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("deptName", deptName.toString()), null);
+            System.out.println("单条件查询通过部门名称");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("deptName", "%"+deptName.toString()+"%"), null);
         } else if (null != beginTime && !"".equals(beginTime)) {
             //说明单条件查询，通过区间时间
+            System.out.println("时间区间单条件查询");
             return selectListByPageAndFiled(pageNo, pageSize, where.andBetween("createTime", beginTime, endTime), null);
         }
         return null;

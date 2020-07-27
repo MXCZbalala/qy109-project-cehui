@@ -217,31 +217,38 @@ public class UserService extends BaseService<User> {
                 && null != deptId && !"".equals(deptId)
                 && null != beginTime && !"".equals(beginTime)) {
             //说明 全条件查询
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", userName.toString()).andEqualTo("deptId", deptId).andBetween("createTime", beginTime, endTime), null);
+            System.out.println("全条件查询");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", "%" + userName.toString() + "%").andEqualTo("deptId", deptId).andBetween("createTime", beginTime, endTime), null);
         } else if (null != deptId && !"".equals(deptId)
                 && null != beginTime && !"".equals(beginTime)
         ) {
             //说明是部门和时间查询
+            System.out.println("部门和时间查询");
             return selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("deptId", deptId).andBetween("createTime", beginTime, endTime), null);
         } else if (null != userName && !"".equals(userName)
                 && null != deptId && !"".equals(deptId)
         ) {
+            System.out.println("名称和部门查询");
             //说明是 名称和部门查询
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", userName.toString()).andEqualTo("deptId", deptId), null);
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", "%" + userName.toString() + "%").andEqualTo("deptId", deptId), null);
         } else if (null != userName && !"".equals(userName)
                 && null != beginTime && !"".equals(beginTime)
         ) {
             //说明是名称和时间查询
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", userName.toString()).andBetween("createTime", beginTime, endTime), null);
+            System.out.println("名称和时间查询");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", "%" + userName.toString() + "%").andBetween("createTime", beginTime, endTime), null);
         } else if (null != userName && !"".equals(userName)) {
             //说明是单条件 名字查询
-            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", userName.toString()), null);
+            System.out.println("单条件查询名字");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andLike("username", "%" + userName.toString() + "%"), null);
         } else if (null != deptId && !"".equals(deptId)) {
             //说明是单条件 部门查询
+            System.out.println("单条件查询部门");
             return selectListByPageAndFiled(pageNo, pageSize, where.andEqualTo("deptId", deptId.toString()), null);
         } else if (null != beginTime && !"".equals(beginTime)) {
             // 说明是单条件 创建时间查询
-            return selectListByPageAndFiled(pageNo,pageSize,where.andBetween("createTime",beginTime,endTime),null);
+            System.out.println("单条件时间查询");
+            return selectListByPageAndFiled(pageNo, pageSize, where.andBetween("createTime", beginTime, endTime), null);
         }
         return null;
     }

@@ -206,7 +206,6 @@ public class BaseController {
         ResultData resultData = new ResultData();
         resultData.setMsg(msg);
         resultData.setCode(GET_FAILED.getCode());
-        resultData.setMsg(GET_FAILED.getMsg());
         return resultData;
     }
 

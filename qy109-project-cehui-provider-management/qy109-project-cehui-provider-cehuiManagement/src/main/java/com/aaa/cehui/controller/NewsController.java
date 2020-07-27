@@ -22,7 +22,6 @@ import static com.aaa.cehui.status.OperationStatus.SUCCESS;
  *      测绘管理--公告栏
  */
 @RestController
-@RequestMapping("/News")
 public class NewsController extends CommonController<News> {
     @Autowired
     private NewsService newsService;
@@ -37,7 +36,7 @@ public class NewsController extends CommonController<News> {
      * @param pageSize
      * @return
      */
-    @PostMapping("/all")
+    @PostMapping("/selectAllNews")
     public ResultData selectAllNews(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize){
         List listNews = getBaseService().selectAll(pageNo, pageSize);
         if (listNews != null && listNews.size()>0) {

@@ -8,6 +8,7 @@ import com.aaa.cehui.service.AuditService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
@@ -51,7 +52,8 @@ public class AuditController extends CommonController<Audit> {
     * @Date: 2020/7/21
     */
     @PostMapping("/getProjectAuditAllByPage")
-    public ResultData getProjectAuditAllByPage(Audit audit, @RequestParam("pageNo") Integer pageNo,
+    public ResultData getProjectAuditAllByPage(@RequestBody Audit audit,
+                                               @RequestParam("pageNo") Integer pageNo,
                                                @RequestParam("pageSize") Integer pageSize){
         PageInfo<Audit> auditPageInfo = auditService.selectListByPage(audit, pageNo, pageSize);
         if (null!=auditPageInfo && !"".equals(auditPageInfo)){

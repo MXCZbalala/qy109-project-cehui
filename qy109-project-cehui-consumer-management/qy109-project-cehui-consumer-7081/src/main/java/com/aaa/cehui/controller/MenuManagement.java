@@ -1,45 +1,29 @@
 package com.aaa.cehui.controller;
 
-import com.aaa.cehui.base.BaseService;
-import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Menu;
-import com.aaa.cehui.model.RoleMenu;
 import com.aaa.cehui.model.User;
-import com.aaa.cehui.model.UserRole;
-import com.aaa.cehui.service.*;
+import com.aaa.cehui.service.SystemApiService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Map;
 
-
 /**
  * @Author ltl
- * @Date 2020/7/17  18:01
+ * @Date 2020/7/27  11:17
  * @Description
  **/
 @RestController
-public class MenuManagement extends CommonController<Menu> {
-
+@Api(value = "菜单管理", tags = "权限信息")
+public class MenuManagement {
     @Autowired
-    private UserRoleService user_roleService;
-
-    @Autowired
-    private RoleMenuService role_menuService;
-
-    @Autowired
-    private MenuService menuService;
-
-    public BaseService<Menu> getBaseService() {
-        return menuService;
-    }
-
+    private SystemApiService systemApiService;
 
     /**
      * @Author LTL
@@ -50,10 +34,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/getMenuByUserId")
-    public ResultData getMenuByUserId(@RequestBody User user) {
-        return menuService.selectMenuByUserId(user, user_roleService, role_menuService).size() > 0 ? getSuccess(menuService.selectMenuByUserId(user, user_roleService, role_menuService)) : getFiled();
+    public ResultData getMenuByUserId(@RequestBody User user){
+        return systemApiService.getMenuByUserId(user);
     }
-
 
     /**
      * @Author LTL
@@ -64,10 +47,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/getMenuByRoleId")
-    public ResultData getMenuByRoleId(@RequestParam Long roleId) {
-        return menuService.getMenuByRoleId(roleId, role_menuService).size() > 0 ? getSuccess(menuService.getMenuByRoleId(roleId, role_menuService)) : getFiled("为查询到数据");
+    public ResultData getMenuByRoleId(@RequestParam Long roleId){
+        return systemApiService.getMenuByRoleId(roleId);
     }
-
 
     /**
      * @Author LTL
@@ -78,10 +60,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/updateMenuByRoleId")
-    public ResultData updateMenuByRoleId(@RequestParam("roleId") Long roleId) {
-        return role_menuService.deleteMenuByRoleId(roleId) > 0 ? updateSuccess(role_menuService.deleteMenuByRoleId(roleId)) : getFiled();
+    public ResultData updateMenuByRoleId(@RequestParam("roleId") Long roleId){
+        return systemApiService.updateMenuByRoleId(roleId);
     }
-
     /**
      * @Author LTL
      * @Description 查询所有的菜单信息
@@ -91,9 +72,10 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/selectAllMenu")
-    public ResultData selectAllMenu() {
-        return menuService.selectAllMenus().size() > 0 ? getSuccess(menuService.selectAllMenus()) : getFiled("网络异常，查询失败");
+    public ResultData selectAllMenu(){
+        return systemApiService.selectAllMenu();
     }
+
 
     /**
      * @Author LTL
@@ -104,10 +86,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/updateMenuByMenuId")
-    public ResultData updateMenuByMenuId(@RequestBody Menu menu) {
-        return menuService.updateMenuByMenuId(menu) > 0 ? updateSuccess(menuService.updateMenuByMenuId(menu)) : updateFiled();
+    public ResultData updateMenuByMenuId(@RequestBody Menu menu){
+        return systemApiService.updateMenuByMenuId(menu);
     }
-
 
     /**
      * @Author LTL
@@ -119,11 +100,9 @@ public class MenuManagement extends CommonController<Menu> {
      */
     @PostMapping("/selectAllParentMenu")
     public PageInfo<Menu> selectAllParentMenu(@RequestParam("pageNo") Integer pageNo,
-                                              @RequestParam("pageSize") Integer pageSize
-    ) {
-        return getBaseService().selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("parentId", 1), null);
+                                              @RequestParam("pageSize") Integer pageSize){
+        return systemApiService.selectAllParentMenu(pageNo, pageSize);
     }
-
 
     /**
      * @Author LTL
@@ -134,10 +113,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/selectChildMenuByParentId")
-    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId) {
-        return getSuccess(getBaseService().selectListByFiled(Sqls.custom().andEqualTo("parentId", parentId), null));
+    public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId){
+        return systemApiService.selectChildMenu(parentId);
     }
-
 
     /**
      * @Author LTL
@@ -148,8 +126,9 @@ public class MenuManagement extends CommonController<Menu> {
      * @Throws
      */
     @PostMapping("/selectMenuByFiled")
-    public ResultData selectMenuByFiled(@RequestBody Map map) {
-        return menuService.selectMenusByFiled(map).size() > 0 ? getSuccess(menuService.selectMenusByFiled(map)) : getFiled("未查到");
+    public ResultData selectMenuByFiled(@RequestBody Map map){
+        return systemApiService.selectMenuByFiled(map);
     }
+
 
 }

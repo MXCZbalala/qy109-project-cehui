@@ -6,10 +6,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.SpecialPost;
 import com.aaa.cehui.service.SpecialPostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +16,11 @@ import java.util.List;
  * @Description
  *      特殊岗位人员信息表的增删改查
  **/
+@RestController
 public class SpecialPostController extends CommonController<SpecialPost> {
 
     @Autowired
-    SpecialPostService specialPostService;
+    private SpecialPostService specialPostService;
 
 
     @Override

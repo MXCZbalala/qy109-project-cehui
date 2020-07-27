@@ -85,8 +85,7 @@ public class RoleController extends CommonController<Role> {
     */
     @PostMapping("/updateRoleById")
     public ResultData updateRoleById(@RequestBody Role role,
-                                     @RequestParam("ids[]")List<Integer> ids,
-                                     RoleMenuService roleMenuService){
+                                     @RequestParam("ids[]")List<Integer> ids){
       return  roleSerivce.updateRoleByPrimaryKey(role,ids,roleMenuService) > 0 ? updateSuccess() : updateFiled();
 
     }
@@ -101,8 +100,7 @@ public class RoleController extends CommonController<Role> {
     */
     @PostMapping("/addRole")
     public ResultData addRole(@RequestBody Role role,
-                              @RequestParam("ids[]")List<Integer> ids,
-                              RoleMenuService roleMenuService
+                              @RequestParam("ids[]")List<Integer> ids
     ){
         return roleMenuService.add(role.getRoleId(),ids) > 0 ? addSuccess() : addFiled();
     }

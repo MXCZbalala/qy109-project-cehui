@@ -8,6 +8,7 @@ import com.aaa.cehui.service.ResourceService;
 import com.aaa.cehui.service.UploadService;
 import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,7 @@ public class ResourceController extends CommonController<Resource> {
      * @DateTime 2020/7/21  16:32
      * @Throws
      */
+    @PostMapping("/selectAllResourceByUnitId")
     public ResultData selectAllResourceByUnitId(@RequestParam("unitId") Long unitId) {
         return resourceService.selectAllResourceByUnitId(unitId).size() > 0
                 ? getSuccess(resourceService.selectAllResourceByUnitId(unitId))
@@ -54,6 +56,7 @@ public class ResourceController extends CommonController<Resource> {
     * @DateTime 2020/7/21  17:10
     * @Throws
     */
+    @PostMapping("/addFileByUnitId")
     public ResultData addFileByUnitId(@RequestParam("file") MultipartFile file,
                                       @RequestParam("refBizType") String refBizType,
                                       @RequestParam("unitId") Long unitId){

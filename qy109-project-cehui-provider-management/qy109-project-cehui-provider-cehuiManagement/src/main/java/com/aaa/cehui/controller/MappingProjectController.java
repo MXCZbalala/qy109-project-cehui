@@ -8,9 +8,7 @@ import com.aaa.cehui.service.MappingProjectService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheAnnotationParser;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
@@ -52,7 +50,7 @@ public class MappingProjectController extends CommonController<MappingProject> {
     * @Date: 2020/7/17
     */
     @PostMapping("/selectMappingProjectByType")
-    public ResultData selectMappingProjectByType(String projectType){
+    public ResultData selectMappingProjectByType(@RequestParam("projectType") String projectType){
         List<MappingProject> list = mappingProjectService.selectMappingProjectByType(projectType);
         if (list.size()>0 && null != list){
             return getSuccess(list);
@@ -67,7 +65,9 @@ public class MappingProjectController extends CommonController<MappingProject> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectMappingProjectByTypeByPage")
-    public ResultData selectMappingProjectByTypeByPage(String projectType, Integer pageNo, Integer pageSize){
+    public ResultData selectMappingProjectByTypeByPage(@RequestParam("projectType") String projectType,
+                                                       @RequestParam("pageNo") Integer pageNo,
+                                                       @RequestParam("pageSize") Integer pageSize){
         PageInfo<MappingProject> projectType1 = mappingProjectService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("projectType", projectType), null);
         if (null!=projectType && !"".equals(projectType1)){
             return getSuccess(projectType1);
@@ -83,8 +83,9 @@ public class MappingProjectController extends CommonController<MappingProject> {
     * @Date: 2020/7/17
     */
     @PostMapping("/selectMappingProjectByPage")
-    public ResultData selectMappingProjectByPage(MappingProject mappingProject,
-                                                 @RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize){
+    public ResultData selectMappingProjectByPage(@RequestBody MappingProject mappingProject,
+                                                 @RequestParam("pageNo") Integer pageNo,
+                                                 @RequestParam("pageSize") Integer pageSize){
         PageInfo<MappingProject> pageInfo = mappingProjectService.selectMappingProjectByPage(mappingProject, pageNo, pageSize);
         if (null!=pageInfo && !"".equals(pageInfo)){
             return getSuccess(pageInfo);
@@ -99,7 +100,7 @@ public class MappingProjectController extends CommonController<MappingProject> {
     * @Date: 2020/7/17
     */
     @PostMapping("/updateMappingProject")
-    public ResultData updateMappingProject(MappingProject mappingProject){
+    public ResultData updateMappingProject(@RequestBody MappingProject mappingProject){
         Integer integer = mappingProjectService.updateMappingProject(mappingProject);
         if (integer>0 && integer !=null){
             return updateSuccess(integer);

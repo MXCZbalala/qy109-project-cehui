@@ -8,6 +8,8 @@ import com.aaa.cehui.service.CheckPersonService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
@@ -50,7 +52,7 @@ public class CheckPersonController extends CommonController<CheckPerson> {
     * @Date: 2020/7/20
     */
     @PostMapping("/addCheckPerson")
-    public ResultData addCheckPerson(CheckPerson checkPerson){
+    public ResultData addCheckPerson(@RequestBody CheckPerson checkPerson){
         Integer add = checkPersonService.add(checkPerson);
         if (null!=add && add>0){
             return addSuccess(add);
@@ -65,7 +67,7 @@ public class CheckPersonController extends CommonController<CheckPerson> {
     * @Date: 2020/7/20
     */
     @PostMapping("/selectPartCheckPerson")
-    public ResultData selectPartCheckPerson(Double put){
+    public ResultData selectPartCheckPerson(@RequestParam("put") Double put){
         List<CheckPerson> checkPeople = checkPersonService.selectPartCheckPerson(put);
         if (checkPeople.size()>0 && checkPeople!=null){
             return getSuccess(checkPeople);
@@ -80,7 +82,9 @@ public class CheckPersonController extends CommonController<CheckPerson> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectCheckPersonByPage")
-    public ResultData selectCheckPersonByPage(CheckPerson checkPerson,Integer pageNo,Integer pageSize){
+    public ResultData selectCheckPersonByPage(@RequestBody CheckPerson checkPerson,
+                                              @RequestParam("pageNo") Integer pageNo,
+                                              @RequestParam("pageSize") Integer pageSize){
         PageInfo<CheckPerson> checkPersonPageInfo = checkPersonService.selectListByPage(checkPerson, pageNo, pageSize);
         if (null!=checkPersonPageInfo && !"".equals(checkPersonPageInfo)){
             return getSuccess(checkPersonPageInfo);
@@ -95,7 +99,10 @@ public class CheckPersonController extends CommonController<CheckPerson> {
     * @Date: 2020/7/21
     */
     @PostMapping("/selectPartCheckPersonByPage")
-    public ResultData selectPartCheckPersonByPage(Double put, CheckPerson checkPerson,Integer pageNo, Integer pageSize) {
+    public ResultData selectPartCheckPersonByPage(@RequestBody CheckPerson checkPerson,
+                                                  @RequestParam("put") Double put,
+                                                  @RequestParam("pageNo") Integer pageNo,
+                                                  @RequestParam("pageSize") Integer pageSize) {
         PageInfo<CheckPerson> personPageInfo = checkPersonService.selectPartCheckPersonByPage(put, checkPerson, pageNo, pageSize);
 
         if (!"".equals(personPageInfo) && null !=personPageInfo){

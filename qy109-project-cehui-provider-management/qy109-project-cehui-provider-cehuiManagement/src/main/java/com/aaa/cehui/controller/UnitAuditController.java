@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,8 +36,8 @@ public class UnitAuditController extends CommonController<MappingUnit> {
     */
     @PostMapping("/selectUnitByPage")
     public ResultData selectUnitByPage(MappingUnit mappingUnit,
-                                       Integer pageNo,
-                                       Integer pageSize){
+                                       @RequestParam("pageNo") Integer pageNo,
+                                       @RequestParam("pageSize") Integer pageSize){
         PageInfo<MappingUnit> mappingUnitPageInfo = unitAuditService.selectListByPage(mappingUnit, pageNo, pageSize);
         if (null!=mappingUnitPageInfo && !"".equals(mappingUnitPageInfo)){
             return getSuccess(mappingUnitPageInfo);
@@ -44,18 +45,18 @@ public class UnitAuditController extends CommonController<MappingUnit> {
         return getFiled();
     }
     /**
-    * @Description: 分页通过抽查比例查询单位信息
-    * @Param: [ownedDistrict, put, mappingUnit, pageNo, pageSize]
-    * @return: com.aaa.cehui.base.ResultData
-    * @Author: Mr.Wang
-    * @Date: 2020/7/21
-    */
+     * @Description: 分页通过抽查比例查询单位信息
+     * @Param: [ownedDistrict, put, mappingUnit, pageNo, pageSize]
+     * @return: com.aaa.cehui.base.ResultData
+     * @Author: Mr.Wang
+     * @Date: 2020/7/21
+     */
     @PostMapping("/selectPartUnitByPage")
-    public ResultData selectPartUnitByPage(@RequestParam(value = "ownedDistrict",required = false) String ownedDistrict,
-                                           Double put,
-                                           MappingUnit mappingUnit,
-                                           Integer pageNo,
-                                           Integer pageSize){
+    public ResultData selectPartUnitByPage(@RequestBody MappingUnit mappingUnit,
+                                           @RequestParam(value = "ownedDistrict") String ownedDistrict,
+                                           @RequestParam("put") Double put,
+                                           @RequestParam("pageNo") Integer pageNo,
+                                           @RequestParam("pageSize") Integer pageSize){
         PageInfo<MappingUnit> mappingUnitPageInfo = unitAuditService.selectPartUnitByPage(ownedDistrict, put, mappingUnit, pageNo, pageSize);
         if (null!=mappingUnitPageInfo && !"".equals(mappingUnitPageInfo)){
             return getSuccess(mappingUnitPageInfo);

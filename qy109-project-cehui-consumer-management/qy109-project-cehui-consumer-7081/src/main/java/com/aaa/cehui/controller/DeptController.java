@@ -1,33 +1,27 @@
 package com.aaa.cehui.controller;
 
-import com.aaa.cehui.base.BaseService;
-import com.aaa.cehui.base.CommonController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Dept;
-import com.aaa.cehui.service.DeptService;
+import com.aaa.cehui.service.SystemApiService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.util.Sqls;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @Author ltl
- * @Date 2020/7/16  15:39
- * @Description 系统管理--部门管理
+ * @Date 2020/7/27  11:09
+ * @Description
  **/
 @RestController
-public class DeptController extends CommonController<Dept> {
+@Api(value = "部门管理", tags = "部门信息")
+public class DeptController {
 
     @Autowired
-    private DeptService deptService;
+    private SystemApiService systemApiService;
 
-    @Override
-    public BaseService getBaseService() {
-        return deptService;
-    }
 
     /**
      * @Author LTL
@@ -38,8 +32,8 @@ public class DeptController extends CommonController<Dept> {
      * @Throws
      */
     @PostMapping("/addDept")
-    public ResultData addDept(@RequestBody Dept dept) {
-        return deptService.add(dept) > 0 ? updateSuccess() : updateFiled();
+    public ResultData addDept(@RequestBody Dept dept){
+        return systemApiService.addDept(dept);
     }
 
     /**
@@ -51,8 +45,8 @@ public class DeptController extends CommonController<Dept> {
      * @Throws
      */
     @PostMapping("/deleteDeptById")
-    public ResultData deleteDeptById(@RequestBody Dept dept) {
-        return deptService.delete(dept) > 0 ? updateSuccess() : updateFiled();
+    public ResultData deleteDeptById(@RequestParam Dept dept) {
+        return systemApiService.deleteDeptById(dept);
     }
 
     /**
@@ -65,7 +59,7 @@ public class DeptController extends CommonController<Dept> {
      */
     @PostMapping("/updateDept")
     public ResultData updateDept(@RequestBody Dept dept) {
-        return deptService.update(dept) > 0 ? updateSuccess() : updateFiled();
+        return systemApiService.deleteDeptById(dept);
     }
 
     /**
@@ -78,9 +72,10 @@ public class DeptController extends CommonController<Dept> {
      */
     @GetMapping("/selectAllDept")
     public ResultData selectAllDept(@RequestParam("pageNo") Integer pageNo,
-                                    @RequestParam("pageSize") Integer pageSize) {
-        return deptService.selectAll(pageNo, pageSize).size() > 0 ? getSuccess(deptService.selectAll(pageNo, pageSize)) : getFiled();
+                                    @RequestParam("pageSize") Integer pageSize){
+        return systemApiService.selectAllDept(pageNo,pageSize);
     }
+
 
     /**
      * @Author LTL
@@ -94,8 +89,7 @@ public class DeptController extends CommonController<Dept> {
     public ResultData selectDeptInfoByField(@RequestBody Map map,
                                             @RequestParam("pageNo") Integer pageNo,
                                             @RequestParam("pageSize") Integer pageSize) {
-        return deptService.selectDeptInfoByField(map, pageNo, pageSize).getSize() > 0 ? getSuccess(deptService.selectDeptInfoByField(map, pageNo, pageSize)) : getFiled("未查询到数据");
-
+        return systemApiService.selectDeptInfoByField(map, pageNo, pageSize);
     }
 
     /**
@@ -107,8 +101,7 @@ public class DeptController extends CommonController<Dept> {
      * @Throws
      */
     @PostMapping("/batchDeleteByPrimaryKey")
-    public ResultData batchDeleteByPrimaryKey(@RequestParam("ids[]") List<Integer> ids) {
-        return deptService.batchDeleteByPrimaryKey(ids) ? deleteSuccess() : deleteSuccess();
+    public ResultData batchDeleteByPrimaryKey(@RequestParam("ids[]") List<Integer> ids){
+        return systemApiService.batchDeleteByPrimaryKey(ids);
     }
-
 }

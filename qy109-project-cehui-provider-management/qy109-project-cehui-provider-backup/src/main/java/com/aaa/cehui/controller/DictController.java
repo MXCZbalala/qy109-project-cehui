@@ -24,6 +24,11 @@ import static com.aaa.cehui.status.CRUDStatus.*;
 public class DictController extends CommonController<Dict> {
     @Autowired
     private DictService dictService;
+
+    @Override
+    public BaseService getBaseService() {
+        return dictService;
+    }
     /**
     * @Description: 查询所有字典信息
     * @Param: []
@@ -103,7 +108,8 @@ public class DictController extends CommonController<Dict> {
     * @Date: 2020/7/16
     */
     @PostMapping("/selectDictByPage")
-    public ResultData selectDictByPage(Dict dict,@RequestParam("pageNo") Integer pageNo,
+    public ResultData selectDictByPage(@RequestBody Dict dict,
+                                       @RequestParam("pageNo") Integer pageNo,
                                        @RequestParam("pageSize") Integer pageSize){
         if (!"".equals(dictService.selectDictByPage(dict,pageNo,pageSize))){
             return getSuccess(dictService.selectDictByPage(dict,pageNo,pageSize));
@@ -111,8 +117,5 @@ public class DictController extends CommonController<Dict> {
         return getFiled();
     }
 
-    @Override
-    public BaseService getBaseService() {
-        return dictService;
-    }
+
 }

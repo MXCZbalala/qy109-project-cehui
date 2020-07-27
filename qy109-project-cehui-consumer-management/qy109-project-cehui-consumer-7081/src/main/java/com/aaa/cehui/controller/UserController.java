@@ -1,38 +1,29 @@
 package com.aaa.cehui.controller;
 
-
-import com.aaa.cehui.base.BaseService;
-import com.aaa.cehui.base.CommonController;
+import com.aaa.cehui.base.BaseController;
 import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.User;
-import com.aaa.cehui.service.UserService;
+import com.aaa.cehui.service.SystemApiService;
 import com.github.pagehelper.PageInfo;
-import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.annotations.Api;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * @Company AAA软件教育
- * @Author Seven Lee
- * @Date Create in 2020/7/8 11:48
+ * @Author ltl
+ * @Date 2020/7/27  11:01
  * @Description
  **/
 @RestController
-public class UserController extends CommonController<User> {
+@Api(value = "用户管理", tags = "用户信息")
+public class UserController extends BaseController {
 
     @Autowired
-    private UserService userService;
-
-
-    @Override
-    public BaseService<User> getBaseService() {
-        return userService;
-    }
+    private SystemApiService systemApiService;
 
     /**
      * @Author LTL
@@ -44,9 +35,8 @@ public class UserController extends CommonController<User> {
      */
     @RequestMapping("/addUser")
     public ResultData addUser(@RequestBody User user) {
-        return userService.addUser(user) ? addSuccess() : addFiled();
+        return systemApiService.addUser(user);
     }
-
     /**
      * @Author LTL
      * @Description 通过ID删除一条用户信息
@@ -56,10 +46,9 @@ public class UserController extends CommonController<User> {
      * @Throws
      */
     @PostMapping("/deleteById")
-    public ResultData deleteById(@RequestBody User user) {
-        return userService.delete(user) > 0 ? deleteSuccess() : deleteFiled();
+    public ResultData deleteById(@RequestBody User user){
+        return systemApiService.deleteById(user);
     }
-
     /**
      * @Author LTL
      * @Description 通过主键批量删除用户信息
@@ -69,8 +58,8 @@ public class UserController extends CommonController<User> {
      * @Throws
      */
     @PostMapping("/deleteUserByIds")
-    public ResultData deleteUserByIds(@RequestParam("ids[]") List<Integer> ids) {
-        return userService.deleteByIds(ids) > 0 ? deleteSuccess() : deleteFiled();
+    public ResultData deleteUserByIds(@RequestParam("ids[]") List<Integer> ids){
+        return systemApiService.deleteUserByIds(ids);
     }
 
     /**
@@ -82,25 +71,22 @@ public class UserController extends CommonController<User> {
      * @Throws
      */
     @PostMapping("/updateUserById")
-    public ResultData updateUserById(@RequestBody User user) {
-        return userService.updateUser(user) > 0 ? updateSuccess() : updateFiled();
+    public ResultData updateUserById(@RequestBody User user){
+        return updateUserById(user);
     }
 
-
     /**
-     * @Author LTL
-     * @Description 分页查询所有用户信息
-     * @Param [pageNo, pageSize]
-     * @Return com.github.pagehelper.PageInfo
-     * @DateTime 2020/7/16  8:57
-     * @Throws
-     */
-    @PostMapping("/selectAllUser")
+    * @Author LTL
+    * @Description 分页查询所有用户信息
+    * @Param [pageNo, pageSize]
+    * @Return com.aaa.cehui.base.ResultData
+    * @DateTime 2020/7/27  11:06
+    * @Throws
+    */
+    @GetMapping("/selectAllUser")
     public ResultData selectAllUser(@RequestParam("pageNo") Integer pageNo,
-                                    @RequestParam("pageSize") Integer pageSize
-    ) {
-        PageInfo pageInfo = userService.selectAllUser(pageNo, pageSize);
-        return pageInfo.getList().size() >0 && pageInfo.getList() != null ? getSuccess(pageInfo) : getFiled("未查询到数据");
+                                    @RequestParam("pageSize")Integer pageSize){
+        return systemApiService.selectAllUser(pageNo, pageSize);
     }
 
     /**
@@ -112,13 +98,9 @@ public class UserController extends CommonController<User> {
      * @Throws
      */
     @PostMapping("/selectUserById")
-    public ResultData selectUserById(@RequestParam("id") Integer id
-
-    ) {
-        User user = userService.selectUserById(id);
-        return user != null ? getSuccess(user) : getFiled("未查询到数据");
+    public ResultData selectUserById(@RequestParam("id") Integer id){
+        return selectUserById(id);
     }
-
 
     /**
      * @Author LTL
@@ -132,10 +114,8 @@ public class UserController extends CommonController<User> {
     public ResultData selectUserByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo") Integer pageNo,
                                         @RequestParam("pageSize") Integer pageSize
-    ) {
-        PageInfo pageInfo = userService.selectUserByFiled(map, pageNo, pageSize);
-        return pageInfo.getList().size() > 0 && pageInfo.getList() != null ? getSuccess(pageInfo) : getFiled("未查询到数据");
+    ){
+        return systemApiService.selectUserByFiled(map,pageNo,pageSize);
     }
-
 
 }

@@ -48,8 +48,8 @@ public class ProjectManagementController extends CommonController<ProjectInfo> {
     * @Author: Mr.Wang
     * @Date: 2020/7/17
     */
-    @PostMapping("/selectById")
-    public ResultData selectById(Long id){
+    @PostMapping("/selectProjectInfoById")
+    public ResultData selectProjectInfoById(Long id){
         if (projectService.selectById(id)!=null){
             return getSuccess(projectService.selectById(id));
         }

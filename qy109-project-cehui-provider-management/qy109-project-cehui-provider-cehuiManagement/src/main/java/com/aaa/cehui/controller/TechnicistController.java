@@ -112,7 +112,7 @@ public class TechnicistController extends CommonController<Technicist> {
      * @return
      */
     @PostMapping("/queryTechnicistByUserIdPage")
-    public ResultData queryByUserIdPage(@RequestParam("userId") Integer userId,
+    public ResultData queryTechnicistByUserIdPage(@RequestParam("userId") Integer userId,
                                         @RequestParam("pageNo") Integer pageNo,
                                         @RequestParam("pageSize") Integer pageSize){
         PageInfo<Technicist> userId1 = technicistService.selectListByPageAndFiled(pageNo, pageSize, Sqls.custom().andEqualTo("userId", userId), null, null);
