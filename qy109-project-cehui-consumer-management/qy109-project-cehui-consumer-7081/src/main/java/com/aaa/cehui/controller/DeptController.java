@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Dept;
 import com.aaa.cehui.service.SystemApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-@Api(value = "部门管理", tags = "部门信息")
+@Api(value = "部门信息", tags = "部门管理")
 public class DeptController {
 
     @Autowired
@@ -32,6 +33,8 @@ public class DeptController {
      * @Throws
      */
     @PostMapping("/addDept")
+    @ApiOperation(value = "新增部门信息",
+            notes = "通过发送实体类参数来新增部门信息")
     public ResultData addDept(@RequestBody Dept dept){
         return systemApiService.addDept(dept);
     }
