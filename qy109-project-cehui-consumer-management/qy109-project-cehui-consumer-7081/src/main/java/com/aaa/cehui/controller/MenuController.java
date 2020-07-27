@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Menu;
 import com.aaa.cehui.service.SystemApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,8 @@ public class MenuController {
      * @Throws
      */
     @PostMapping("/updateMenu")
+    @ApiOperation(value = "修改菜单信息",
+            notes = "修改菜单信息")
     public ResultData updateMenu(@RequestBody Menu menu){
         return updateMenu(menu);
     }

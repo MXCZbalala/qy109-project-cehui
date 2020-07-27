@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Role;
 import com.aaa.cehui.service.SystemApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,8 @@ public class RoleController {
      * @Throws
      */
     @PostMapping("/selectAllRole")
+    @ApiOperation(value = "查询所有角色信息",
+            notes = "分页查询所有角色信息")
     public ResultData selectAllRole(@RequestParam("pageNo")Integer pageNo,
                                     @RequestParam("pageSize")Integer pageSize){
         return systemApiService.selectAllRole(pageNo, pageSize);
@@ -50,6 +53,8 @@ public class RoleController {
      * @Throws
      */
     @PostMapping("/selectRoleByFiled")
+    @ApiOperation(value = "条件查询部门信息",
+            notes = "通过角色名和创建时间区间来查询角色信息")
     public ResultData selectRoleByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo")Integer pageNo,
                                         @RequestParam("pageSize") Integer pageSize
@@ -66,6 +71,8 @@ public class RoleController {
      * @Throws
      */
     @PostMapping("/updateRoleById")
+    @ApiOperation(value = "修改角色信息",
+            notes = "根据ID修改角色信息")
     public ResultData updateRoleById(@RequestBody Role role,
                                      @RequestParam("ids[]") List<Integer> ids){
         return systemApiService.updateRoleById(role, ids);
@@ -80,6 +87,8 @@ public class RoleController {
      * @Throws
      */
     @PostMapping("/addRole")
+    @ApiOperation(value = "新增角色信息",
+            notes = "新增角色信息")
     public ResultData addRole(@RequestBody Role role,
                               @RequestParam("ids[]")List<Integer> ids
     ){
@@ -95,6 +104,8 @@ public class RoleController {
      * @Throws
      */
     @PostMapping("/deleteRoleByIds")
+    @ApiOperation(value = "批量删除角色信息",
+            notes = "批量删除角色信息")
     public ResultData deleteRoleByIds(@RequestParam("ids[]") List<Integer> ids){
         return systemApiService.deleteRoleByIds(ids);
     }

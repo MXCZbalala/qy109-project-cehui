@@ -6,6 +6,7 @@ import com.aaa.cehui.model.User;
 import com.aaa.cehui.service.SystemApiService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-@Api(value = "菜单管理", tags = "权限信息")
+@Api(value = "权限管理", tags = "权限信息")
 public class MenuManagement {
     @Autowired
     private SystemApiService systemApiService;
@@ -34,6 +35,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/getMenuByUserId")
+    @ApiOperation(value = "用户权限信息查询",
+            notes = "通过用户ID查询用户拥有的权限")
     public ResultData getMenuByUserId(@RequestBody User user){
         return systemApiService.getMenuByUserId(user);
     }
@@ -47,6 +50,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/getMenuByRoleId")
+    @ApiOperation(value = "角色权限信息查询",
+            notes = "通过角色ID查询角色菜单信息")
     public ResultData getMenuByRoleId(@RequestParam Long roleId){
         return systemApiService.getMenuByRoleId(roleId);
     }
@@ -60,6 +65,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/updateMenuByRoleId")
+    @ApiOperation(value = "修改菜单信息",
+            notes = "通过角色ID 修改菜单信息")
     public ResultData updateMenuByRoleId(@RequestParam("roleId") Long roleId){
         return systemApiService.updateMenuByRoleId(roleId);
     }
@@ -72,6 +79,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/selectAllMenu")
+    @ApiOperation(value = "查询所有菜单信息",
+            notes = "查询所有菜单信息")
     public ResultData selectAllMenu(){
         return systemApiService.selectAllMenu();
     }
@@ -86,6 +95,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/updateMenuByMenuId")
+    @ApiOperation(value = "修改菜单信息",
+            notes = "通过菜单ID 修改菜单信息")
     public ResultData updateMenuByMenuId(@RequestBody Menu menu){
         return systemApiService.updateMenuByMenuId(menu);
     }
@@ -99,6 +110,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/selectAllParentMenu")
+    @ApiOperation(value = "分页查询所有一级菜单",
+            notes = "分页查询所有一级菜单")
     public PageInfo<Menu> selectAllParentMenu(@RequestParam("pageNo") Integer pageNo,
                                               @RequestParam("pageSize") Integer pageSize){
         return systemApiService.selectAllParentMenu(pageNo, pageSize);
@@ -113,6 +126,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/selectChildMenuByParentId")
+    @ApiOperation(value = "查询父级菜单",
+            notes = "通过菜单ID查询所拥有的子菜单信息")
     public ResultData selectChildMenu(@RequestParam("parentId") Integer parentId){
         return systemApiService.selectChildMenu(parentId);
     }
@@ -126,6 +141,8 @@ public class MenuManagement {
      * @Throws
      */
     @PostMapping("/selectMenuByFiled")
+    @ApiOperation(value = "条件查询菜单信息",
+            notes = "通过菜单名称和创建时间区间查询菜单信息")
     public ResultData selectMenuByFiled(@RequestBody Map map){
         return systemApiService.selectMenuByFiled(map);
     }

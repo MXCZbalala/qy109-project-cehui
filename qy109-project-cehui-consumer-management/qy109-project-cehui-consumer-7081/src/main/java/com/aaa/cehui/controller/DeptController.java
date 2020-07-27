@@ -17,7 +17,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-@Api(value = "部门信息", tags = "部门管理")
+@Api(value = "部门管理", tags = "部门信息")
 public class DeptController {
 
     @Autowired
@@ -48,6 +48,8 @@ public class DeptController {
      * @Throws
      */
     @PostMapping("/deleteDeptById")
+    @ApiOperation(value = "删除部门信息",
+            notes = "通过ID删除部门信息")
     public ResultData deleteDeptById(@RequestParam Dept dept) {
         return systemApiService.deleteDeptById(dept);
     }
@@ -61,6 +63,8 @@ public class DeptController {
      * @Throws
      */
     @PostMapping("/updateDept")
+    @ApiOperation(value = "修改部门信息",
+            notes = "通过ID修改部门信息")
     public ResultData updateDept(@RequestBody Dept dept) {
         return systemApiService.deleteDeptById(dept);
     }
@@ -74,6 +78,8 @@ public class DeptController {
      * @Throws
      */
     @GetMapping("/selectAllDept")
+    @ApiOperation(value = "查询所有部门信息",
+            notes = "分页查询所有分页信息")
     public ResultData selectAllDept(@RequestParam("pageNo") Integer pageNo,
                                     @RequestParam("pageSize") Integer pageSize){
         return systemApiService.selectAllDept(pageNo,pageSize);
@@ -88,6 +94,8 @@ public class DeptController {
      * @DateTime 2020/7/16  17:32
      * @Throws
      */
+    @ApiOperation(value = "条件查询部门信息",
+            notes = "通过部门名称和创建时间区间来查询部门信息")
     @PostMapping("/selectDeptInfoByField")
     public ResultData selectDeptInfoByField(@RequestBody Map map,
                                             @RequestParam("pageNo") Integer pageNo,
@@ -104,6 +112,8 @@ public class DeptController {
      * @Throws
      */
     @PostMapping("/batchDeleteByPrimaryKey")
+    @ApiOperation(value = "批量删除部门信息",
+            notes = "通过ID集合批量删除部门信息")
     public ResultData batchDeleteByPrimaryKey(@RequestParam("ids[]") List<Integer> ids){
         return systemApiService.batchDeleteByPrimaryKey(ids);
     }

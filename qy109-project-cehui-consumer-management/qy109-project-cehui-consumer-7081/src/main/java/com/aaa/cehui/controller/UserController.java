@@ -6,6 +6,7 @@ import com.aaa.cehui.model.User;
 import com.aaa.cehui.service.SystemApiService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @Description
  **/
 @RestController
-@Api(value = "用户管理", tags = "用户信息")
+@Api(value = "用户信息", tags = "用户管理")
 public class UserController extends BaseController {
 
     @Autowired
@@ -34,6 +35,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @RequestMapping("/addUser")
+    @ApiOperation(value = "新增用户",
+            notes = "通过添加用户属性来新增用户信息")
     public ResultData addUser(@RequestBody User user) {
         return systemApiService.addUser(user);
     }
@@ -46,6 +49,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @PostMapping("/deleteById")
+    @ApiOperation(value = "删除用户",
+            notes = "通过ID删除一条用户信息")
     public ResultData deleteById(@RequestBody User user){
         return systemApiService.deleteById(user);
     }
@@ -58,6 +63,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @PostMapping("/deleteUserByIds")
+    @ApiOperation(value = "批量删除用户",
+            notes = "通过ID集合删除用户信息")
     public ResultData deleteUserByIds(@RequestParam("ids[]") List<Integer> ids){
         return systemApiService.deleteUserByIds(ids);
     }
@@ -71,6 +78,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @PostMapping("/updateUserById")
+    @ApiOperation(value = "修改用户信息",
+            notes = "通过ID修改用户信息")
     public ResultData updateUserById(@RequestBody User user){
         return updateUserById(user);
     }
@@ -84,6 +93,8 @@ public class UserController extends BaseController {
     * @Throws
     */
     @GetMapping("/selectAllUser")
+    @ApiOperation(value = "查询用户信息",
+            notes = "分页查询所有用户信息")
     public ResultData selectAllUser(@RequestParam("pageNo") Integer pageNo,
                                     @RequestParam("pageSize")Integer pageSize){
         return systemApiService.selectAllUser(pageNo, pageSize);
@@ -98,6 +109,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @PostMapping("/selectUserById")
+    @ApiOperation(value = "通过ID查询用户信息",
+            notes = "通过用户ID查询用户信息")
     public ResultData selectUserById(@RequestParam("id") Integer id){
         return selectUserById(id);
     }
@@ -111,6 +124,8 @@ public class UserController extends BaseController {
      * @Throws
      */
     @PostMapping("/selectUserByFiled")
+    @ApiOperation(value = "多条件查询用户信息",
+            notes = "多条件查询用户信息")
     public ResultData selectUserByFiled(@RequestBody Map map,
                                         @RequestParam("pageNo") Integer pageNo,
                                         @RequestParam("pageSize") Integer pageSize
