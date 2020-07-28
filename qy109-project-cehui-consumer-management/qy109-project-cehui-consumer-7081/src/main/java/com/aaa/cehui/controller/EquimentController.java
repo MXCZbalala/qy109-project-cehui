@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.service.MappingApiService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,8 @@ public class EquimentController {
      * @return
      */
     @PostMapping("/queryEquimentByUserIdPage")
+    @ApiOperation(value = "通过userId分页查询所有设备信息",
+            notes = "通过发送userId和当前页面和叶面条数参数来分页查询所有设备信息")
     public ResultData queryByUserIdPage(@RequestParam("userId") Integer userId,
                                         @RequestParam("pageNo") Integer pageNo,
                                         @RequestParam("pageSize") Integer pageSize

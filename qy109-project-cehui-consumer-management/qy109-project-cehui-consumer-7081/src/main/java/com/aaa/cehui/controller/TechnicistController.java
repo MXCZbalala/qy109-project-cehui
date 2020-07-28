@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Technicist;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,6 +85,8 @@ public class TechnicistController {
      * @return
      */
     @PostMapping("/queryTechnicistByUserIdPage")
+    @ApiOperation(value = "通过userId查询所有技术人员信息",
+            notes = "通过发送userId和当前页面和叶面条数参数来查询所有技术人员信息")
     public ResultData queryTechnicistByUserIdPage(@RequestParam("userId") Integer userId,
                                                   @RequestParam("pageNo") Integer pageNo,
                                                   @RequestParam("pageSize") Integer pageSize){

@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Score;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,8 @@ public class ScoreController {
      * @return
      */
     @PostMapping("/selectAllScorePage")
+    @ApiOperation(value = "分页查询所有打分记录",
+            notes = "通过发送当前页面和页面条数参数来分页查询所有打分记录")
     public ResultData selectAllScorePage(@RequestParam("pageNo")Integer pageNo,
                                          @RequestParam("pageSize") Integer pageSize){
         return mappingApiService.selectAllScorePage(pageNo, pageSize);
@@ -40,6 +43,8 @@ public class ScoreController {
      * @return
      */
     @PostMapping("/insertScore")
+    @ApiOperation(value = "添加加分记录",
+            notes = "通过发送实体类参数来添加加分记录")
     public ResultData insertScore(Score score){
         return mappingApiService.insertScore(score);
     }

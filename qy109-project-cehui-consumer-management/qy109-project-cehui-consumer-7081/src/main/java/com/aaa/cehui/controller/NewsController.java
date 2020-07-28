@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.News;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/selectAllNews")
+    @ApiOperation(value = "分页查询所有新闻",
+            notes = "通过发送当前页面和页面条数参数来分页查询新闻信息")
     public ResultData selectAllNews(@RequestParam("pageNo") Integer pageNo,
                                     @RequestParam("pageSize") Integer pageSize){
         return mappingApiService.selectAllNews(pageNo, pageSize);
@@ -40,6 +43,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/queryByTitle")
+    @ApiOperation(value = "通过标题模糊查询新闻信息",
+            notes = "通过发送新闻标题参数来模糊查询新闻信息")
     public ResultData queryByTitle(@RequestParam(value = "title",required = false) String title){
         return mappingApiService.queryByTitle(title);
     }
@@ -50,6 +55,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/insertNews")
+    @ApiOperation(value = "添加新闻信息",
+            notes = "通过发送实体类参数来添加新闻信息")
     public ResultData insertNews(News news){
         return mappingApiService.insertNews(news);
     }
@@ -60,6 +67,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/updateNews")
+    @ApiOperation(value = "修改新闻信息",
+            notes = "通过发送实体类参数来修改新闻信息")
     public ResultData updateNews(News news){
         return mappingApiService.updateNews(news);
     }
@@ -70,6 +79,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/delNews")
+    @ApiOperation(value = "删除新闻信息",
+            notes = "通过发送id参数来删除新闻信息")
     public ResultData deleteNews(Integer id){
         return mappingApiService.deleteNews(id);
     }
@@ -80,6 +91,8 @@ public class NewsController {
      * @return
      */
     @PostMapping("/deleteByIds")
+    @ApiOperation(value = "批量删除新闻信息",
+            notes = "通过发送id集合参数来批量删除新闻信息")
     public ResultData deleteNewsByIds(List<Integer> ids){
         return  mappingApiService.deleteNewsByIds(ids);
     }

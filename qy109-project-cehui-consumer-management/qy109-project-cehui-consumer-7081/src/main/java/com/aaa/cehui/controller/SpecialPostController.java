@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.SpecialPost;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +83,8 @@ public class SpecialPostController {
      * @return
      */
     @PostMapping("/queryByUserId")
+    @ApiOperation(value = "通过userId查询所有特殊人员信息",
+            notes = "通过发送userId参数来查询所有特殊人员信息")
     public ResultData queryByUserId(@RequestParam("userId") Integer userId){
         return mappingApiService.queryByUserId(userId);
     }

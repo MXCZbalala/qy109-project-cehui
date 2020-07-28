@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.Principal;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,6 +99,8 @@ public class PrincipalController {
      * @return
      */
     @PostMapping("/queryPrincipalByUserId")
+    @ApiOperation(value = "通过userId查询负责人信息",
+            notes = "通过发送userId和当前页面和叶面条数参数来查询负责人信息")
     public List<Principal> selectByUserId(@RequestParam("userId")Integer userId
     ){
         return mappingApiService.selectByUserId(userId);

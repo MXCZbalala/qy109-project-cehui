@@ -4,6 +4,7 @@ import com.aaa.cehui.base.ResultData;
 import com.aaa.cehui.model.MappingUnit;
 import com.aaa.cehui.service.MappingApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryBaiMingDan")
+    @ApiOperation(value = "查询所有白名单信息",
+            notes = "无参数来查询白名单信息")
     public List<MappingUnit> selectBaiByScore(){
         return mappingApiService.selectBaiByScore();
     }
@@ -41,6 +44,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryBaiMingDanPage")
+    @ApiOperation(value = "分页查询所有白名单信息",
+            notes = "通过当前页面和页面条数参数来查询白名单信息")
     public ResultData queryBaiMingDan(@RequestParam("pageNo") Integer pageNo,
                                       @RequestParam("pageSize")Integer pageSize
     ){
@@ -52,6 +57,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryHeiMingDan")
+    @ApiOperation(value = "查询所有黑名单信息",
+            notes = "无参数来查询黑名单信息")
     public List<MappingUnit> selectHeiByScore(){
         return mappingApiService.selectHeiByScore();
     }
@@ -65,6 +72,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryHeiMingDanPage")
+    @ApiOperation(value = "分页查询所有黑名单信息",
+            notes = "通过当前页面和页面条数参数来查询黑名单信息")
     public ResultData queryHeiMingDan(@RequestParam("pageNo") Integer pageNo,
                                       @RequestParam("pageSize")Integer pageSize
     ){
@@ -76,6 +85,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/selectAllMappingUtil")
+    @ApiOperation(value = "查询所有单位信息",
+            notes = "无参数来查询所有单位信息")
     public List<MappingUnit> selectAllMappingUtil(){
         return mappingApiService.selectAllMappingUtil();
     }
@@ -87,6 +98,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/selectAllMappingUtilPage")
+    @ApiOperation(value = "分页查询所有单位信息",
+            notes = "通过当前页面和页面条数参数来查询所有单位信息")
     public ResultData selectAllMappingUtilPage(@RequestParam("pageNo") Integer pageNo,
                                                @RequestParam("pageSize") Integer pageSize
     ){
@@ -99,6 +112,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryAllMappingUtilByName")
+    @ApiOperation(value = "根据单位名称模糊查询单位信息",
+            notes = "通过单位名称参数来查询单位信息")
     public ResultData queryAllMappingUtilByName(@RequestParam("name") String name){
         return mappingApiService.queryAllMappingUtilByName(name);
     }
@@ -112,6 +127,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/queryMappingUtilByStatus")
+    @ApiOperation(value = "分页查询所有未检测单位信息",
+            notes = "通过同步状态码和当前页面和页面条数参数来分页查询所有未检测单位信息")
     public  ResultData queryMappingUtilBySyzStatus(@RequestParam("synchronizationStatus")Integer synchronizationStatus,
                                                    @RequestParam("pageNo") Integer pageNo,
                                                    @RequestParam("pageSize")Integer pageSize
@@ -125,6 +142,8 @@ public class MappingUtilController {
      * @return
      */
     @PostMapping("/updateMappingUnit")
+    @ApiOperation(value = "修改所有单位信息",
+            notes = "通过发送实体类参数来修改所有单位信息")
     public ResultData updateMappingUnit(MappingUnit mapping_unit){
         return mappingApiService.updateMappingUnit(mapping_unit);
     }
